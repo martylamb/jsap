@@ -389,7 +389,7 @@ public class JSAPAntTask extends Task {
 
         System.out.println(
             "Creating directory \"" + classFileDir.toString() + "\"");
-        classFileDir.mkdir();
+        classFileDir.mkdirs();
         System.out.println("Creating JSAP class file \"" + classFile + "\"");
         classFile.createNewFile();
         System.out.println("Created");

@@ -255,7 +255,7 @@ public abstract class OptionConfiguration extends ParameterConfiguration {
         out.println(
             "        "
                 + objName
-                + ".setIsList("
+                + ".setList("
                 + (getIslist() ? "true" : "false")
                 + ");");
         out.println(

@@ -24,7 +24,7 @@ Legal:
 
 	<!-- Basics -->
    	<property name="name" value="JSAP" />
-    <property name="version" value="1.03"/>
+    <property name="version" value="1.04"/>
     <property name="year" value="2002-2004"/>
 
 	<!-- Directories -->
@@ -37,7 +37,7 @@ Legal:
 	<property name="javadoc.tmp.src" value="${javadoc}/tmpsrc"/>
     <property name="dist" value="dist"/>
     <property name="lib" value="lib"/>
-
+	
 	<!-- Special Tasks -->
 	<taskdef
     	name="snip"
@@ -59,8 +59,8 @@ Legal:
 	<!-- Administrivia -->
 	<property name="url" value="http://www.martiansoftware.com/jsap" />
     <property name="copyrightowners" value="Martian Software, Inc." />
-    <property name="copyright.htm" value="Copyright &amp;copy; ${year}, ${copyrightowners}.  All Rights Reserved." />
-	<property name="updates.htm" value="For the latest version and documentation, please visit &lt;a href='${url}'&gt;${url}&lt;/a&gt;" />
+    <property name="copyright.html" value="Copyright &amp;copy; ${year}, ${copyrightowners}.  All Rights Reserved." />
+	<property name="updates.html" value="For the latest version and documentation, please visit &lt;a href='${url}'&gt;${url}&lt;/a&gt;" />
 	<!-- END OF PROPERTIES ********************************************************************************** -->
 
 	<!-- required for build to work in eclipse -->

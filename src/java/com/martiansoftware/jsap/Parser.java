@@ -231,7 +231,6 @@ class Parser {
      * @return the index of the next argument to parse
      */
     private int parseLongForm(String[] args, int index) {
-    	// TODO: work with qualifiedswitch
         int equalsIndex = args[index].indexOf('=');
         int colonIndex = args[index].indexOf(':'); // KPB
         String paramFlag = null;
