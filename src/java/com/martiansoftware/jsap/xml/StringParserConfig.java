@@ -47,7 +47,7 @@ class StringParserConfig {
 			} else {
 				result = (StringParser) Class.forName("com.martiansoftware.jsap.stringparsers." + classname).newInstance();
 			}
-			if (properties.size() > 0) {
+			if ((properties != null) && (properties.size() > 0)) {
 				PropertyStringParser p = (PropertyStringParser) result;
 				for (Iterator i = properties.iterator(); i.hasNext(); ) {
 					Property property = (Property) i.next();

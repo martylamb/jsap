@@ -53,7 +53,8 @@ Legal:
     <property name="testFiles" value="**/Test*" />
     <property name="exampleFiles" value="com/martiansoftware/jsap/examples/" />
     <property name="manualFiles" value="manual" />
-    
+    <property name="jsapXmlFiles" value="**/*.jsap" />
+	
     <property name="jarname" value="${name}-${version}.jar" />
 
 	<!-- Administrivia -->
@@ -123,6 +124,11 @@ Targets:
         	<exclude name="${exampleFiles}" /> -->
         	<classpath refid="lib.class.path" />
         </javac>
+        <copy todir="${build}">
+    		<fileset dir="${javasrc}">
+    			<include name="${jsapXmlFiles}" />
+			</fileset>
+  		</copy>
     </target>
 
 	<!-- compile the JSAP API and JUnit tests -->
@@ -189,6 +195,7 @@ Targets:
 	<target name="manual" depends="compile-all">
 		<snip xmlsafe="true">
      		<fileset dir="${javasrc}" includes="**/*.java" />
+     		<fileset dir="${javasrc}" includes="**/*.jsap" />
  		</snip>
  		<mkdir dir="${build}/manual"/>
 		<copy overwrite="true" verbose="true" file="${src}/doc/manual.xml" todir="${build}/manual">
@@ -200,13 +207,16 @@ Targets:
     			<filter token="Manual_HelloWorld_5" value="${snip.Manual_HelloWorld_5}"/>
     			<filter token="Manual_HelloWorld_6" value="${snip.Manual_HelloWorld_6}"/>
     			<filter token="Manual_HelloWorld_7" value="${snip.Manual_HelloWorld_7}"/>
+    			<filter token="Manual_HelloWorld_8" value="${snip.Manual_HelloWorld_8}"/>
+        		<filter token="Manual_HelloWorld_9" value="${snip.Manual_HelloWorld_9}"/>
+        		<filter token="Manual_HelloWorld_9_jsap" value="${snip.Manual_HelloWorld_9_jsap}"/>
   			</filterset>
   		</copy>
 
 		<echo>${build}</echo>
  		<rundoc prompt="[mlamb@morbo]$ " format="docbook">
        		<fileset file="${build}/manual/manual.xml"/>
-       		<env key="CLASSPATH" value="${build}"/>
+       		<env key="CLASSPATH" value="${build}:${lib}/xstream-1.0.1.jar"/>
 		</rundoc>
 		
 		<!-- anyone want to write a non-platform-specific task to do this? -->

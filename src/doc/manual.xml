@@ -7,8 +7,8 @@
   <preface>
     <title>Formalities</title>
 
-    <para>This document is current as of April 21, 2004. The most up-to-date
-    copy of this document is available at <ulink
+    <para>This document is current as of September 4, 2004. The most
+    up-to-date copy of this document is available at <ulink
     url="http://www.martiansoftware.com/jsap/doc/manual.html">http://www.martiansoftware.com/jsap/doc/index.html</ulink>.</para>
 
     <para>Copyright (c) 2004, <ulink
@@ -39,8 +39,11 @@
         rebundling of unmodified JSAP classes into your program&#39;s .jar
         file, does not affect the license of your application code.</para>
 
-        <para>If you modify JSAP and redistribute your modifications, the LGPL
-        applies.</para>
+        <para>If you modify JSAP and redistribute your modifications, you must
+        also distribute your modifications as specified by the LGPL applies.</para>
+
+        <para>Other licensing terms may be obtained by contacting Martian
+        Software.</para>
       </note>
     </section>
   </preface>
@@ -426,6 +429,26 @@
 
 @@rundoc:java com.martiansoftware.jsap.examples.Manual_HelloWorld_7 --nosuchflag@@</screen>
     </sect1>
+
+    <sect1>
+      <title><anchor id="HelloWorld_8" />HelloWorld_8</title>
+
+      <para>The following example uses a <classname>QualifiedSwitch</classname>
+      to allow the user to specify the language(s) to use in verbose mode.</para>
+
+      <programlisting>@Manual_HelloWorld_8@</programlisting>
+
+      <screen>@@rundoc:java com.martiansoftware.jsap.examples.Manual_HelloWorld_8 -n 2 --verbose Zoidberg@@
+
+@@rundoc:java com.martiansoftware.jsap.examples.Manual_HelloWorld_8 --verbose:de Farnsworth@@
+
+@@rundoc:java com.martiansoftware.jsap.examples.Manual_HelloWorld_8 -v:de,en Branigan@@
+
+@@rundoc:java com.martiansoftware.jsap.examples.Manual_HelloWorld_8 Horrible_Gelatanous_Blob@@
+</screen>
+
+      <para></para>
+    </sect1>
   </chapter>
 
   <chapter>
@@ -752,12 +775,64 @@
   </chapter>
 
   <chapter>
-    <title>Using ANT To Make Everything Easier</title>
+    <title>Loading JSAP Configurations at Runtime with XML</title>
 
     <caution>
-      <para>The Ant task is still experimental. It used to work quite well,
-      but it hasn&#39;t kept up with recent changes. It&#39;s on my list.</para>
+      <para>As of JSAP v1.04, this feature is experimental.</para>
     </caution>
+
+    <para>In order to keep your program source free of clutter and to support
+    a large number of possible command line syntaxes, <classname>JSAP</classname>
+    provides a means to load configurations from XML sources at run time. A
+    new contructor with the signature <function>JSAP(<classname>URL</classname>
+    xmlJSAPSource)</function> has been introduced to support this. It is now
+    very easy to store a number of <classname>JSAP</classname> configurations
+    in XML files in the same <filename>.jar</filename> as your application.</para>
+
+    <note>
+      <para>This feature requires the <classname>XStream</classname>
+      <filename>.jar</filename> from <ulink url="http://xstream.codehaus.org">http://xstream.codehaus.org</ulink>.
+      <classname>XStream</classname> is an excellent library that provides a
+      simple means to map objects to/from XML. It is made available under a
+      <ulink url="http://xstream.codehaus.org/license.html">BSD-style license</ulink>.</para>
+
+      <para>Although a <filename>.jar</filename> is available with
+      <classname>JSAP</classname>, <classname>XStream</classname> is in no way
+      affiliated with Martian Software or the <classname>JSAP</classname>
+      project. Furthermore, you&#39;re virtually guaranteed a more up-to-date
+      version of the <filename>.jar</filename> if you go straight to their
+      website.</para>
+    </note>
+
+    <para>The XML syntax for <classname>JSAP</classname> configurations is
+    designed to closely mirror the sequence of function calls required to
+    manually instantiate a <classname>JSAP</classname>.</para>
+
+    <tip>
+      <para>An Eclipse plug-in for editing <classname>JSAP</classname> XML
+      files would be <emphasis>very</emphasis> cool. If you&#39;re interested
+      in writing one, let me know!</para>
+    </tip>
+
+    <para>The following example is a reimplementation of the <ulink
+    url="ch03s08.html"><link linkend="HelloWorld_8"><olink><ulink url="???"><link
+    linkend="HelloWorld_8">HelloWorld_8</link></ulink></olink></link></ulink>
+    example found earlier in this document.</para>
+
+    <programlisting>@Manual_HelloWorld_9_jsap@</programlisting>
+
+    <programlisting>@Manual_HelloWorld_9@</programlisting>
+
+    <screen>@@rundoc:java com.martiansoftware.jsap.examples.Manual_HelloWorld_9 -n 2 --verbose Zoidberg@@
+
+@@rundoc:java com.martiansoftware.jsap.examples.Manual_HelloWorld_9 --verbose:de Farnsworth@@
+
+@@rundoc:java com.martiansoftware.jsap.examples.Manual_HelloWorld_9 -v:de,en Branigan@@
+
+@@rundoc:java com.martiansoftware.jsap.examples.Manual_HelloWorld_9 Horrible_Gelatanous_Blob@@
+</screen>
+
+    <para></para>
   </chapter>
 
   <chapter>

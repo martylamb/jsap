@@ -1,4 +1,4 @@
-<html><head><link rel='stylesheet' type='text/css' href='manual.css'/><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>HelloWorld_6</title><meta name="generator" content="DocBook XSL Stylesheets V1.61.2"><link rel="home" href="index.html" title="JSAP - Java Simple Argument Parser (v1.03a)"><link rel="up" href="ch03.html" title="Chapter 3. Quick Start"><link rel="previous" href="ch03s05.html" title="HelloWorld_5"><link rel="next" href="ch03s07.html" title="HelloWorld_7"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">HelloWorld_6</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch03s05.html">Prev</a> </td><th width="60%" align="center">Chapter 3. Quick Start</th><td width="20%" align="right"> <a accesskey="n" href="ch03s07.html">Next</a></td></tr></table><hr></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="id3187591"></a>HelloWorld_6</h2></div></div><div></div></div><p>Of course, sometimes usage information doesn't provide enough
+<html><head><link rel='stylesheet' type='text/css' href='manual.css'/><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>HelloWorld_6</title><meta name="generator" content="DocBook XSL Stylesheets V1.61.2"><link rel="home" href="index.html" title="JSAP - Java Simple Argument Parser (v1.04)"><link rel="up" href="ch03.html" title="Chapter 3. Quick Start"><link rel="previous" href="ch03s05.html" title="HelloWorld_5"><link rel="next" href="ch03s07.html" title="HelloWorld_7"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">HelloWorld_6</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch03s05.html">Prev</a> </td><th width="60%" align="center">Chapter 3. Quick Start</th><td width="20%" align="right"> <a accesskey="n" href="ch03s07.html">Next</a></td></tr></table><hr></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="id3035974"></a>HelloWorld_6</h2></div></div><div></div></div><p>Of course, sometimes usage information doesn't provide enough
       detail. How about some actual program help?</p><pre class="programlisting">
     public static void main(String[] args) throws Exception {
         JSAP jsap = new JSAP();
@@ -57,12 +57,9 @@ Usage: java com.martiansoftware.jsap.examples.Manual_HelloWorld_6
                 -n &lt;count&gt; [-v|--verbose] name1 name2 ... nameN
 
   -n &lt;count&gt;               The number of times to say hello (default=1).      
-
   [-v|--verbose]           Requests verbose output.                           
-
   name1 name2 ... nameN    One or more names of people you would like to      
                            greet.                                             
-
 </tt>
 
 <tt class="prompt">[mlamb@morbo]$ </tt><b class="command">java com.martiansoftware.jsap.examples.Manual_HelloWorld_6 --nosuchflag</b>
@@ -71,12 +68,9 @@ Usage: java com.martiansoftware.jsap.examples.Manual_HelloWorld_6
                 -n &lt;count&gt; [-v|--verbose] name1 name2 ... nameN
 
   -n &lt;count&gt;               The number of times to say hello (default=1).      
-
   [-v|--verbose]           Requests verbose output.                           
-
   name1 name2 ... nameN    One or more names of people you would like to      
                            greet.                                             
-
 </tt></pre><p>In <tt class="classname">HelloWorld_3</tt> you learned how to add a
       <tt class="classname">Switch</tt> (verbose). Combine a -h / --help switch
       with the <tt class="methodname">getHelp()</tt> method as used here, and

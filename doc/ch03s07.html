@@ -1,4 +1,4 @@
-<html><head><link rel='stylesheet' type='text/css' href='manual.css'/><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>HelloWorld_7</title><meta name="generator" content="DocBook XSL Stylesheets V1.61.2"><link rel="home" href="index.html" title="JSAP - Java Simple Argument Parser (v1.03a)"><link rel="up" href="ch03.html" title="Chapter 3. Quick Start"><link rel="previous" href="ch03s06.html" title="HelloWorld_6"><link rel="next" href="ch04.html" title="Chapter 4. How It Works"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">HelloWorld_7</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch03s06.html">Prev</a> </td><th width="60%" align="center">Chapter 3. Quick Start</th><td width="20%" align="right"> <a accesskey="n" href="ch04.html">Next</a></td></tr></table><hr></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="id3187778"></a>HelloWorld_7</h2></div></div><div></div></div><p>Showing the expected input of your program can be helpful, but it
+<html><head><link rel='stylesheet' type='text/css' href='manual.css'/><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>HelloWorld_7</title><meta name="generator" content="DocBook XSL Stylesheets V1.61.2"><link rel="home" href="index.html" title="JSAP - Java Simple Argument Parser (v1.04)"><link rel="up" href="ch03.html" title="Chapter 3. Quick Start"><link rel="previous" href="ch03s06.html" title="HelloWorld_6"><link rel="next" href="ch03s08.html" title="HelloWorld_8"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">HelloWorld_7</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch03s06.html">Prev</a> </td><th width="60%" align="center">Chapter 3. Quick Start</th><td width="20%" align="right"> <a accesskey="n" href="ch03s08.html">Next</a></td></tr></table><hr></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="id3036126"></a>HelloWorld_7</h2></div></div><div></div></div><p>Showing the expected input of your program can be helpful, but it
       can be even more helpful to tell the user specifically what they did
       wrong. It's pretty easy as of version 1.03:</p><pre class="programlisting">
     public static void main(String[] args) throws Exception {
@@ -14,12 +14,9 @@
         opt1.setHelp("The number of times to say hello (default=1).");
         jsap.registerParameter(opt1);
         
-        QualifiedSwitch sw1 = (QualifiedSwitch)
-                                (new QualifiedSwitch("verbose")
-                                .setShortFlag('v')
-                                .setLongFlag("verbose")
-                                .setList(true)
-                                .setListSeparator(','));
+        Switch sw1 = new Switch("verbose")
+                        .setShortFlag('v')
+                        .setLongFlag("verbose");
         
         sw1.setHelp("Requests verbose output.");
         jsap.registerParameter(sw1);
@@ -49,7 +46,7 @@
             
             System.err.println();
             System.err.println("Usage: java "
-                                + Manual_HelloWorld_8.class.getName());
+                                + Manual_HelloWorld_7.class.getName());
             System.err.println("                "
                                 + jsap.getUsage());
             System.err.println();
@@ -58,10 +55,6 @@
         }
         
         String[] names = config.getStringArray("name");
-        String[] languages = config.getStringArray("verbose");
-        for (int i = 0; i &lt; languages.length; ++i) {
-            System.out.println("language=" + languages[i]);
-        }
         for (int i = 0; i &lt; config.getInt("count"); ++i) {
             for (int j = 0; j &lt; names.length; ++j) {
                 System.out.println((config.getBoolean("verbose") ? "Hello" : "Hi")
@@ -78,12 +71,9 @@ Usage: java com.martiansoftware.jsap.examples.Manual_HelloWorld_7
                 -n &lt;count&gt; [-v|--verbose] name1 name2 ... nameN
 
   -n &lt;count&gt;               The number of times to say hello (default=1).      
-
   [-v|--verbose]           Requests verbose output.                           
-
   name1 name2 ... nameN    One or more names of people you would like to      
                            greet.                                             
-
 </tt>
 
 <tt class="prompt">[mlamb@morbo]$ </tt><b class="command">java com.martiansoftware.jsap.examples.Manual_HelloWorld_7 --nosuchflag</b>
@@ -94,10 +84,7 @@ Usage: java com.martiansoftware.jsap.examples.Manual_HelloWorld_7
                 -n &lt;count&gt; [-v|--verbose] name1 name2 ... nameN
 
   -n &lt;count&gt;               The number of times to say hello (default=1).      
-
   [-v|--verbose]           Requests verbose output.                           
-
   name1 name2 ... nameN    One or more names of people you would like to      
                            greet.                                             
-
-</tt></pre></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch03s06.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ch03.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ch04.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">HelloWorld_6 </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> Chapter 4. How It Works</td></tr></table></div></body></html>
+</tt></pre></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch03s06.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ch03.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ch03s08.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">HelloWorld_6 </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> HelloWorld_8</td></tr></table></div></body></html>
