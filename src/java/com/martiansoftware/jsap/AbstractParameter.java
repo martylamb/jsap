@@ -47,6 +47,12 @@ public abstract class AbstractParameter {
     private String id = null;
 
     /**
+     * The name to use for this AbstractParameter when generating
+     * usage information.  If null, the id will be used.
+     */
+    private String usageName = null;
+    
+    /**
      * If true, this parameter is "locked" (i.e., cannot be modified).
      * Parameters are locked when they are stored in a JSAPConfiguration.
      */
@@ -175,6 +181,26 @@ public abstract class AbstractParameter {
         }
     }
 
+    /**
+     * Sets the name of this AbstractPArameter for the purposes of
+     * usage information.  If null, the id will be used.
+     * @param usageName the usage name for this AbstractParameter
+     */
+    protected final void _setUsageName(String usageName) {
+    	this.usageName = usageName;
+    }
+    
+    /**
+     * Returns the name of this AbstractParameter for the purposes of
+     * usage information.  The returned value is by default the id of
+     * this parameter, but can be overridden via setUsageName(String).
+     * @return the name of this AbstractParameter for the purposes of
+     * usage information.
+     */
+    public final String getUsageName() {
+    	return (usageName == null ? id : usageName);
+    }
+    
     /**
      * Returns an array of default values for this parameter, or
      * null if no default values have been defined.

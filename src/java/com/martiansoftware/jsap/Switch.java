@@ -72,6 +72,17 @@ public class Switch extends AbstractParameter implements Flagged {
 		return (this);
 	}
 
+//	irrelevant for switches
+//    /**
+//     * Sets the name that will be displayed when getSyntax() is called
+//     * @param usageName the name to use, or null if the id should be used (default)
+//     * @return the modified Switch
+//     */
+//    public Switch setUsageName(String usageName) {
+//    	_setUsageName(usageName);
+//    	return (this);
+//    }
+
 	/**
 	 * Returns the short flag for this Switch.  If this Switch has no short 
 	 * flag, the

@@ -123,13 +123,13 @@ public final class QualifiedSwitch extends FlaggedOption {
     		}
     	}
     	result.append("[:");
-    	String id = getID();
+    	String un = getUsageName();
     	char sep = this.getListSeparator();
     	if (this.isList()) {
     		result.append(
-    				id + "1" + sep + id + "2" + sep + "..." + sep + id + "N ");
+    				un + "1" + sep + un + "2" + sep + "..." + sep + un + "N ");
     	} else {
-    		result.append("<" + id + ">");
+    		result.append("<" + un + ">");
     	}
     	if (!required()) {
     		result.append("]");

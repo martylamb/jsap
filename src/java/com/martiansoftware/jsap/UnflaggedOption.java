@@ -77,6 +77,16 @@ public final class UnflaggedOption extends Option {
     }
 
     /**
+     * Sets the name that will be displayed when getUsage() is called
+     * @param usageName the name to use, or null if the id should be used (default)
+     * @return the modified UnflaggedOption
+     */
+    public UnflaggedOption setUsageName(String usageName) {
+    	_setUsageName(usageName);
+    	return (this);
+    }
+
+    /**
      * Returns a boolean indicating whether this UnflaggedOption is greedy.
      * @return a boolean indicating whether this UnflaggedOption is greedy.
      */
@@ -95,11 +105,11 @@ public final class UnflaggedOption extends Option {
             result.append("[");
         }
 
-        String id = getID();
+        String un = getUsageName();
         if (this.isGreedy()) {
-            result.append(id + "1 " + id + "2 ... " + id + "N");
+            result.append(un + "1 " + un + "2 ... " + un + "N");
         } else {
-            result.append("<" + id + ">");
+            result.append("<" + un + ">");
         }
         if (!required()) {
             result.append(" ]");

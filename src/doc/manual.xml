@@ -2,12 +2,12 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
 "http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
 <book>
-  <title>JSAP - Java Simple Argument Parser (v1.03a)</title>
+  <title>JSAP - Java Simple Argument Parser (v1.04)</title>
 
   <preface>
     <title>Formalities</title>
 
-    <para>This document is current as of March 7, 2004. The most up-to-date
+    <para>This document is current as of April 21, 2004. The most up-to-date
     copy of this document is available at <ulink
     url="http://www.martiansoftware.com/jsap/doc/manual.html">http://www.martiansoftware.com/jsap/doc/index.html</ulink>.</para>
 
@@ -387,6 +387,12 @@
       <screen>@@rundoc:java com.martiansoftware.jsap.examples.Manual_HelloWorld_5 -n 2 -n 4@@
 
 @@rundoc:java com.martiansoftware.jsap.examples.Manual_HelloWorld_5 --nosuchflag@@</screen>
+
+      <para>Note that the IDs of the &#34;count&#34; <classname>FlaggedOption</classname>
+      and the &#34;name&#34; <classname>UnflaggedOption</classname> were used
+      in the automatically-generated usage information. As of v1.4, this can
+      be overridden via <function>setUsageName(<classname>String</classname>)</function>
+      on any parameters. (Thanks to Andreas Hochsteger for the suggestion!)</para>
     </sect1>
 
     <sect1>
@@ -752,6 +758,27 @@
       <para>The Ant task is still experimental. It used to work quite well,
       but it hasn&#39;t kept up with recent changes. It&#39;s on my list.</para>
     </caution>
+  </chapter>
+
+  <chapter>
+    <title>Contributors</title>
+
+    <para>JSAP started out as a one-person project, but has since grown thanks
+    to code and idea contributions from its users. I hope the following is a
+    complete list. Please let me know if I&#39;m leaving anyone out.<variablelist><varlistentry><term>Klaus-Peter
+    Berg</term><listitem><para>Contributed the <classname>QualifiedSwitch</classname>
+    and <classname>EnumeratedStringParser</classname> classes, plus a few bug
+    fixes.</para></listitem></varlistentry><varlistentry><term>Andreas
+    Hochsteger</term><listitem><para>Suggested the ability to override the use
+    of the ID in automatically-generated usage information.</para></listitem></varlistentry><varlistentry><term>Paul
+    Kim</term><listitem><para>Suggested the ability to mark command line
+    parameters as mutually-exclusive.</para></listitem></varlistentry><varlistentry><term>Brian
+    Roconne</term><listitem><para>Implemented mutual exclusion and its
+    complement, mutual requirement of parameters.</para></listitem></varlistentry><varlistentry><term>Mark
+    Hopkins</term><listitem><para>Pointed out a few bugs in the Ant task and
+    provided solutions (the best kind of bug report there is!)</para></listitem></varlistentry><varlistentry><term>Edward
+    Glen</term><listitem><para>Provided the <classname>FileStringParser</classname>
+    class.</para></listitem></varlistentry></variablelist></para>
   </chapter>
 
   <chapter>

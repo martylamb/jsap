@@ -6,7 +6,7 @@
 
 package com.martiansoftware.jsap.stringparsers;
 
-import com.martiansoftware.jsap.StringParser;
+import com.martiansoftware.jsap.PropertyStringParser;
 import com.martiansoftware.jsap.ParseException;
 
 /**
@@ -20,7 +20,7 @@ import com.martiansoftware.jsap.ParseException;
  * @see com.martiansoftware.jsap.StringParser
  * @see java.lang.Float
  */
-public class FloatStringParser extends StringParser {
+public class FloatStringParser extends PropertyStringParser {
 
     /**
      * Creates a new FloatStringParser.

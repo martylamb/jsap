@@ -124,6 +124,16 @@ public class FlaggedOption extends Option implements Flagged {
     }
 
     /**
+     * Sets the name that will be displayed when getSyntax() is called
+     * @param usageName the name to use, or null if the id should be used (default)
+     * @return the modified FlaggedOption
+     */
+    public FlaggedOption setUsageName(String usageName) {
+    	_setUsageName(usageName);
+    	return (this);
+    }
+    
+    /**
      * Returns the long flag for this FlaggedOption.  If this FlaggedOption has
      * no long flag, the return
      * value will be equal to JSAP.NO_LONGFLAG.
@@ -187,13 +197,13 @@ public class FlaggedOption extends Option implements Flagged {
                     "(-" + getShortFlag() + "|--" + getLongFlag() + ") ");
             }
         }
-        String id = getID();
+        String un = getUsageName();
         char sep = this.getListSeparator();
         if (this.isList()) {
             result.append(
-                id + "1" + sep + id + "2" + sep + "..." + sep + id + "N ");
+            	un + "1" + sep + un + "2" + sep + "..." + sep + un + "N ");
         } else {
-            result.append("<" + id + ">");
+            result.append("<" + un + ">");
         }
         if (!required()) {
             result.append("]");
