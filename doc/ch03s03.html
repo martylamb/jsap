@@ -1,4 +1,4 @@
-<html><head><link rel='stylesheet' type='text/css' href='manual.css'/><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>HelloWorld_3</title><meta name="generator" content="DocBook XSL Stylesheets V1.61.2"><link rel="home" href="index.html" title="JSAP - Java Simple Argument Parser (v1.03)"><link rel="up" href="ch03.html" title="Chapter 3. Quick Start"><link rel="previous" href="ch03s02.html" title="HelloWorld_2"><link rel="next" href="ch03s04.html" title="HelloWorld_4"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">HelloWorld_3</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch03s02.html">Prev</a> </td><th width="60%" align="center">Chapter 3. Quick Start</th><td width="20%" align="right"> <a accesskey="n" href="ch03s04.html">Next</a></td></tr></table><hr></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="id3320254"></a>HelloWorld_3</h2></div></div><div></div></div><pre class="programlisting">
+<html><head><link rel='stylesheet' type='text/css' href='manual.css'/><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>HelloWorld_3</title><meta name="generator" content="DocBook XSL Stylesheets V1.61.2"><link rel="home" href="index.html" title="JSAP - Java Simple Argument Parser (v1.03a)"><link rel="up" href="ch03.html" title="Chapter 3. Quick Start"><link rel="previous" href="ch03s02.html" title="HelloWorld_2"><link rel="next" href="ch03s04.html" title="HelloWorld_4"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">HelloWorld_3</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch03s02.html">Prev</a> </td><th width="60%" align="center">Chapter 3. Quick Start</th><td width="20%" align="right"> <a accesskey="n" href="ch03s04.html">Next</a></td></tr></table><hr></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="id3116751"></a>HelloWorld_3</h2></div></div><div></div></div><pre class="programlisting">
     public static void main(String[] args) throws Exception {
         JSAP jsap = new JSAP();
         
@@ -33,19 +33,23 @@
       inside the print loop. That might still seem like a lot of code for this
       little feature, but let's look at all the ways we can invoke the
       program now:</p><pre class="screen"><tt class="prompt">[mlamb@morbo]$ </tt><b class="command">java com.martiansoftware.jsap.examples.Manual_HelloWorld_3 -n 2</b>
-<tt class="computeroutput">Exception in thread "main" java.lang.NoClassDefFoundError: com/martiansoftware/jsap/examples/Manual_HelloWorld_3
+<tt class="computeroutput">Hi, World!
+Hi, World!
 </tt>
 
 <tt class="prompt">[mlamb@morbo]$ </tt><b class="command">java com.martiansoftware.jsap.examples.Manual_HelloWorld_3 -n 3 -v</b>
-<tt class="computeroutput">Exception in thread "main" java.lang.NoClassDefFoundError: com/martiansoftware/jsap/examples/Manual_HelloWorld_3
+<tt class="computeroutput">Hello, World!
+Hello, World!
+Hello, World!
 </tt>
 
 <tt class="prompt">[mlamb@morbo]$ </tt><b class="command">java com.martiansoftware.jsap.examples.Manual_HelloWorld_3 --verbose</b>
-<tt class="computeroutput">Exception in thread "main" java.lang.NoClassDefFoundError: com/martiansoftware/jsap/examples/Manual_HelloWorld_3
+<tt class="computeroutput">Hello, World!
 </tt>
 
 <tt class="prompt">[mlamb@morbo]$ </tt><b class="command">java com.martiansoftware.jsap.examples.Manual_HelloWorld_3 -vn 2</b>
-<tt class="computeroutput">Exception in thread "main" java.lang.NoClassDefFoundError: com/martiansoftware/jsap/examples/Manual_HelloWorld_3
+<tt class="computeroutput">Hello, World!
+Hello, World!
 </tt></pre><p>That last one is the most interesting - note that we were able to
       combine multiple short flags ("<b class="command">v</b>" and "<b class="command">n</b>").
       <tt class="classname">JSAP</tt> allows this for as many short flags as you

@@ -24,7 +24,7 @@ Legal:
 
 	<!-- Basics -->
    	<property name="name" value="JSAP" />
-    <property name="version" value="1.04"/>
+    <property name="version" value="1.03a"/>
     <property name="year" value="2002-2004"/>
 
 	<!-- Directories -->
@@ -118,8 +118,8 @@ Targets:
     <!-- compile the JSAP API -->
     <target name="compile-api" depends="init" >
         <javac destdir="${build}" srcdir="${javasrc}">
-        	<exclude name="${testFiles}" />
-        	<exclude name="${exampleFiles}" />
+<!--        	<exclude name="${testFiles}" />
+        	<exclude name="${exampleFiles}" /> -->
         	<classpath refid="lib.class.path" />
         </javac>
     </target>
@@ -127,7 +127,7 @@ Targets:
 	<!-- compile the JSAP API and JUnit tests -->
     <target name="compile-tests" depends="init" >
         <javac destdir="${build}" srcdir="${javasrc}">
-        	<exclude name="${exampleFiles}" />
+<!--        	<exclude name="${exampleFiles}" /> -->
         	<classpath refid="lib.class.path" />
         </javac>
         <copy todir="${build}">
@@ -185,7 +185,7 @@ Targets:
     </target>
 
 	<!-- generate manual -->
-	<target name="manual" depends="compile-api">
+	<target name="manual" depends="compile-all">
 		<snip xmlsafe="true">
      		<fileset dir="${javasrc}" includes="**/*.java" />
  		</snip>
@@ -202,6 +202,7 @@ Targets:
   			</filterset>
   		</copy>
 
+		<echo>${build}</echo>
  		<rundoc prompt="[mlamb@morbo]$ " format="docbook">
        		<fileset file="${build}/manual/manual.xml"/>
        		<env key="CLASSPATH" value="${build}"/>
@@ -234,7 +235,7 @@ Targets:
 	
 		<!-- copy files to a temp directory for packaging -->
 		<property name="distimage" value="${dist}/${name}-${version}"/>
-
+		<property name="distimage.short" value="${name}-${version}"/>
 		<delete dir="${distimage}" />
 		<mkdir dir="${distimage}" />
 		<copy todir="${distimage}" file="${buildfile}" />
@@ -262,8 +263,8 @@ Targets:
 		</copy>
 
 		<!-- make the source zip file -->
-		<zip destfile="${dist}/${name}-${version}-src.zip" basedir="${distimage}" update="false" />
-		<tar tarfile="${dist}/${name}-${version}-src.tar" basedir="${distimage}"/>
+		<zip destfile="${dist}/${name}-${version}-src.zip" basedir="${dist}" includes="${distimage.short}/**" update="false" />
+		<tar tarfile="${dist}/${name}-${version}-src.tar" basedir="${dist}" includes="${distimage.short}/**"/>
 		<gzip zipfile="${dist}/${name}-${version}-src.tar.gz" src="${dist}/${name}-${version}-src.tar"/>
 		
 		<!-- delete the buildfile, source files and development libaries from the temp directory. -->
@@ -275,8 +276,8 @@ Targets:
 		</delete>
 
 		<!-- make the binary zip file -->
-		<zip destfile="${dist}/${name}-${version}.zip" basedir="${distimage}" update="false" />
-		<tar tarfile="${dist}/${name}-${version}.tar" basedir="${distimage}"/>
+		<zip destfile="${dist}/${name}-${version}.zip" basedir="${dist}" includes="${distimage.short}/**" update="false" />
+		<tar tarfile="${dist}/${name}-${version}.tar" basedir="${dist}" includes="${distimage.short}/**"/>
 		<gzip zipfile="${dist}/${name}-${version}.tar.gz" src="${distimage}.tar"/>
 
 		<!-- delete the tar files that are now gzipped -->

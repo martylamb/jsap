@@ -1,4 +1,4 @@
-<html><head><link rel='stylesheet' type='text/css' href='manual.css'/><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>HelloWorld_2</title><meta name="generator" content="DocBook XSL Stylesheets V1.61.2"><link rel="home" href="index.html" title="JSAP - Java Simple Argument Parser (v1.03)"><link rel="up" href="ch03.html" title="Chapter 3. Quick Start"><link rel="previous" href="ch03.html" title="Chapter 3. Quick Start"><link rel="next" href="ch03s03.html" title="HelloWorld_3"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">HelloWorld_2</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch03.html">Prev</a> </td><th width="60%" align="center">Chapter 3. Quick Start</th><td width="20%" align="right"> <a accesskey="n" href="ch03s03.html">Next</a></td></tr></table><hr></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="id3317867"></a>HelloWorld_2</h2></div></div><div></div></div><pre class="programlisting">
+<html><head><link rel='stylesheet' type='text/css' href='manual.css'/><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>HelloWorld_2</title><meta name="generator" content="DocBook XSL Stylesheets V1.61.2"><link rel="home" href="index.html" title="JSAP - Java Simple Argument Parser (v1.03a)"><link rel="up" href="ch03.html" title="Chapter 3. Quick Start"><link rel="previous" href="ch03.html" title="Chapter 3. Quick Start"><link rel="next" href="ch03s03.html" title="HelloWorld_3"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">HelloWorld_2</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch03.html">Prev</a> </td><th width="60%" align="center">Chapter 3. Quick Start</th><td width="20%" align="right"> <a accesskey="n" href="ch03s03.html">Next</a></td></tr></table><hr></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="id3116444"></a>HelloWorld_2</h2></div></div><div></div></div><pre class="programlisting">
     public static void main(String[] args) throws Exception {
         JSAP jsap = new JSAP();
         
@@ -33,9 +33,13 @@
               five times, for example.</p></li><li><p>It has no long flag.</p></li></ol></div></li><li><p>We register the flagged option with the parser we created in
           the beginning.</p></li><li><p>We tell the parser to parse the command line arguments, and
           store the result in a variable called "config".</p></li><li><p>We print the message.</p></li></ol></div><p>The output of the program looks like this:</p><pre class="screen"><tt class="prompt">[mlamb@morbo]$ </tt><b class="command">java com.martiansoftware.jsap.examples.Manual_HelloWorld_2</b>
-<tt class="computeroutput">Exception in thread "main" java.lang.NoClassDefFoundError: com/martiansoftware/jsap/examples/Manual_HelloWorld_2
+<tt class="computeroutput">Hello, World!
 </tt>
 
 <tt class="prompt">[mlamb@morbo]$ </tt><b class="command">java com.martiansoftware.jsap.examples.Manual_HelloWorld_2 -n 5</b>
-<tt class="computeroutput">Exception in thread "main" java.lang.NoClassDefFoundError: com/martiansoftware/jsap/examples/Manual_HelloWorld_2
+<tt class="computeroutput">Hello, World!
+Hello, World!
+Hello, World!
+Hello, World!
+Hello, World!
 </tt></pre><p>So far, so good. Let's add a switch.</p></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch03.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ch03.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ch03s03.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter 3. Quick Start </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> HelloWorld_3</td></tr></table></div></body></html>

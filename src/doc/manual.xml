@@ -2,13 +2,13 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
 "http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
 <book>
-  <title>JSAP - Java Simple Argument Parser (v1.03)</title>
+  <title>JSAP - Java Simple Argument Parser (v1.03a)</title>
 
   <preface>
     <title>Formalities</title>
 
-    <para>This document is current as of February 24, 2004. The most
-    up-to-date copy of this document is available at <ulink
+    <para>This document is current as of March 7, 2004. The most up-to-date
+    copy of this document is available at <ulink
     url="http://www.martiansoftware.com/jsap/doc/manual.html">http://www.martiansoftware.com/jsap/doc/index.html</ulink>.</para>
 
     <para>Copyright (c) 2004, <ulink
@@ -40,7 +40,7 @@
         file, does not affect the license of your application code.</para>
 
         <para>If you modify JSAP and redistribute your modifications, the LGPL
-        applies. </para>
+        applies.</para>
       </note>
     </section>
   </preface>

@@ -275,7 +275,7 @@ public class JSAP {
                 buf.append("    ");
                 buf.append(
                     StringUtils.padRightToWidth(
-                        (String) helpInfo.next(),
+                        helpInfo.hasNext() ? (String) helpInfo.next() : "",  // Bug fix by Klaus Berg
                         wrapWidth));
                 buf.append("\n");
 
