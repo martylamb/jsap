@@ -217,8 +217,6 @@ Targets:
 		     (and just get a bunch of usage information), you should be good to go. -->
 		     
 		<exec executable="java">
-			<arg value="-cp" />
-			<arg value="${java.class.path}" />
 			<arg value="org.apache.xalan.xslt.Process" />
 			<arg value="-IN" />
 			<arg value="${doc}/src/manual.xml" />

@@ -69,6 +69,8 @@
 							position in the command line.  In the command "java -cp myjar.jar MyClass", the "MyClass" is an unflagged option.</li>
 						<li><b>Short Flag</b> - A single-character flag preceded by a single dash.</li>
 						<li><b>Long Flag</b> - A multi-character flag preceded by a double dash.</li>
+						<li><b>ID</b> - A unique identifier assigned by the programmer to each parameter JSAP should recognize.
+						A parameter's ID is seen only by the programmer, and is used to retrieve its values from the JSAPResult object.</li>
 					</ul>
 				</p>
 			</section>
@@ -333,6 +335,9 @@ Hello, Leela!</output>
 					<output>Hi, Kif!
 Hi, Kif!
 Hi, Kif!</output>
+					<input>java HelloWorld_4 -v -n 2</input>
+					<output>Hello, World!
+Hello, World!</output>
 				</console>
 				
 			</section>
@@ -342,7 +347,44 @@ Hi, Kif!</output>
 		<title>How it Works</title>
 		<body>
 			<section>
-				<p>This chapter will describe the basic flow of JSAP.</p>
+				<p>
+					Everything you do with JSAP leads to the same goal: a JSAPResult object that contains objects created
+					from the parsed command line.  Getting to this point requires the following steps:
+				</p>
+			</section>
+			<section>
+				<title>1.  Creating a JSAP to do the parsing.</title>
+				<p>This is generally accomplished through JSAP's no-argument constructor.  Depending upon the complexity
+				of your program, however, you may want to instantiate a custom JSAP subclass that also takes care of steps
+				2 and 3 (described below) during the construction process.  This approach results in a much "cleaner"
+				main class.
+				</p>
+			</section>
+			<section>
+				<title>2.  Defining your program's parameters.</title>
+				<p>As described above in the Vocabulary section, there are three types of parameters you can define:
+				Switches, FlaggedOptions, and UnflaggedOptions.  When you define a parameter, you tell JSAP what
+				flags (if any) it uses, what its default values are, whether it is required, what its ID is, and other relevant
+				information.  See the individual sections below for each type of parameter for details.
+				</p>
+			</section>
+			<section>
+				<title>3.  Registering your parameters with JSAP</title>
+				<p>Each parameter you define must be registered with JSAP via its registerParameter method.  When a parameter
+				is registered, its properties (flags, etc.) cannot be modified; to modify them, you must first unregister
+				them from JSAP, and register them again once modified.  Registration can throw an exception if the parameter
+				to be registered conflicts with any other registered parameters (for example, if they use the same flags,
+				or have the same ID).</p>
+			</section>
+			<section>
+				<title>4.  Parsing the command line</title>
+				<p>The JSAP object provides two parse() methods to parse a command line.  The first takes an array of Strings
+				as its only	parameter; in most uses of JSAP, this will simply be the args[] array supplied by the JVM to your
+				main() method.</p>
+				<p>The second parse() method takes a single String as its only parameter.  This method first tokenizes the String
+				into an array, much like the operating system does for the JVM in providing your main() method with the
+				args[] array, then calls the parse(String[]) method described above.</p>
+				<p>Both of these methods return a JSAPResult object encapsulating the parsed command line.</p>
 			</section>
 		</body>
 	</chapter>
