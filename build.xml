@@ -29,7 +29,7 @@ Legal:
 
 		<!-- Basics -->
     	<property name="name" value="JSAP" />
-        <property name="version" value="1.0b"/>
+        <property name="version" value="1.0.alpha"/>
         <property name="year" value="2002"/>
 
 		<!-- Directories -->
@@ -177,7 +177,7 @@ Targets:
   		<replace dir="${javadoc.tmp.src}" token="@@VERSION@@" value="${version}">
   			<include name="**/*.java"/>
   		</replace>
-  		<replace dir="${javadoc.tmp.src}" token="@@AUTHOR_MARTY@@" value="${author-marty}">
+  		<replace dir="${javadoc.tmp.src}" token="@@AUTHOR_MARTY@@" value="${author.marty.html}">
   			<include name="**/*.java"/>
   		</replace>
 
