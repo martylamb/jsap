@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Andreas Hochsteger (ÖAMTC) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  <xs:element name="JSAP">
+    <xs:annotation>
+      <xs:documentation>Root element</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:choice maxOccurs="unbounded">
+        <xs:element ref="FlaggedOption" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="QualifiedSwitch" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="Switch" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="UnflaggedOption" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FlaggedOption">
+    <xs:annotation>
+      <xs:documentation>Flagged option (e.g. -n 5)</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:group ref="ArgumentGroup"/>
+      </xs:sequence>
+      <xs:attributeGroup ref="flagged"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="QualifiedSwitch">
+    <xs:annotation>
+      <xs:documentation>Qualified switch (e.g. -s:value)</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:group ref="ArgumentGroup"/>
+      </xs:sequence>
+      <xs:attributeGroup ref="flagged"/>
+      <xs:attributeGroup ref="multiple"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Switch">
+    <xs:annotation>
+      <xs:documentation>Switch (e.g. -v)</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:all>
+        <xs:element ref="Help" minOccurs="0"/>
+      </xs:all>
+      <xs:attributeGroup ref="common"/>
+      <xs:attributeGroup ref="flags"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UnflaggedOption">
+    <xs:annotation>
+      <xs:documentation>Unflagged option (e.g. name1 name2 ... nameN)</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:group ref="ArgumentGroup"/>
+      </xs:sequence>
+      <xs:attributeGroup ref="common"/>
+      <xs:attributeGroup ref="argcommon"/>
+      <xs:attributeGroup ref="greedy"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UsageName">
+    <xs:annotation>
+      <xs:documentation>Usage name (e.g. -n &lt;count&gt;)</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attributeGroup ref="lang"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Help">
+    <xs:annotation>
+      <xs:documentation>Help text of the option</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attributeGroup ref="lang"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Default">
+    <xs:annotation>
+      <xs:documentation>Default value</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="Property">
+    <xs:annotation>
+      <xs:documentation>StringParser property</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:attribute name="name" type="xs:string" use="required"/>
+      <xs:attribute name="value" type="xs:string" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="StringParser">
+    <xs:annotation>
+      <xs:documentation>Parser for the argument values</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:choice>
+        <xs:element ref="Property" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:choice>
+      <xs:attribute name="classname" type="xs:string" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="common">
+    <xs:attribute name="id" type="xs:ID" use="required"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="lang">
+    <xs:attribute name="lang" type="xs:language" use="optional" default="en"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="flags">
+    <xs:attribute name="shortFlag" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:minLength value="1"/>
+          <xs:maxLength value="1"/>
+          <xs:length value="1"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="longFlag" use="optional">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:minLength value="2"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="argcommon">
+    <xs:attribute name="list" type="xs:boolean" use="optional"/>
+    <xs:attribute name="listSeparator" type="xs:string" use="optional"/>
+    <xs:attribute name="required" type="xs:boolean" use="optional" default="false"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="greedy">
+    <xs:attribute name="greedy" type="xs:boolean" use="required"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="flagged">
+    <xs:attributeGroup ref="common"/>
+    <xs:attributeGroup ref="argcommon"/>
+    <xs:attributeGroup ref="flags"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="multiple">
+    <xs:attribute name="multiple" type="xs:boolean" default="false"/>
+  </xs:attributeGroup>
+  <xs:group name="ArgumentGroup">
+    <xs:all>
+      <xs:element ref="UsageName" minOccurs="0"/>
+      <xs:element ref="Default" minOccurs="0"/>
+      <xs:element ref="Help" minOccurs="0"/>
+      <xs:element ref="StringParser" minOccurs="0"/>
+    </xs:all>
+  </xs:group>
+</xs:schema>

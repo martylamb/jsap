@@ -39,7 +39,12 @@ public final class StringUtils {
     public static List wrapToList(String s, int width) {
         List result = new java.util.LinkedList();
         if ((s != null) && (s.length() > 0)) {
-            StringBuffer buf = new StringBuffer();
+        	if (width <= 0) {
+        		result.add(s);
+        		return (result);
+        	}
+        	
+        	StringBuffer buf = new StringBuffer();
             int lastSpaceBufIndex = -1;
             for (int i = 0; i < s.length(); ++i) {
                 char c = s.charAt(i);

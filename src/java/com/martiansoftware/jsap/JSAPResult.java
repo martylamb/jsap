@@ -1,4 +1,4 @@
-/*
+ /*
  * Copyright (c) 2002-2004, Martian Software, Inc.
  * This file is made available under the LGPL as described in the accompanying
  * LICENSE.TXT file.

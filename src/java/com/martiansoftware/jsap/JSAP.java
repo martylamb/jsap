@@ -6,6 +6,7 @@
 
 package com.martiansoftware.jsap;
 
+import java.util.Locale;
 import java.util.Map;
 import java.util.List;
 import java.util.Iterator;
@@ -52,6 +53,8 @@ import com.martiansoftware.util.StringUtils;
  * <p>See the accompanying documentation for examples and further information.
  *
  * @author <a href="http://www.martiansoftware.com/contact.html">Marty Lamb</a>
+ * @author Klaus Berg (bug fixes in help generation)
+ * @author Wolfram Esser (contributed code for custom line separators in help)
  * @see com.martiansoftware.jsap.ant.JSAPAntTask
  */
 public class JSAP {
@@ -122,6 +125,12 @@ public class JSAP {
     public static final char DEFAULT_LISTSEPARATOR =
         java.io.File.pathSeparatorChar;
 
+    /**
+     * The default separator between parameters in generated help (a newline
+     * by default)
+     */
+    public static final String DEFAULT_PARAM_HELP_SEPARATOR = "\n";
+    
     /**
      * The parameter is required.
      *
@@ -195,6 +204,40 @@ public class JSAP {
      * with registerParameter() before its parse() methods may be called.
      */
     public JSAP() {
+        init();
+    }
+
+    /**
+     * Creates a pre-configured JSAP with an xml file using the default locale.
+     */
+    public JSAP(String xmlconfig) throws JSAPException {
+        processConfig(xmlconfig, Locale.getDefault());
+    }
+    
+    /**
+     * Creates a pre-configured JSAP with an xml file using a certain locale.
+     */
+    public JSAP(String xmlconfig, Locale locale) throws JSAPException {
+        processConfig (xmlconfig, locale);
+    }
+
+    /**
+     * Processes an xml config file using a certain locale.
+     */
+    private void processConfig (String xmlconfig, Locale locale) throws JSAPException {
+        init();
+        // Processing configuration XML file:
+        // DOM variant:
+        DOMConfigHandler handler = new DOMConfigHandler(xmlconfig, locale);
+        handler.setup(this);
+        // SAX variant:
+        //SAXConfigHandler handler = new SAXConfigHandler(this, xmlconfig);
+    }
+    
+    /**
+     * Initializes JSAP.
+     */
+    private void init() {
         paramsByID = new java.util.HashMap();
         paramsByShortFlag = new java.util.HashMap();
         paramsByLongFlag = new java.util.HashMap();
@@ -222,24 +265,36 @@ public class JSAP {
     }
 
     /**
-     * A shortcut method for calling getHelp(80).
-     * @see #getHelp(int)
-     * @return the same as gethelp(80)
+     * A shortcut method for calling getHelp(80, "\n").
+     * @see #getHelp(int,String)
+     * @return the same as gethelp(80, "\n")
      */
     public String getHelp() {
-        return (getHelp(DEFAULT_SCREENWIDTH));
+        return (getHelp(DEFAULT_SCREENWIDTH, DEFAULT_PARAM_HELP_SEPARATOR));
     }
 
+    /**
+     * A shortcut method for calling getHelp(screenWidth, "\n").
+     * @param screenWidth the screen width for which to format the help.
+     * @see #getHelp(int,String)
+     * @return the same as gethelp(screenWidth, "\n")
+     * @author Wolfram Esser
+     */
+    public String getHelp(int screenWidth) {
+    	return (getHelp(screenWidth, DEFAULT_PARAM_HELP_SEPARATOR));
+    }
+    
     /**
      * If the help text has been manually set, this method simply
      * returns it, ignoring the screenWidth parameter.  Otherwise,
      * an automatically-formatted help message is returned, tailored
      * to the specified screen width.
      * @param screenWidth the screen width (in characters) for which
-     * the help text will be formatted.
+     * the help text will be formatted.  If zero, help will not be
+     * line-wrapped.
      * @return complete help text for this JSAP.
      */
-    public String getHelp(int screenWidth) {
+    public String getHelp(int screenWidth, String paramSeparator) {
         String result = help;
         if (result == null) {
             StringBuffer buf = new StringBuffer();
@@ -277,19 +332,18 @@ public class JSAP {
                     StringUtils.padRightToWidth(
                         helpInfo.hasNext() ? (String) helpInfo.next() : "",  // Bug fix by Klaus Berg
                         wrapWidth));
-                buf.append("\n");
 
                 while (helpInfo.hasNext()) {
+                	buf.append("\n");
                     buf.append(
                         StringUtils.padRightToWidth("", maxUsageLength + 6));
                     buf.append(
                         StringUtils.padRightToWidth(
                             (String) helpInfo.next(),
                             wrapWidth));
-                    buf.append("\n");
                 }
                 if (i.hasNext()) {
-                    buf.append("\n");
+                    buf.append(paramSeparator);
                 }
             }
             result = buf.toString();
