@@ -52,6 +52,13 @@
 	</p>
 </xsl:template>
 
+
+<xsl:template match="ul">
+	<ul>
+	<xsl:apply-templates/>
+	</ul>
+</xsl:template>
+
 <xsl:template match="ol">
 	<ol>
 	<xsl:apply-templates/>

@@ -17,7 +17,7 @@
 				</p>
 				<p>
 					I also wanted the ability to read default values from a configuration file, which could be overridden
-					by the command line.  JSAP supports this, and in fact supports multiple, prioritized configuration
+					by the command line.  JSAP supports this, and in fact supports multiple, "cascading" configuration
 					files as well.
 				</p>
 			</section>
@@ -26,17 +26,17 @@
 					So what does JSAP actually <i>do</i> then?
 				</title>
 				<p>
-					JSAP not only guarantees that your command line was successfully parsed, but it instantiates objects of 
-					types specified by the developer based upon that command line.  If you tell JSAP that one of your 
-					parameters is an Integer, for example, and the user does not provide a String that can be converted to 
-					an Integer when invoking the program, JSAP will alert your program to the fact that there was a problem
+					JSAP parses your command line and instantiates objects of 
+					types you specify based upon that command line.  If you configure JSAP to expect an Integer 
+					on the command line, and the user does not provide a String that can be converted to 
+					an Integer, JSAP will alert your program to the fact that there was a problem
 					with the command line.  If JSAP indicates that your command line was successfully parsed, you are 
 					guaranteed an Integer when you request that parameter's value from your program.  There's a pretty big 
 					(and growing) list of return types suppored by JSAP; you may want to <link target="optionparsers">skip 
 					ahead a little and check it out</link>.
 				</p>
 				<p>
-					JSAP provides not only for default values for its parameters, but for an entire <i>chain</i> of defaults.  
+					JSAP provides not only for default values for its parameters, but for a cascading <i>chain</i> of values.  
 					With a couple extra lines of code, JSAP will, for example:
 					<ol>
 						<li>Parse the command line.</li>
@@ -54,8 +54,7 @@
 			<section>
 				<p>Before continuing, some explanation of the vocabulary used in this manual is required:
 					<ul>
-						<li><b>Argument</b> - A single token from the command line.  In most cases the JVM will provide this to
-							you as an array of Strings in your main() method.</li>
+						<li><b>Argument</b> - A single (String) token from the command line.  The JVM will provide an array of these to your main() method.</li>
 						<li><b>Parameter</b> - One or more <b>arguments</b> that must be taken together to have meaning.  For example,
 							in the command "java -cp myjar.jar MyClass", the arguments "-cp" and "myjar.jar" comprise a single parameter
 							defining the classpath.  The argument "MyClass" comprises another parameter indicating the class to load and run.</li>
@@ -66,7 +65,7 @@
 						<li><b>Flagged Option</b> - An <b>option</b> that is preceded by a "flag" to indicate which option is being set.  In
 							the command "java -cp myjar.jar MyClass", the "-cp myjar.jar" option is flagged by "-cp".</li>
 						<li><b>Unflagged Option</b> - An <b>option</b> that is not preceded by a flag, and whose meaning is conveyed by its
-							position in the command line.  In the command "java -cp myjar.jar MyClass", the "MyClass" is an unflagged option.</li>
+							position in the command line.  In the command "java -cp myjar.jar MyClass", "MyClass" is an unflagged option.</li>
 						<li><b>Short Flag</b> - A single-character flag preceded by a single dash.</li>
 						<li><b>Long Flag</b> - A multi-character flag preceded by a double dash.</li>
 						<li><b>ID</b> - A unique identifier assigned by the programmer to each parameter JSAP should recognize.
@@ -150,11 +149,14 @@ public class HelloWorld_2 {
 					<ol>
 						<li>We create a new JSAP to do the parsing.</li>
 						<li>We create a new flagged option so we can tell the program how many times to print the message.
-							It has an ID of "count", which is only used internally by our program to retrieve the value.  It's
-							using an IntegerStringParser to convert the value to an Integer, and it has a default value of 1.
-							It's required, but only by our program (that is, since we're specifying a default value, it's not
-							actually required on the command line).  It has a short flag "n", so the syntax is "-n 5" to print
-							the message five times, for example.  It has no long flag.</li>
+							<ul>
+								<li>It has an ID of "count", which is only used internally by our program to retrieve the value.</li>
+								<li>It's using an IntegerStringParser to convert the value to an Integer, and it has a default value of 1.</li>
+								<li>It's required, but since we're specifying a default value, the requirement will always be met.</li>
+								<li>It has a short flag "n", so the syntax is "-n 5" to print the message five times, for example.</li>
+								<li>It has no long flag.</li>
+							</ul>
+						</li>
 						<li>We register the flagged option with the parser we created in the beginning.</li>
 						<li>We tell the parser to parse the command line arguments, and store the result in a variable called "config".</li>
 						<li>We print the message.</li>
@@ -249,7 +251,7 @@ Hello, World!</output>
 				it's the last one in the list.
 				</p>
 				<p>For the final example, we'll use an unflagged option to specify to whom we really want to say hello.  It will be optional,
-				defaulting to "World" for backwards compatibility.  :)  We'll also make it <b>greedy</b>, so it consumes the rest of the
+				defaulting to "World" for backwards compatibility with our earlier examples.  :)  We'll also make it <b>greedy</b>, so it consumes the rest of the
 				command line to allow multiple values.</p>
 				<example-src id="3" caption="Can't this guy come up with a real-world example?">package com.martiansoftware.jsap.examples;
 
@@ -392,7 +394,9 @@ Hello, World!</output>
 		<title>Short vs. Long Flags</title>
 		<body>
 			<section>
-				<p>This chapter will explain the difference between short and long flags.</p>
+				<p>Both <b>switches</b> and <b>flagged options</b> require flags.  Flags can be <i>short</i>, consisting of a single character and preceded by a single hyphen, or <i>long</i>, consisting of more than one character and preceded by two hyphens.  Switches and flagged options may use short flags, long flags, or both.</p>
+				<p>In general, your program's most commonly used options should have short flags.  Long flags are generally more appropriate for less-frequently used options.</p>
+				<p>In order to configure a parameter with no short flag, specify a short flag equal to JSAP.NO_SHORTFLAG.  In order to configure a parameter with no long flag, specify a long flag equal to JSAP.NO_LONGFLAG.</p>
 			</section>
 		</body>
 	</chapter>
