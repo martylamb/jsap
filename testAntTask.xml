@@ -23,12 +23,14 @@ Legal:
 	
 	<target name="test">
 	
-		<jsap srcdir="${build}" classname="myJSAP">
-			<flaggedoption id="testoption" longflag="testoption">
+		<jsap srcdir="${build}" classname="com.martiansoftware.jsap.examples.MyJSAP">
+			<flaggedoption id="verbose" longflag="verbose" stringparser="IntegerStringParser">
+			
 				<default>default value 1</default>
 			</flaggedoption>
 			<flaggedoption id="testoption2" shortflag="t"/>
-			<flaggedoption id="testoption2" shortflag="f" required="true"/>
+			<unflaggedoption id="testoption3" required="true"/>
+			<switch id="myswitch" shortflag="v"/>
 		</jsap>
 	
 	</target>
