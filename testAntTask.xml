@@ -16,6 +16,7 @@ Legal:
 --> 
 <project basedir="." default="test" name="testAntTask">
 
+	<property name="src" value="src"/>
 	<property name="build" value="build"/>
 	
 	<taskdef name="jsap" classname="com.martiansoftware.jsap.ant.JSAPAntTask" classpath="${build}"/>
@@ -23,14 +24,19 @@ Legal:
 	
 	<target name="test">
 	
-		<jsap srcdir="${build}" classname="com.martiansoftware.jsap.examples.MyJSAP">
+		<jsap srcdir="${src}" classname="com.martiansoftware.jsap.examples.MyJSAP">
 			<flaggedoption id="verbose" longflag="verbose" stringparser="IntegerStringParser">
 			
 				<default>default value 1</default>
+				<property name="something" value="somethingelse" />
 			</flaggedoption>
 			<flaggedoption id="testoption2" shortflag="t"/>
 			<unflaggedoption id="testoption3" required="true"/>
 			<switch id="myswitch" shortflag="v"/>
+			<flaggedoption id="dateoption" shortflag="d" stringparser="DateStringParser">
+				<property name="format" value="MM/DD/YYYY"/>
+			</flaggedoption>
+				
 		</jsap>
 	
 	</target>
