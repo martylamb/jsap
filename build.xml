@@ -1,81 +1,103 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Written to assume that classpath is rooted in the current directory. -->
-<!-- So this should be OK if you make this script in the root of a filesystem. -->
-<!-- If not, you may prefer to adjust the basedir, or move some directories around. -->
-<!-- The idea is that both Ant and NetBeans have to know what the package root is -->
-<!-- for the classes in your application. -->
+<!-- 
+ ==========================================================================
+
+ JSAP build file
+
+Author:
+ Martin Lamb
+
+Legal:
+ Copyright (c) 2002, Martin Lamb All rights reserved.
+
+==============================================================================
+ 
+
+--> 
+
 <project basedir="." default="help" name="jsap">
 
-    <target name="init">
-        <property name="version" value="1.0"/>
+	<target name="eclipse-setcompiler" if="eclipse.running">
+	    <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter" />
+	</target>
+	
+
+    <target name="init" depends="eclipse-setcompiler">
+
+		<!-- Basics -->
+    	<property name="name" value="JSAP" />
+        <property name="version" value="1.0b"/>
+        <property name="year" value="2002"/>
+
+		<!-- Directories -->
         <property name="src" value="src"/>
         <property name="build" value="build"/>
         <property name="javadoc" value="doc/javadoc"/>
+		<property name="javadoc-tmpsrc" value="${javadoc}/tmpsrc"/>
         <property name="dist" value="dist"/>
         <property name="devlib" value="devlib"/>
+
+		<!-- Special Files -->
+        <property name="testFiles" value="**/_Test*" />
+        <property name="testConfFiles" value="**/_Test*.conf" />
+        <property name="exampleFiles" value="com/martiansoftware/jsap/examples/" />
+
+		<!-- Administrivia -->
+		<property name="url" value="http://www.martiansoftware.com/jsap" />
+		
+		<property name="author.marty" value="Martin Lamb" />
+        <property name="author.marty.html" value="&lt;a href='mailto:marty%20at%20martiansoftware.com'&gt;Martin Lamb&lt;/a&gt;" />
+        
+        <property name="authors.all" value="${author.marty}" />
+        <property name="authors.all.html" value="${author.marty.html}" />
+        
+        <property name="copyrightowners.all" value="${author.marty}" />
+        <property name="copyrightowners.all.html" value="${author.marty.html}" />
+        
+     	<property name="copyright" value="Copyright (c) ${year} ${copyrightowners.all}.  All Rights Reserved." />
+        <property name="copyright.html" value="Copyright &amp;copy; ${year}, ${copyrightowners.all.html}.  All Rights Reserved." />
+
+		<property name="updates" value="For the latest version and documentation, please visit ${url}" />
+		<property name="updates.html" value="For the latest version and documentation, please visit &lt;a href='${url}'&gt;${url}&lt;/a&gt;" />
+		
+
+		<!-- Create destination directories if needed. -->
         <mkdir dir="${build}"/>
         <mkdir dir="${javadoc}"/>
         <mkdir dir="${dist}"/>
+        
+        <!-- Who knows... we might need this for something. -->
         <tstamp/>
+        
     </target>
 
-  <target name="help">
-    <echo>
+	<path id="devlib.class.path">
+		<pathelement location="${devlib}/junit.jar"/>
+	</path>
+
+
+	<target name="help">
+		<echo>
 
 ----------------------------------------------------------------------
 
 Targets:
 
   clean         - delete all intermediate &amp; compiled files
-  compile       - compiles the JSAP API
+  compile-api   - compiles the JSAP API
+  compile-tests - compiles the JSAP API and JUnit test cases
+  compile-all	- compiles the JSAP API, JUnit test cases, and examples
+  test          - compiles the JSAP API and tests it
   build         - compiles the JSAP API and builds JSAP.jar
   javadoc       - compiles the JSAP API and generates javadoc documentation
-  test          - compiles the JSAP API and tests it
-  all           - do everything listed above
+  dist			- compiles the JSAP API, builds the jar file, runs javadoc, and
+  				  creates source and binary distribution files.
 
 ----------------------------------------------------------------------
-        </echo>
-    </target>
+		</echo>
+	</target>
 
-    <target depends="init" name="compile">
-        <!-- Compile the java code from ${src} into ${build} -->
-        <javac destdir="${build}" srcdir="${src}">
-            <exclude name="com/ntpgroup/jsap/examples/"/>
-        </javac>
-    </target>
-
-    <target depends="init" name="testcompile">
-        <!-- Compile the java code from ${src} into ${build} -->
-        <javac classpath="${devlib}/junit.jar" destdir="${build}" srcdir="${src}">
-            <exclude name="com/ntpgroup/jsap/examples/"/>
-        </javac>
-    </target>
-
-
-    <target depends="testcompile" name="test">
-        <junit printsummary="on">
-            <test name="com.martiansoftware.jsap.junit.TestEverything"/>
-            <formatter type="plain" usefile="false"/>
-            <classpath>
-                <pathelement location="${build}"/>
-                <pathelement location="${devlib}/junit.jar "/>
-            </classpath>
-        </junit>
-    </target>
-
-    <target depends="compile" name="build">
-        <!-- Create the distribution directory -->
-        <mkdir dir="${dist}"/>
-        <jar basedir="${build}" jarfile="${dist}/jsap_${version}.jar"/>
-    </target>
-
-    <target depends="compile" name="javadoc">
-    	<delete dir="${javadoc}"/>
-        <mkdir dir="${javadoc}"/>
-        <javadoc public="true" destdir="${javadoc}" excludepackagenames="com.martiansoftware.jsap.junit" packagenames="com.martiansoftware.*,com.martiansoftware.jsap.*" sourcepath="${src}"/>
-    </target>    
-
-    <target depends="init" name="clean">
+    <target name="clean" depends="init">
         <delete dir="${build}" verbose="true"/>
         <delete dir="${javadoc}" verbose="true"/>
         <delete dir="${dist}" verbose="true"/>
@@ -83,8 +105,75 @@ Targets:
         <mkdir dir="${javadoc}"/>
         <mkdir dir="${dist}"/>
     </target>
+    
+    <target name="compile-api" depends="init" >
+        <javac destdir="${build}" srcdir="${src}">
+        	<exclude name="${testFiles}" />
+        	<exclude name="${exampleFiles}" />
+        </javac>
+    </target>
 
-    <target depends="clean,build,javadoc" name="all">
+    <target name="compile-tests" depends="init" >
+        <javac destdir="${build}" srcdir="${src}">
+        	<exclude name="${exampleFiles}" />
+        	<classpath>
+        		<pathelement location="${devlib}/junit.jar"/>
+        	</classpath>
+        </javac>
+        <copy todir="${build}">
+    		<fileset dir="${src}">
+    			<include name="${testConfFiles}" />
+			</fileset>
+  		</copy>
+    </target>
+
+    <target name="compile-all" depends="init" >
+        <javac destdir="${build}" srcdir="${src}">
+        	<classpath refid="devlib.class.path" />
+        </javac>
+    </target>
+
+	<target name="test" depends="compile-tests" >
+        <junit printsummary="on">
+            <test name="com.martiansoftware.jsap._TestEverything"/>
+            <formatter type="plain" usefile="false"/>
+            <classpath>
+                <pathelement location="${build}"/>
+            </classpath>
+            <classpath refid="devlib.class.path" />
+        </junit>
+    </target>
+
+    <target name="build" depends="compile-api">
+        <mkdir dir="${dist}"/>
+        <jar basedir="${build}" jarfile="${dist}/${name}_${version}.jar">
+        	<exclude name="${testFiles}" />
+        	<exclude name="${exampleFiles}" />
+        </jar>
+    </target> 
+
+    <target name="javadoc" depends="compile-api">
+    	<delete dir="${javadoc}"/>
+        <mkdir dir="${javadoc}"/>
+        <mkdir dir="${javadoc-tmpsrc}"/>
+        <copy todir="${javadoc-tmpsrc}">
+    		<fileset dir="${src}">
+    			<exclude name="${testFiles}" />
+    			<exclude name="${exampleFiles}" />
+			</fileset>
+  		</copy>
+  		
+  		<replace dir="${javadoc-tmpsrc}" token="@@VERSION@@" value="${version}">
+  			<include name="**/*.java"/>
+  		</replace>
+  		<replace dir="${javadoc-tmpsrc}" token="@@AUTHOR_MARTY@@" value="${author-marty}">
+  			<include name="**/*.java"/>
+  		</replace>
+
+        <javadoc public="true" destdir="${javadoc}" sourcepath="${javadoc-tmpsrc}" packagenames="com.martiansoftware.*">
+			<bottom>${copyright.html}&lt;br&gt;${updates.html}</bottom>
+        </javadoc>
+		<delete dir="${javadoc-tmpsrc}" />
     </target>
 
 </project>
