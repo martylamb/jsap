@@ -38,8 +38,9 @@
       successfully parsed, you are guaranteed an <classname>Integer</classname>
       when you request that parameter&#39;s value from your program.
       There&#39;s a pretty big (and growing) list of return types suppored by
-      <classname>JSAP</classname>; you may want to skip right to the javadocs
-      and check it out.</para>
+      <classname>JSAP</classname>; you may want to <ulink
+      url="javadoc/com/martiansoftware/jsap/stringparsers/package-summary.html">skip
+      right to the javadocs</ulink> and check it out.</para>
 
       <para><classname>JSAP</classname> provides not only for default values
       for its parameters, but for a cascading chain of values. With a couple
@@ -196,7 +197,8 @@
     up and running with <classname>JSAP</classname> very quickly. We&#39;ll
     start with a simple example and gradually build upon it in order to
     demonstrate some of the basic features of <classname>JSAP</classname>.
-    You&#39;ll have to read further for some of the more interesting features.</para>
+    You&#39;ll have to read further for some of the more interesting features,
+    or you can <ulink url="javadoc/index.html">dive straight into the javadocs</ulink>.</para>
 
     <sect1>
       <title>HelloWorld_1</title>
@@ -464,7 +466,9 @@
       <methodname>getInteger()</methodname>, <methodname>getInetAddress()</methodname>,
       <methodname>getColor()</methodname>, ...far too many to include here,
       including <classname>Iterator</classname>s and arrays for reading
-      multivalue parameters. The javadocs are pretty useful for this class.</para>
+      multivalue parameters. The <ulink
+      url="javadoc/com/martiansoftware/jsap/JSAPResult.html">javadocs</ulink>
+      are pretty useful for this class.</para>
     </sect1>
   </chapter>
 

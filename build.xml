@@ -203,23 +203,39 @@ Targets:
   			</filterset>
   		</copy>
 
-		<copy overwrite="true" verbose="true" file="${src}/doc/manual.css" todir="${build}/manual"/>
-
  		<rundoc prompt="[mlamb@morbo]$ " format="docbook">
        		<fileset file="${build}/manual/manual.xml"/>
        		<env key="CLASSPATH" value="${build}"/>
 		</rundoc>
+		
+		<!-- anyone want to write a non-platform-specific task to do this? -->
  		<exec dir="${build}/manual" executable="xmlto">
  			<arg value="html-nochunks"/>
  			<arg value="manual.xml"/>
  		</exec>
-  		<replace file="${build}/manual/manual.html"
-			token="&#xef;&#xbf;&#xbd;"
-			value=" " />
-  		<replace file="${build}/manual/manual.html"
+
+		<!-- I don't know why, but for some reason xmlto puts character \xa0
+		     in several places where a space would suffice.  If there's a reason
+		     for this, it escapes me... but the replace task can't handle it,
+		     so I again resort to platform-specific operations.  -->
+		<exec dir="${build}/manual"
+				executable="sed"
+				output="${build}/manual/manual2.html">
+			<arg value="-e"/>
+			<arg value="s/\xa0/ /g"/>
+			<arg value="manual.html"/>
+		</exec>
+		
+  		<replace file="${build}/manual/manual2.html"
 			token="&lt;head&gt;"
 			value="&lt;head&gt;&lt;link rel='stylesheet' type='text/css' href='manual.css'/&gt;" />
-		<copy overwrite="true" verbose="true" file="${build}/manual/manual.html" todir="${doc}"/>
+			
+  		<replace file="${build}/manual/manual2.html"
+			token="&#x09;"
+			value="    " />
+			
+		<copy overwrite="true" verbose="true" file="${build}/manual/manual2.html" tofile="${doc}/manual.html"/>
+		<copy overwrite="true" verbose="true" file="${src}/doc/manual.css" todir="${doc}"/>
  		
 	</target>
 	
