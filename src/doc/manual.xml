@@ -183,7 +183,9 @@
 
       <programlisting>@@Manual_HelloWorld_1@@</programlisting>
 
-      <screen>${run:java com.martiansoftware.jsap.examples.HelloWorld_1}</screen>
+      <screen>${run:java com.martiansoftware.jsap.examples.HelloWorld_1}
+<prompt>[mlamb@morbo]</prompt><command>this is my command
+<computeroutput>this is the computer output</computeroutput></command></screen>
 
       <para>Not only is this completely uninteresting, but it doesn&#39;t use
       JSAP. Let&#39;s tweak it a little.</para>

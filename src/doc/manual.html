@@ -1,0 +1,212 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>JSAP - Java Simple Argument Parser</title><meta name="generator" content="DocBook XSL Stylesheets V1.61.2"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="book" lang="en"><div class="titlepage"><div><div><h1 class="title"><a name="id3301948"></a>JSAP - Java Simple Argument Parser</h1></div></div><div></div><hr></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt>1. <a href="#id3301941">Introduction</a></dt><dd><dl><dt><a href="#id3301933">Why did you write another command line parser?</a></dt><dt><a href="#id3301749">So what does JSAP actually do?</a></dt></dl></dd><dt>2. <a href="#id3287018">Vocabulary</a></dt><dt>3. <a href="#id3234678">Quick Start</a></dt><dd><dl><dt><a href="#id3234696">HelloWorld_1</a></dt><dt><a href="#id3234748">HelloWorld_2</a></dt><dt><a href="#id3235079">HelloWorld_3</a></dt><dt><a href="#id3235153">HelloWorld_4</a></dt><dt><a href="#id3235193">HelloWorld_5</a></dt><dt><a href="#id3237326">HelloWorld_6</a></dt><dt><a href="#id3237371">HelloWorld_7</a></dt></dl></dd><dt>4. <a href="#id3237406">How It Works</a></dt><dd><dl><dt><a href="#id3237421">Creating a JSAP to do the parsing.</a></dt><dt><a href="#id3237447">Defining your program's parameters.</a></dt><dt><a href="#id3237468">Registering your parameters with JSAP.</a></dt><dt><a href="#id3237491">Parsing the command line.</a></dt><dt><a href="#id3237523">Using the JSAPResult</a></dt></dl></dd><dt>5. <a href="#id3237545">Short vs. Long Flags</a></dt><dt>6. <a href="#id3237582">Switches</a></dt><dt>7. <a href="#id3237600">Flagged Options</a></dt><dt>8. <a href="#id3237631">Unflagged Options</a></dt><dt>9. <a href="#id3235838">StringParsers</a></dt><dt>10. <a href="#id3235897">Handling Errors</a></dt><dt>11. <a href="#id3235980">DefaultSources and Configuration Files</a></dt><dd><dl><dt><a href="#id3236054">PropertyDefaultSource</a></dt></dl></dd><dt>12. <a href="#id3293359">Using ANT To Make Everything Easier</a></dt><dt>13. <a href="#id3293373">Reporting Problems</a></dt></dl></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="id3301941"></a>Chapter 1. Introduction</h2></div></div><div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><a href="#id3301933">Why did you write another command line parser?</a></dt><dt><a href="#id3301749">So what does JSAP actually do?</a></dt></dl></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="id3301933"></a>Why did you write another command line parser?</h2></div></div><div></div></div><p>Put simply, I got tired of writing simple command line parsers for
+      every java utility program I wrote. I wanted a simple tool that would
+      support complex command lines - and return more than just Strings. If
+      one of the options for a program, for example, is a number, it should be
+      retrievable by the program AS a number. JSAP does this, and allows
+      developers to add new command line data types as needed.</p><p>I also wanted the ability to read default values from a
+      configuration file, which could be overridden by the command line. JSAP
+      supports this, and in fact supports multiple, "cascading"
+      configuration files as well.</p></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="id3301749"></a>So what does JSAP actually do?</h2></div></div><div></div></div><p>JSAP parses your command line and instantiates objects of types
+      you specify based upon that command line. If you configure JSAP to
+      expect an Integer on the command line, and the user does not provide a
+      String that can be converted to an Integer, JSAP will alert your program
+      to the fact that there was a problem with the command line. If JSAP
+      indicates that your command line was successfully parsed, you are
+      guaranteed an Integer when you request that parameter's value from
+      your program. There's a pretty big (and growing) list of return
+      types suppored by JSAP; you may want to skip ahead a little and check it
+      out.</p><p>JSAP provides not only for default values for its parameters, but
+      for a cascading chain of values. With a couple extra lines of code, JSAP
+      will, for example:</p><div class="procedure"><ol type="1"><li><p>Parse the command line.</p></li><li><p>For any omitted parameters, look for values in
+          ~/.yourProgramName.conf</p></li><li><p>For any still omitted parameters, look for values in
+          /etc/yourProgramName.conf</p></li><li><p>For any still omitted parameters, use the default values (if
+          any) specified by the developer.</p></li></ol></div></div></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="id3287018"></a>Chapter 2. Vocabulary</h2></div></div><div></div></div><p>Before continuing, some explanation of the vocabulary used in this
+    manual is required:</p><div class="variablelist"><dl><dt><span class="term">Argument</span></dt><dd><p>A single (String) token from the command line. The JVM will
+          provide an array of these to your main() method.</p></dd><dt><span class="term">Parameter</span></dt><dd><p>One or more arguments that must be taken together to have
+          meaning. For example, in the command "java -cp myjar.jar
+          MyClass", the arguments "-cp" and "myjar.jar"
+          comprise a single parameter defining the classpath. The argument
+          "MyClass" comprises another parameter indicating the class
+          to load and run.</p></dd><dt><span class="term">Switch</span></dt><dd><p>A single-argument parameter whose presence alone conveys
+          meaning. For example, in the command "java -version", the
+          "-version" switch tells the JVM to print its version
+          information and exit.</p></dd><dt><span class="term">Option</span></dt><dd><p>A parameter whose content conveys meaning. In the command
+          "java -cp myjar.jar MyClass", the "-cp myjar.jar"
+          parameter is an option, as is the "MyClass" parameter.</p></dd><dt><span class="term">Flagged Option</span></dt><dd><p>An option that is preceded by a "flag" to indicate
+          which option is being set. In the command "java -cp myjar.jar
+          MyClass", the "-cp myjar.jar" option is flagged by
+          "-cp".</p></dd><dt><span class="term">Unflagged Option</span></dt><dd><p>An option that is not preceded by a flag, and whose meaning is
+          conveyed by its position in the command line relative to other
+          Unflagged Options. In the command "java -cp myjar.jar
+          MyClass", "MyClass" is an unflagged option.</p></dd><dt><span class="term">Short Flag</span></dt><dd><p>A single-character flag preceded by a single dash.</p></dd><dt><span class="term">Long Flag</span></dt><dd><p>A multi-character flag preceded by a double dash.</p></dd><dt><span class="term">ID</span></dt><dd><p>A unique identifier assigned by the programmer to each
+          parameter JSAP should recognize. A parameter's ID is seen only
+          by the programmer, and is used to retrieve its values from the
+          JSAPResult object.</p></dd></dl></div></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="id3234678"></a>Chapter 3. Quick Start</h2></div></div><div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><a href="#id3234696">HelloWorld_1</a></dt><dt><a href="#id3234748">HelloWorld_2</a></dt><dt><a href="#id3235079">HelloWorld_3</a></dt><dt><a href="#id3235153">HelloWorld_4</a></dt><dt><a href="#id3235193">HelloWorld_5</a></dt><dt><a href="#id3237326">HelloWorld_6</a></dt><dt><a href="#id3237371">HelloWorld_7</a></dt></dl></div><p>If you're the type of developer who likes to take a quick look
+    at example code and tweak it for your needs, this chapter should get you
+    up and running with JSAP very quickly. We'll start with a simple
+    example and gradually build upon it in order to demonstrate some of the
+    basic features of JSAP. You'll have to read further for some of the
+    more interesting features.</p><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="id3234696"></a>HelloWorld_1</h2></div></div><div></div></div><p>Everyone else begins with a "Hello, World!" program, so we
+      will, too.</p><pre class="programlisting">@@Manual_HelloWorld_1@@</pre><pre class="screen">${run:java com.martiansoftware.jsap.examples.HelloWorld_1}
+<tt class="prompt">[mlamb@morbo]</tt><b class="command">this is my command
+<tt class="computeroutput">this is the computer output</tt></b></pre><p>Not only is this completely uninteresting, but it doesn't use
+      JSAP. Let's tweak it a little.</p></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="id3234748"></a>HelloWorld_2</h2></div></div><div></div></div><pre class="programlisting">@@Manual_HelloWorld_2@@</pre><p>That's pretty verbose. Later on you'll see ways to trim
+      this down quite a bit. Here's what's going on:</p><div class="procedure"><ol type="1"><li><p>We create a new JSAP to do the parsing.</p></li><li><p>We create a new flagged option so we can tell the program how
+          many times to print the message.</p><div class="procedure"><ol type="1"><li><p>It has an ID of "count", which is only used
+              internally by our program to retrieve the value.</p></li><li><p>It's using an IntegerStringParser to convert the value
+              to an Integer, and it has a default value of 1.</p></li><li><p>It's required, but since we're specifying a
+              default value, the requirement will always be met.</p></li><li><p>It has a short flag "n", so the syntax is "-n
+              5" to print the message five times, for example.</p></li><li><p>It has no long flag.</p></li></ol></div></li><li><p>We register the flagged option with the parser we created in
+          the beginning.</p></li><li><p>We tell the parser to parse the command line arguments, and
+          store the result in a variable called "config".</p></li><li><p>We print the message.</p></li></ol></div><p>The output of the program looks like this:</p><pre class="screen">${run:java com.martiansoftware.jsap.examples.HelloWorld_2}
+
+${run:java com.martiansoftware.jsap.examples.HelloWorld_2 -n 5}</pre><p>So far, so good. Let's add a switch.</p></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="id3235079"></a>HelloWorld_3</h2></div></div><div></div></div><pre class="programlisting">@@Manual_HelloWorld_3@@</pre><p>What did we do? We created a new "switch" to determine how
+      verbose we're going to be with our greeting, registered it with
+      JSAP, and read its value inside the print loop. That might still seem
+      like a lot of code for this little feature, but let's look at all
+      the ways we can invoke the program now:</p><pre class="screen">${run:java com.martiansoftware.jsap.examples.HelloWorld_3 -n 2}
+
+${run:java com.martiansoftware.jsap.examples.HelloWorld_3 -n 3 -v}
+
+${run:java com.martiansoftware.jsap.examples.HelloWorld_3 --verbose}
+
+${run:java com.martiansoftware.jsap.examples.HelloWorld_3 -vn 2}</pre><p>That last one is the most interesting - note that we were able to
+      combine multiple short flags ("v" and "n"). JSAP allows
+      this for as many short flags as you want - provided that at most one of
+      them is an option (as opposed to a switch) and it's the last one in
+      the list.</p><p>For the next example, we'll use an unflagged option to specify
+      to whom we really want to say hello. It will be optional, defaulting to
+      "World" for backwards compatibility with our earlier examples.
+      :) We'll also make it greedy, so it consumes the rest of the command
+      line to allow multiple values.</p></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="id3235153"></a>HelloWorld_4</h2></div></div><div></div></div><p>Here we've added an UnflaggedOption to greet specific names.
+      It's marked as "greedy", so any number of names on the
+      command line are associated with this option.</p><pre class="programlisting">@@Manual_HelloWorld_4@@</pre><pre class="screen">${run:java com.martiansoftware.jsap.examples.HelloWorld_4 -n 2 --verbose Bender Fry Leela}
+
+${run:java com.martiansoftware.jsap.examples.HelloWorld_4 Kif -n 3}
+
+${run:java com.martiansoftware.jsap.examples.HelloWorld_4 -v -n 2}</pre></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="id3235193"></a>HelloWorld_5</h2></div></div><div></div></div><p>All or the previous examples showed command lines flawlessly typed
+      by the user. This, of course, never happens. One way to handle this is
+      to print usage information:</p><pre class="programlisting">@@Manual_HelloWorld_5@@</pre><pre class="screen">${run:java com.martiansoftware.jsap.examples.HelloWorld_5 -n 2 -n 4}
+
+${run:java com.martiansoftware.jsap.examples.HelloWorld_5 --nosuchflag}</pre></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="id3237326"></a>HelloWorld_6</h2></div></div><div></div></div><p>Of course, sometimes usage information doesn't provide enough
+      detail. How about some actual program help?</p><pre class="programlisting">@@Manual_HelloWorld_6@@</pre><pre class="screen">${run:java com.martiansoftware.jsap.examples.HelloWorld_5 -n 2 -n 4}
+
+${run:java com.martiansoftware.jsap.examples.HelloWorld_5 --nosuchflag}</pre><p>In HelloWorld_3 you learned how to add a switch (verbose). Combine
+      a -h / --help switch with the getHelp() method as used here, and
+      you've made your program much friendlier.</p></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="id3237371"></a>HelloWorld_7</h2></div></div><div></div></div><p>Showing the expected input of your program can be helpful, but it
+      can be even more helpful to tell the user specifically what they did
+      wrong. It's pretty easy:</p><pre class="programlisting">@@Manual_HelloWorld_7@@</pre><pre class="screen">${run:java com.martiansoftware.jsap.examples.HelloWorld_5 -n 2 -n 4}
+
+${run:java com.martiansoftware.jsap.examples.HelloWorld_5 --nosuchflag}</pre></div></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="id3237406"></a>Chapter 4. How It Works</h2></div></div><div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><a href="#id3237421">Creating a JSAP to do the parsing.</a></dt><dt><a href="#id3237447">Defining your program's parameters.</a></dt><dt><a href="#id3237468">Registering your parameters with JSAP.</a></dt><dt><a href="#id3237491">Parsing the command line.</a></dt><dt><a href="#id3237523">Using the JSAPResult</a></dt></dl></div><p>Everything you do with JSAP leads to the same goal: a JSAPResult
+    object that contains objects created from the parsed command line. Getting
+    to this point requires the following steps:</p><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="id3237421"></a>Creating a JSAP to do the parsing.</h2></div></div><div></div></div><p>This is generally accomplished through JSAP's no-argument
+      constructor. Depending upon the complexity of your program, however, you
+      may want to instantiate a custom JSAP subclass that also takes care of
+      steps 2 and 3 (described below) during the construction process. This
+      approach results in a much "cleaner" main class.</p></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="id3237447"></a>Defining your program's parameters.</h2></div></div><div></div></div><p>As described above in the Vocabulary section, there are three
+      types of parameters you can define: Switches, FlaggedOptions, and
+      UnflaggedOptions. When you define a parameter, you tell JSAP what flags
+      (if any) it uses, what its default values are, whether it is required,
+      what its ID is, and other relevant information. See the individual
+      sections below for each type of parameter for details.</p></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="id3237468"></a>Registering your parameters with JSAP.</h2></div></div><div></div></div><p>Each parameter you define must be registered with JSAP via its
+      registerParameter method. When a parameter is registered, its properties
+      (flags, etc.) cannot be modified; to modify them, you must first
+      unregister them from JSAP, and register them again once modified.
+      Registration can throw an exception if the parameter to be registered
+      conflicts with any other registered parameters (for example, if they use
+      the same flags, or have the same ID).</p></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="id3237491"></a>Parsing the command line.</h2></div></div><div></div></div><p>The JSAP object provides two parse() methods to parse a command
+      line. The first takes an array of Strings as its only parameter; in most
+      uses of JSAP, this will simply be the args[] array supplied by the JVM
+      to your main() method.</p><p>The second parse() method takes a single String as its only
+      parameter. This method first tokenizes the String into an array, much
+      like the operating system does for the JVM in providing your main()
+      method with the args[] array, then calls the parse(String[]) method
+      described above.</p><p>Both of these methods return a JSAPResult object encapsulating the
+      parsed command line.</p></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="id3237523"></a>Using the JSAPResult</h2></div></div><div></div></div><p>The result of JSAP.parse() is a JSAPResult object. This contains
+      all of the values for each command line parameter. There are a large
+      number of accessor methods available for reading the values:
+      getString(), getBoolean(), getInteger(), getInetAddress(), getColor(),
+      ...far too many to include here, including Iterators and arrays for
+      reading multivalue parameters. The javadocs are pretty useful for this
+      class.</p></div></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="id3237545"></a>Chapter 5. Short vs. Long Flags</h2></div></div><div></div></div><p>Both switches and flagged options require flags. Flags can be short,
+    consisting of a single character and preceded by a single hyphen, or long,
+    consisting of more than one character and preceded by two hyphens.
+    Switches and flagged options may use short flags, long flags, or both.</p><p>In general, your program's most commonly used options should
+    have short flags. Long flags are generally more appropriate for
+    less-frequently used options.</p><p>In order to configure a parameter with no short flag, specify a
+    short flag equal to JSAP.NO_SHORTFLAG. In order to configure a parameter
+    with no long flag, specify a long flag equal to JSAP.NO_LONGFLAG.</p></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="id3237582"></a>Chapter 6. Switches</h2></div></div><div></div></div><p>A Switch is just what it sounds like: a setting that is either on or
+    off. If a switch is present on the command line,
+    JSAPResult.getBoolean("yourSwitchID") will return true. Otherwise,
+    it will return false.</p></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="id3237600"></a>Chapter 7. Flagged Options</h2></div></div><div></div></div><p>A Flagged Option is a value preceded by either a long or short flag
+    indicating the value's meaning (see the example in Chapter 2). The
+    FlaggedOption class provides a setAllowMultipleDeclarations(boolean)
+    method that informs JSAP whether the FlaggedOption may be repeated on the
+    command line. For example, if your program uses a FlaggedOption to specify
+    an input file (say, "-i file"), multiple declarations will allow
+    your users to enter "-i file1 -i file2 -i file3 ...". The multiple
+    values can be accessed through JSAPResult's getXXXArray() methods.</p></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="id3237631"></a>Chapter 8. Unflagged Options</h2></div></div><div></div></div><p>Unflagged Options are values whose meanings are indicated by their
+    position on the command line relative to other Unflagged Options (see
+    example in Chapter 2). JSAP expects Unflagged Options on the command line
+    in the order in which they were registered with the JSAP.</p><p>"Greedy" Unflagged Options (set via
+    UnflaggedOption.setGreedy(boolean)) consume all remaining unflagged values
+    from the command line as multiple values. Obviously, your JSAP can have
+    only one greedy Unflagged Option, and it must be the last Unflagged Option
+    registered with the JSAP.</p></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="id3235838"></a>Chapter 9. StringParsers</h2></div></div><div></div></div><p>All String-to-Object conversions are handled by StringParsers. The
+    type of Object you want to read from the command line determines which
+    StringParser you should use with your Option. If you need an int, use
+    IntegerStringParser. If you need an InetAddress, use
+    InetAddressStringParser. JSAP comes with quite a few - see the
+    com.martiansoftware.jsap.stringparsers package.</p><p>Of course, you may want to read your own object types from the
+    command line, or at least read a type that JSAP doesn't support out of
+    the box. No problem. Just extend com.martiansoftware.jsap.StringParser.
+    The only method you have to implement is:</p><pre class="programlisting">public abstract Object parse(String arg) throws com.martiansoftware.jsap.ParseException;</pre><p>You can now use your own StringParser with any JSAP option. JSAP
+    won't have a built-in accessor method for the class of the object
+    you're returning, so you'll have to use JSAPResult.getObject() or
+    JSAPResult.getObjectArray() and re-cast the result to obtain the objects.</p></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="id3235897"></a>Chapter 10. Handling Errors</h2></div></div><div></div></div><p>Users can botch program input in more ways than you could ever
+    imagine. To detect an error, check JSAPResult.success() after parsing the
+    command line. It will return false if there were any problems.</p><p>Once you detect a problem, you have a number of options:</p><div class="itemizedlist"><ul type="disc"><li><p>Display program usage (see HelloWorld_5 example)</p></li><li><p>Display help information (see HelloWorld_6 example)</p></li><li><p>Display messages specific to the user's errors (see
+        HelloWorld_7 example)</p></li><li><p>Obtain a list of parameter IDs for the problematic items through
+        JSAPResult.getBadParameterIDIterator(). Then obtain the individual
+        exceptions for each ID through JSAPResult.getExceptionIterator(String
+        id) and related methods. After that, you're on your own.</p></li><li><p>Any combination of the above.</p></li></ul></div></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="id3235980"></a>Chapter 11. DefaultSources and Configuration Files</h2></div></div><div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><a href="#id3236054">PropertyDefaultSource</a></dt></dl></div><p>Default program behavior can be configured in one or more files that
+    the command line merely overrides. JSAP provides a
+    registerDefaultSource(DefaultSource) method to support this. At the time
+    of this writing, the only concrete implementation of DefaultSource is
+    PropertyDefaultSource, which reads files in java.util.Properties format.</p><p>Multiple DefaultSources may be registered with a JSAP. When a
+    default value is sought, the DefaultSources are checked in the order in
+    which they were registered. The first default value encountered by JSAP is
+    used.</p><p>Yes, it's implemented through JSAP.registerDefaultSource().
+    Defaultsare checked in the order in which they are registered with the
+    JSAP.Right now the only type of DefaultSource implemented is based
+    onProperty files. When you create the PropertyDefaultSource, however,
+    youcan specify whether or not it should throw exceptions for problems
+    suchas the property file not existing. If you tell it to ignore
+    exceptions,you can make this work across platforms.For example, you might
+    want to check your user's home directory first. You can obtain the
+    users' home directory through the System properties,so this would work
+    cross-platform right away (you would of course needto append
+    File.separator and the name of the file you're looking for). This
+    would be the first DefaultSource you register.Then you might want to
+    register /etc/yourprogram.conf as a source. Thiswill just be ignored on
+    Windows if you tell this DefaultSource not tothrow exceptions.Then you
+    might want to use the "All Users" directory on Windows, so youcan
+    get the user's home again, then use File operations to
+    obtain"..\\All Users\\yourprogram.conf" and register yet another
+    source.Note that the order in which these last two are done doesn't
+    matter; oneither linux or Windows, at least one of them will be
+    ignored.There's no automatic checking of any location; it's up to
+    the developerto provide the list of places to check. That might be a nice
+    thing toadd to the TO DO list</p><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="id3236054"></a>PropertyDefaultSource</h2></div></div><div></div></div><p>PropertyDefaultSource reads default values from text files
+      consisting of zero or more lines of "key=value"-type
+      assignments. Property names may be parameter IDs, long flags, or short
+      flags for the parameters they address. JSAP interprets them in that
+      order (ID, then long flag, then short flag).</p><p>When you create a PropertyDefaultSource, you can tell it not to
+      throw Exceptions. This allows you to specify a number of possible
+      locations for files that don't have to exist.</p><p>A typical order in which to register PropertyDefaultSources is:</p><div class="orderedlist"><ol type="1"><li><p>.yourprogramname
+      in the user's home directory (obtained via System properties)</p></li><li><p>/etc/yourprogramname.conf
+      on *nix systems</p></li><li><p>$YOURPROGRAM_HOME/yourprogramname.conf
+      if your program makes use of an environment variable to point to its
+      home directory</p></li></ol></div><p>Note: if anyone has suggestions for a search order example for
+      Windows or Mac, please let me know.</p></div></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="id3293359"></a>Chapter 12. Using ANT To Make Everything Easier</h2></div></div><div></div></div><p>The Ant task is still experimental. It used to work quite well, but
+    it hasn't kept up with recent changes. It's on my list.</p></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="id3293373"></a>Chapter 13. Reporting Problems</h2></div></div><div></div></div><p>Please send any problem reports to jsap at martiansoftware dot com.</p></div></div></body></html>
