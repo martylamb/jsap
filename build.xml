@@ -14,8 +14,11 @@ Legal:
  
 
 --> 
-
 <project basedir="." default="help" name="jsap">
+
+	<!-- see checkstyle.sourceforge.net for details -->
+	<taskdef name="checkstyle" classname="com.puppycrawl.tools.checkstyle.CheckStyleTask"/>
+
 
 	<target name="eclipse-setcompiler" if="eclipse.running">
 	    <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter" />
@@ -94,6 +97,7 @@ Targets:
   compile-api   - compiles the JSAP API
   compile-tests - compiles the JSAP API and JUnit test cases
   compile-all	- compiles the JSAP API, JUnit test cases, and examples
+  checkstyle    - compiles everything and checks the code style against Sun conventions.
   test          - compiles the JSAP API and tests it
   build         - compiles the JSAP API and builds JSAP.jar
   javadoc       - compiles the JSAP API and generates javadoc documentation
@@ -170,10 +174,10 @@ Targets:
 			</fileset>
   		</copy>
   		
-  		<replace dir="${javadoc-tmp.src}" token="@@VERSION@@" value="${version}">
+  		<replace dir="${javadoc.tmp.src}" token="@@VERSION@@" value="${version}">
   			<include name="**/*.java"/>
   		</replace>
-  		<replace dir="${javadoc-tmp.src}" token="@@AUTHOR_MARTY@@" value="${author-marty}">
+  		<replace dir="${javadoc.tmp.src}" token="@@AUTHOR_MARTY@@" value="${author-marty}">
   			<include name="**/*.java"/>
   		</replace>
 
@@ -183,7 +187,12 @@ Targets:
 		<delete dir="${javadoc-tmpsrc}" />
     </target>
 
-
+	<target name="checkstyle" depends="compile-all">
+		<checkstyle allowTabs="yes">
+			<fileset dir="${src}" includes="**/*.java"/>
+		</checkstyle>
+	</target>
+	
 	<target name="dist" depends="build,javadoc">
 		<delete dir="${dist.tmp.src}" />
 		<mkdir dir="${dist.tmp.src}" />
@@ -198,7 +207,7 @@ Targets:
 
 		<!-- copy jar file into temp directory -->
 		<mkdir dir="${dist.tmp.src}/${name}-${version}/${lib}"/>
-		<copy todir="${dist.tmp.src}/${name}-${version}/${lib}" file="${build}/${jarname}" />
+		<copy todir="${dist.tmp.src}/${name}-${version}/${lib}" file="${dist}/${jarname}" />
 		
 		<!-- copy any libraries required for development into temp directory -->
 		<mkdir dir="${dist.tmp.src}/${name}-${version}/${devlib}"/>
