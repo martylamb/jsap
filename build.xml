@@ -30,17 +30,24 @@ Legal:
         <property name="year" value="2002"/>
 
 		<!-- Directories -->
+		<property name="buildfile" value="build.xml"/>
         <property name="src" value="src"/>
         <property name="build" value="build"/>
-        <property name="javadoc" value="doc/javadoc"/>
-		<property name="javadoc-tmpsrc" value="${javadoc}/tmpsrc"/>
+        <property name="doc" value="doc"/>
+        <property name="javadoc" value="${doc}/javadoc"/>
+		<property name="javadoc.tmp.src" value="${javadoc}/tmpsrc"/>
         <property name="dist" value="dist"/>
+        <property name="lib" value="lib"/>
         <property name="devlib" value="devlib"/>
+        <property name="dist.tmp.bin" value="${dist}/tmp-bin"/>
+        <property name="dist.tmp.src" value="${dist}/tmp-src"/>
 
 		<!-- Special Files -->
         <property name="testFiles" value="**/_Test*" />
         <property name="testConfFiles" value="**/_Test*.conf" />
         <property name="exampleFiles" value="com/martiansoftware/jsap/examples/" />
+        
+        <property name="jarname" value="${name}_${version}.jar" />
 
 		<!-- Administrivia -->
 		<property name="url" value="http://www.martiansoftware.com/jsap" />
@@ -137,16 +144,16 @@ Targets:
         <junit printsummary="on">
             <test name="com.martiansoftware.jsap._TestEverything"/>
             <formatter type="plain" usefile="false"/>
+            <classpath refid="devlib.class.path" />
             <classpath>
                 <pathelement location="${build}"/>
             </classpath>
-            <classpath refid="devlib.class.path" />
         </junit>
     </target>
 
-    <target name="build" depends="compile-api">
+    <target name="build" depends="clean,test">
         <mkdir dir="${dist}"/>
-        <jar basedir="${build}" jarfile="${dist}/${name}_${version}.jar">
+        <jar basedir="${build}" jarfile="${dist}/${jarname}">
         	<exclude name="${testFiles}" />
         	<exclude name="${exampleFiles}" />
         </jar>
@@ -155,25 +162,70 @@ Targets:
     <target name="javadoc" depends="compile-api">
     	<delete dir="${javadoc}"/>
         <mkdir dir="${javadoc}"/>
-        <mkdir dir="${javadoc-tmpsrc}"/>
-        <copy todir="${javadoc-tmpsrc}">
+        <mkdir dir="${javadoc.tmp.src}"/>
+        <copy todir="${javadoc.tmp.src}">
     		<fileset dir="${src}">
     			<exclude name="${testFiles}" />
     			<exclude name="${exampleFiles}" />
 			</fileset>
   		</copy>
   		
-  		<replace dir="${javadoc-tmpsrc}" token="@@VERSION@@" value="${version}">
+  		<replace dir="${javadoc-tmp.src}" token="@@VERSION@@" value="${version}">
   			<include name="**/*.java"/>
   		</replace>
-  		<replace dir="${javadoc-tmpsrc}" token="@@AUTHOR_MARTY@@" value="${author-marty}">
+  		<replace dir="${javadoc-tmp.src}" token="@@AUTHOR_MARTY@@" value="${author-marty}">
   			<include name="**/*.java"/>
   		</replace>
 
-        <javadoc public="true" destdir="${javadoc}" sourcepath="${javadoc-tmpsrc}" packagenames="com.martiansoftware.*">
+        <javadoc public="true" destdir="${javadoc}" sourcepath="${javadoc.tmp.src}" packagenames="com.martiansoftware.*">
 			<bottom>${copyright.html}&lt;br&gt;${updates.html}</bottom>
         </javadoc>
 		<delete dir="${javadoc-tmpsrc}" />
     </target>
 
+
+	<target name="dist" depends="build,javadoc">
+		<delete dir="${dist.tmp.src}" />
+		<mkdir dir="${dist.tmp.src}" />
+		<mkdir dir="${dist.tmp.src}/${name}-${version}" />
+		<copy todir="${dist.tmp.src}/${name}-${version}" file="${buildfile}" />
+
+		<!-- copy source files into temp directory -->
+		<mkdir dir="${dist.tmp.src}/${name}-${version}/${src}"/>
+		<copy todir="${dist.tmp.src}/${name}-${version}/${src}">
+			<fileset dir="${src}" />
+		</copy>
+
+		<!-- copy jar file into temp directory -->
+		<mkdir dir="${dist.tmp.src}/${name}-${version}/${lib}"/>
+		<copy todir="${dist.tmp.src}/${name}-${version}/${lib}" file="${build}/${jarname}" />
+		
+		<!-- copy any libraries required for development into temp directory -->
+		<mkdir dir="${dist.tmp.src}/${name}-${version}/${devlib}"/>
+		<copy todir="${dist.tmp.src}/${name}-${version}/${devlib}">
+			<fileset dir="${devlib}" />
+		</copy>
+		
+		<!-- copy documentation into temp directory -->
+		<mkdir dir="${dist.tmp.src}/${name}-${version}/${doc}"/>
+		<copy todir="${dist.tmp.src}/${name}-${version}/${doc}">
+			<fileset dir="${doc}" />
+		</copy>
+
+		<!-- make the source zip file -->
+		<zip destfile="${dist}/${name}-${version}-${src}.zip" basedir="${dist.tmp.src}" update="false" />
+		
+		<!-- delete the buildfile, source files and development libaries from the temp directory. -->
+		<!-- the binary distribution file should just contain the jar and the documentation. -->
+		<delete file="${dist.tmp.src}/${name}-${version}/${buildfile}" />
+		<delete dir="${dist.tmp.src}/${name}-${version}/${src}" />
+		<delete dir="${dist.tmp.src}/${name}-${version}/${devlib}" />
+
+		<!-- make the binary zip file -->
+		<zip destfile="${dist}/${name}-${version}.zip" basedir="${dist.tmp.src}" update="false" />
+
+<!--		<delete dir="${dist.tmp.src}"/> -->
+	</target>
+
+	
 </project>
