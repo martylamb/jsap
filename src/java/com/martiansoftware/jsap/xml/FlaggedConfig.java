@@ -1,11 +1,12 @@
 package com.martiansoftware.jsap.xml;
 
+import com.martiansoftware.jsap.FlaggedOption;
 import com.martiansoftware.jsap.JSAP;
 
 /**
  * @author mlamb
  */
-public class FlaggedConfig extends AbstractParameterConfig {
+public abstract class FlaggedConfig extends AbstractParameterConfig {
 	
 	private char shortFlag = JSAP.NO_SHORTFLAG;
 	private String longFlag = JSAP.NO_LONGFLAG;
@@ -35,4 +36,5 @@ public class FlaggedConfig extends AbstractParameterConfig {
 	public void setShortFlag(char shortFlag) {
 		this.shortFlag = shortFlag;
 	}
+
 }

@@ -1,16 +1,18 @@
 package com.martiansoftware.jsap.xml;
 
+import com.martiansoftware.jsap.AbstractParameter;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
  * @author mlamb
  */
-public class AbstractParameterConfig {
+public abstract class AbstractParameterConfig {
 
 	private String id = null;
 	private String help = null;
-	private String usage = null;
+	private String usageName = null;
 	private java.util.List defaults = null;
 	
 	public AbstractParameterConfig() {
@@ -52,16 +54,26 @@ public class AbstractParameterConfig {
 	public void setId(String id) {
 		this.id = id;
 	}
+	
 	/**
-	 * @return Returns the usage.
+	 * @return Returns the usageName.
 	 */
-	public String getUsage() {
-		return usage;
+	public String getUsageName() {
+		return usageName;
 	}
 	/**
-	 * @param usage The usage to set.
+	 * @param usageName The usageName to set.
 	 */
-	public void setUsage(String usage) {
-		this.usage = usage;
+	public void setUsageName(String usageName) {
+		this.usageName = usageName;
 	}
+	
+	protected void configure(AbstractParameter param) {
+		param.setHelp(getHelp());
+		for (Iterator i = getDefaults().iterator(); i.hasNext();) {
+			String def = (String) i.next();
+			param.addDefault(def);
+		}
+	}
+	public abstract AbstractParameter getConfiguredParameter();
 }

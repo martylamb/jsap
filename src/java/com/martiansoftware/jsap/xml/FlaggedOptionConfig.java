@@ -1,5 +1,9 @@
 package com.martiansoftware.jsap.xml;
 
+import java.util.Iterator;
+
+import com.martiansoftware.jsap.AbstractParameter;
+import com.martiansoftware.jsap.FlaggedOption;
 import com.martiansoftware.jsap.JSAP;
 
 /**
@@ -12,7 +16,6 @@ public class FlaggedOptionConfig extends FlaggedConfig {
 	private char listSeparator = JSAP.DEFAULT_LISTSEPARATOR;
 	private StringParserConfig stringParser = null;
 	private boolean required = JSAP.NOT_REQUIRED;
-	
 	public FlaggedOptionConfig() {
 		super();
 	}
@@ -75,5 +78,27 @@ public class FlaggedOptionConfig extends FlaggedConfig {
 	 */
 	public void setStringParser(StringParserConfig stringParser) {
 		this.stringParser = stringParser;
+	}
+	
+	protected void configure(FlaggedOption option) {
+		super.configure(option);
+		option.setUsageName(getUsageName());
+
+		option.setShortFlag(getShortFlag());
+		option.setLongFlag(getLongFlag());
+		option.setAllowMultipleDeclarations(allowMultipleDeclarations());
+		option.setListSeparator(getListSeparator());
+		option.setList(isList());
+		option.setRequired(isRequired());
+
+		if (stringParser != null) {
+			option.setStringParser(stringParser.getConfiguredStringParser());
+		}
+	}
+	
+	public AbstractParameter getConfiguredParameter() {
+		FlaggedOption result = new FlaggedOption(getId());
+		configure(result);
+		return (result);
 	}
 }

@@ -182,7 +182,7 @@ public abstract class AbstractParameter {
     }
 
     /**
-     * Sets the name of this AbstractPArameter for the purposes of
+     * Sets the name of this AbstractParameter for the purposes of
      * usage information.  If null, the id will be used.
      * @param usageName the usage name for this AbstractParameter
      */
