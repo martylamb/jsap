@@ -1,12 +1,20 @@
+/*
+ * Copyright (c) 2002-2004, Martian Software, Inc.
+ * This file is made available under the LGPL as described in the accompanying
+ * LICENSE.TXT file.
+ */
 package com.martiansoftware.jsap.xml;
 
 import com.thoughtworks.xstream.XStream;
 
 /**
+ * Provides support for loading JSAP configurations at runtime
+ * via an xml file.  You don't need to access this class directly;
+ * instead, use JSAP's constructors that support xml.
  * 
  * @author <a href="http://www.martiansoftware.com/contact.html">Marty Lamb</a>
  */
-public class JSAPXStream extends XStream {
+class JSAPXStream extends XStream {
 
 	public JSAPXStream() {
 		super();

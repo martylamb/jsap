@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2002-2004, Martian Software, Inc.
+ * This file is made available under the LGPL as described in the accompanying
+ * LICENSE.TXT file.
+ */
 package com.martiansoftware.jsap.xml;
 
 import com.martiansoftware.jsap.AbstractParameter;
@@ -6,9 +11,13 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * @author mlamb
+ * Provides support for loading JSAP configurations at runtime
+ * via an xml file.  You don't need to access this class directly;
+ * instead, use JSAP's constructors that support xml.
+ * 
+ * @author <a href="http://www.martiansoftware.com/contact.html">Marty Lamb</a>
  */
-public abstract class AbstractParameterConfig {
+abstract class AbstractParameterConfig {
 
 	private String id = null;
 	private String help = null;
@@ -30,40 +39,26 @@ public abstract class AbstractParameterConfig {
 		return (defaults);
 	}
 	
-	/**
-	 * @return Returns the help.
-	 */
 	public String getHelp() {
 		return help;
 	}
-	/**
-	 * @param help The help to set.
-	 */
+
 	public void setHelp(String help) {
 		this.help = help;
 	}
-	/**
-	 * @return Returns the id.
-	 */
+
 	public String getId() {
 		return id;
 	}
-	/**
-	 * @param id The id to set.
-	 */
+
 	public void setId(String id) {
 		this.id = id;
 	}
 	
-	/**
-	 * @return Returns the usageName.
-	 */
 	public String getUsageName() {
 		return usageName;
 	}
-	/**
-	 * @param usageName The usageName to set.
-	 */
+
 	public void setUsageName(String usageName) {
 		this.usageName = usageName;
 	}

@@ -3,7 +3,6 @@
  * This file is made available under the LGPL as described in the accompanying
  * LICENSE.TXT file.
  */
-
 package com.martiansoftware.jsap;
 
 import java.util.List;

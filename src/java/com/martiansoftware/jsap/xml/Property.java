@@ -1,34 +1,34 @@
+/*
+ * Copyright (c) 2002-2004, Martian Software, Inc.
+ * This file is made available under the LGPL as described in the accompanying
+ * LICENSE.TXT file.
+ */
 package com.martiansoftware.jsap.xml;
 
 /**
- * @author mlamb
+ * Provides support for loading JSAP configurations at runtime
+ * via an xml file.  You don't need to access this class directly;
+ * instead, use JSAP's constructors that support xml.
+ * 
+ * @author <a href="http://www.martiansoftware.com/contact.html">Marty Lamb</a>
  */
-public class Property {
+class Property {
 
 	private String name = null;
 	private String value = null;
 
-	/**
-	 * @return Returns the name.
-	 */
 	public String getName() {
 		return name;
 	}
-	/**
-	 * @param name The name to set.
-	 */
+
 	public void setName(String name) {
 		this.name = name;
 	}
-	/**
-	 * @return Returns the value.
-	 */
+
 	public String getValue() {
 		return value;
 	}
-	/**
-	 * @param value The value to set.
-	 */
+
 	public void setValue(String value) {
 		this.value = value;
 	}

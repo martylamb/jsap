@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2002-2004, Martian Software, Inc.
+ * This file is made available under the LGPL as described in the accompanying
+ * LICENSE.TXT file.
+ */
 package com.martiansoftware.jsap.xml;
 
 import java.util.Iterator;
@@ -7,33 +12,29 @@ import com.martiansoftware.jsap.PropertyStringParser;
 import com.martiansoftware.jsap.StringParser;
 
 /**
- * @author mlamb
+ * Provides support for loading JSAP configurations at runtime
+ * via an xml file.  You don't need to access this class directly;
+ * instead, use JSAP's constructors that support xml.
+ * 
+ * @author <a href="http://www.martiansoftware.com/contact.html">Marty Lamb</a>
  */
-public class StringParserConfig {
+class StringParserConfig {
 	
 	String classname = null;
 	List properties = null;
-	/**
-	 * @return Returns the classname.
-	 */
+
 	public String getClassname() {
 		return classname;
 	}
-	/**
-	 * @param classname The classname to set.
-	 */
+
 	public void setClassname(String classname) {
 		this.classname = classname;
 	}
-	/**
-	 * @return Returns the properties.
-	 */
+
 	public List getProperties() {
 		return properties;
 	}
-	/**
-	 * @param properties The properties to set.
-	 */
+
 	public void setProperties(List properties) {
 		this.properties = properties;
 	}

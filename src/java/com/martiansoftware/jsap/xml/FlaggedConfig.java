@@ -1,38 +1,36 @@
+/*
+ * Copyright (c) 2002-2004, Martian Software, Inc.
+ * This file is made available under the LGPL as described in the accompanying
+ * LICENSE.TXT file.
+ */
 package com.martiansoftware.jsap.xml;
 
-import com.martiansoftware.jsap.FlaggedOption;
 import com.martiansoftware.jsap.JSAP;
 
 /**
- * @author mlamb
+ * Provides support for loading JSAP configurations at runtime
+ * via an xml file.  You don't need to access this class directly;
+ * instead, use JSAP's constructors that support xml.
+ * 
+ * @author <a href="http://www.martiansoftware.com/contact.html">Marty Lamb</a>
  */
-public abstract class FlaggedConfig extends AbstractParameterConfig {
+abstract class FlaggedConfig extends AbstractParameterConfig {
 	
 	private char shortFlag = JSAP.NO_SHORTFLAG;
 	private String longFlag = JSAP.NO_LONGFLAG;
 	
-	/**
-	 * @return Returns the longFlag.
-	 */
 	public String getLongFlag() {
 		return longFlag;
 	}
 	
-	/**
-	 * @param longFlag The longFlag to set.
-	 */
 	public void setLongFlag(String longFlag) {
 		this.longFlag = longFlag;
 	}
-	/**
-	 * @return Returns the shortFlag.
-	 */
+
 	public char getShortFlag() {
 		return shortFlag;
 	}
-	/**
-	 * @param shortFlag The shortFlag to set.
-	 */
+
 	public void setShortFlag(char shortFlag) {
 		this.shortFlag = shortFlag;
 	}
