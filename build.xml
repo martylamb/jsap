@@ -30,6 +30,7 @@ Legal:
 	<!-- Directories -->
 	<property name="buildfile" value="build.xml"/>
     <property name="src" value="src"/>
+    <property name="javasrc" value="${src}/java"/>
     <property name="build" value="build"/>
     <property name="doc" value="doc"/>
     <property name="javadoc" value="${doc}/javadoc"/>
@@ -104,7 +105,7 @@ Targets:
     
     <!-- compile the JSAP API -->
     <target name="compile-api" depends="init" >
-        <javac destdir="${build}" srcdir="${src}">
+        <javac destdir="${build}" srcdir="${javasrc}">
         	<exclude name="${testFiles}" />
         	<exclude name="${exampleFiles}" />
         	<classpath refid="lib.class.path" />
@@ -113,12 +114,12 @@ Targets:
 
 	<!-- compile the JSAP API and JUnit tests -->
     <target name="compile-tests" depends="init" >
-        <javac destdir="${build}" srcdir="${src}">
+        <javac destdir="${build}" srcdir="${javasrc}">
         	<exclude name="${exampleFiles}" />
         	<classpath refid="lib.class.path" />
         </javac>
         <copy todir="${build}">
-    		<fileset dir="${src}">
+    		<fileset dir="${javasrc}">
     			<include name="${testConfFiles}" />
 			</fileset>
   		</copy>
@@ -126,7 +127,7 @@ Targets:
 
 	<!-- compile the JSAP API, JUnit tests, and examples -->
     <target name="compile-all" depends="init" >
-        <javac destdir="${build}" srcdir="${src}">
+        <javac destdir="${build}" srcdir="${javasrc}">
         	<classpath refid="lib.class.path" />
         </javac>
     </target>
@@ -160,7 +161,7 @@ Targets:
         <javadoc 
         	public="true" 
         	destdir="${javadoc}" 
-        	sourcepath="${src}" 
+        	sourcepath="${javasrc}" 
         	packagenames="com.martiansoftware.*"
         	windowtitle="JSAP: the Java Simple Argument Parser" >
         	
@@ -203,9 +204,9 @@ Targets:
 		</copy>
 
 		<!-- make the source zip file -->
-		<zip destfile="${dist}/${name}-${version}-${src}.zip" basedir="${distimage}" update="false" />
-		<tar tarfile="${dist}/${name}-${version}-${src}.tar" basedir="${distimage}"/>
-		<gzip zipfile="${name}-${version}-${src}.tar.gz" src="${name}-${version}-${src}.tar"/>
+		<zip destfile="${dist}/${name}-${version}-src.zip" basedir="${distimage}" update="false" />
+		<tar tarfile="${dist}/${name}-${version}-src.tar" basedir="${distimage}"/>
+		<gzip zipfile="${name}-${version}-src.tar.gz" src="${name}-${version}-src.tar"/>
 		
 		<!-- delete the buildfile, source files and development libaries from the temp directory. -->
 		<!-- the binary distribution file should just contain the jar and the documentation. -->

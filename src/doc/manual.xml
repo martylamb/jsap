@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+<book>
+  <title>JSAP - Java Simple Argument Parser</title>
+
+  <chapter>
+    <title>Introduction</title>
+
+    <sect1>
+      <title>Why did you write another command line parser?</title>
+
+      <para>Put simply, I got tired of writing simple command line parsers for
+      every java utility program I wrote. I wanted a simple tool that would
+      support complex command lines - and return more than just Strings. If
+      one of the options for a program, for example, is a number, it should be
+      retrievable by the program AS a number. JSAP does this, and allows
+      developers to add new command line data types as needed.</para>
+
+      <para>I also wanted the ability to read default values from a
+      configuration file, which could be overridden by the command line. JSAP
+      supports this, and in fact supports multiple, &#34;cascading&#34;
+      configuration files as well.</para>
+    </sect1>
+
+    <sect1>
+      <title>So what does JSAP actually do?</title>
+
+      <para>JSAP parses your command line and instantiates objects of types
+      you specify based upon that command line. If you configure JSAP to
+      expect an Integer on the command line, and the user does not provide a
+      String that can be converted to an Integer, JSAP will alert your program
+      to the fact that there was a problem with the command line. If JSAP
+      indicates that your command line was successfully parsed, you are
+      guaranteed an Integer when you request that parameter&#39;s value from
+      your program. There&#39;s a pretty big (and growing) list of return
+      types suppored by JSAP; you may want to skip ahead a little and check it
+      out.</para>
+
+      <para>JSAP provides not only for default values for its parameters, but
+      for a cascading chain of values. With a couple extra lines of code, JSAP
+      will, for example:</para>
+
+      <procedure>
+        <step>
+          <para>Parse the command line.</para>
+        </step>
+
+        <step>
+          <para>For any omitted parameters, look for values in
+          ~/.yourProgramName.conf</para>
+        </step>
+
+        <step>
+          <para>For any still omitted parameters, look for values in
+          /etc/yourProgramName.conf</para>
+        </step>
+
+        <step>
+          <para>For any still omitted parameters, use the default values (if
+          any) specified by the developer.</para>
+        </step>
+      </procedure>
+    </sect1>
+  </chapter>
+
+  <chapter>
+    <title>Vocabulary</title>
+
+    <para>Before continuing, some explanation of the vocabulary used in this
+    manual is required:</para>
+
+    <variablelist>
+      <varlistentry>
+        <term>Argument</term>
+
+        <listitem>
+          <para>A single (String) token from the command line. The JVM will
+          provide an array of these to your main() method.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>Parameter</term>
+
+        <listitem>
+          <para>One or more arguments that must be taken together to have
+          meaning. For example, in the command &#34;java -cp myjar.jar
+          MyClass&#34;, the arguments &#34;-cp&#34; and &#34;myjar.jar&#34;
+          comprise a single parameter defining the classpath. The argument
+          &#34;MyClass&#34; comprises another parameter indicating the class
+          to load and run.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>Switch</term>
+
+        <listitem>
+          <para>A single-argument parameter whose presence alone conveys
+          meaning. For example, in the command &#34;java -version&#34;, the
+          &#34;-version&#34; switch tells the JVM to print its version
+          information and exit.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>Option</term>
+
+        <listitem>
+          <para>A parameter whose content conveys meaning. In the command
+          &#34;java -cp myjar.jar MyClass&#34;, the &#34;-cp myjar.jar&#34;
+          parameter is an option, as is the &#34;MyClass&#34; parameter.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>Flagged Option</term>
+
+        <listitem>
+          <para>An option that is preceded by a &#34;flag&#34; to indicate
+          which option is being set. In the command &#34;java -cp myjar.jar
+          MyClass&#34;, the &#34;-cp myjar.jar&#34; option is flagged by
+          &#34;-cp&#34;.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>Unflagged Option</term>
+
+        <listitem>
+          <para>An option that is not preceded by a flag, and whose meaning is
+          conveyed by its position in the command line. In the command
+          &#34;java -cp myjar.jar MyClass&#34;, &#34;MyClass&#34; is an
+          unflagged option.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>Short Flag</term>
+
+        <listitem>
+          <para>A single-character flag preceded by a single dash.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>Long Flag</term>
+
+        <listitem>
+          <para>A multi-character flag preceded by a double dash.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>ID</term>
+
+        <listitem>
+          <para>A unique identifier assigned by the programmer to each
+          parameter JSAP should recognize. A parameter&#39;s ID is seen only
+          by the programmer, and is used to retrieve its values from the
+          JSAPResult object.</para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </chapter>
+
+  <chapter>
+    <title>Quick Start</title>
+
+    <para>If you&#39;re the type of developer who likes to take a quick look
+    at example code and tweak it for your needs, this chapter should get you
+    up and running with JSAP very quickly. We&#39;ll start with a simple
+    example and gradually build upon it in order to demonstrate some of the
+    basic features of JSAP. You&#39;ll have to read further for some of the
+    cooler features.</para>
+
+    <sect1>
+      <title>HelloWorld_1</title>
+
+      <para> Everyone else begins with a &#34;Hello, World!&#34; program, so
+      we will, too.</para>
+
+      <programlisting>${source:com/martiansoftware/jsap/examples/HelloWorld_1.java}</programlisting>
+
+      <screen>${run:java com.martiansoftware.jsap.examples.HelloWorld_1}</screen>
+
+      <para>Not only is this completely uninteresting, but it doesn&#39;t use
+      JSAP. Let&#39;s tweak it a little.</para>
+    </sect1>
+
+    <sect1>
+      <title>HelloWorld_2</title>
+
+      <programlisting>${source:com/martiansoftware/jsap/examples/HelloWorld_2.java}</programlisting>
+
+      <para>That&#39;s pretty verbose. Later on you&#39;ll see ways to trim
+      this down quite a bit. Here&#39;s what&#39;s going on:</para>
+
+      <procedure>
+        <step>
+          <para>We create a new JSAP to do the parsing.</para>
+        </step>
+
+        <step>
+          <para>We create a new flagged option so we can tell the program how
+          many times to print the message.</para>
+
+          <procedure>
+            <step>
+              <para>It has an ID of &#34;count&#34;, which is only used
+              internally by our program to retrieve the value.</para>
+            </step>
+
+            <step>
+              <para>It&#39;s using an IntegerStringParser to convert the value
+              to an Integer, and it has a default value of 1.</para>
+            </step>
+
+            <step>
+              <para>It&#39;s required, but since we&#39;re specifying a
+              default value, the requirement will always be met.</para>
+            </step>
+
+            <step>
+              <para>It has a short flag &#34;n&#34;, so the syntax is &#34;-n
+              5&#34; to print the message five times, for example.</para>
+            </step>
+
+            <step>
+              <para>It has no long flag.</para>
+            </step>
+          </procedure>
+        </step>
+
+        <step>
+          <para>We register the flagged option with the parser we created in
+          the beginning.</para>
+        </step>
+
+        <step>
+          <para>We tell the parser to parse the command line arguments, and
+          store the result in a variable called &#34;config&#34;.</para>
+        </step>
+
+        <step>
+          <para>We print the message.</para>
+        </step>
+      </procedure>
+
+      <para>The output of the program looks like this:</para>
+
+      <screen>${run:java com.martiansoftware.jsap.examples.HelloWorld_2}
+
+${run:java com.martiansoftware.jsap.examples.HelloWorld_2 -n 5}</screen>
+
+      <para>So far, so good. Let&#39;s add a switch.</para>
+    </sect1>
+
+    <sect1>
+      <title>HelloWorld_3</title>
+
+      <programlisting>${source:com/martiansoftware/jsap/examples/HelloWorld_3.java}</programlisting>
+
+      <para>What did we do? We created a new &#34;switch&#34; to determine how
+      verbose we&#39;re going to be with our greeting, registered it with
+      JSAP, and read its value inside the print loop. That might still seem
+      like a lot of code for this little feature, but let&#39;s look at all
+      the ways we can invoke the program now:</para>
+
+      <screen>${run:java com.martiansoftware.jsap.examples.HelloWorld_3 -n 2}
+
+${run:java com.martiansoftware.jsap.examples.HelloWorld_3 -n 3 -v}
+
+${run:java com.martiansoftware.jsap.examples.HelloWorld_3 --verbose}
+
+${run:java com.martiansoftware.jsap.examples.HelloWorld_3 -vn 2}</screen>
+
+      <para>That last one is the most interesting - note that we were able to
+      combine multiple short flags (&#34;v&#34; and &#34;n&#34;). JSAP allows
+      this for as many short flags as you want - provided that at most one of
+      them is an option (as opposed to a switch) and it&#39;s the last one in
+      the list.</para>
+
+      <para>For the next example, we&#39;ll use an unflagged option to specify
+      to whom we really want to say hello. It will be optional, defaulting to
+      &#34;World&#34; for backwards compatibility with our earlier examples.
+      :) We&#39;ll also make it greedy, so it consumes the rest of the command
+      line to allow multiple values.</para>
+    </sect1>
+
+    <sect1>
+      <title>HelloWorld_4</title>
+
+      <programlisting>${source:com/martiansoftware/jsap/examples/HelloWorld_4.java}</programlisting>
+
+      <screen>${run:java com.martiansoftware.jsap.examples.HelloWorld_4 -n 2 --verbose Bender Fry Leela}
+
+${run:java com.martiansoftware.jsap.examples.HelloWorld_4 Kif -n 3}
+
+${run:java com.martiansoftware.jsap.examples.HelloWorld_4 -v -n 2}</screen>
+
+      <para></para>
+    </sect1>
+  </chapter>
+
+  <chapter>
+    <title>How It Works</title>
+
+    <para>Everything you do with JSAP leads to the same goal: a JSAPResult
+    object that contains objects created from the parsed command line. Getting
+    to this point requires the following steps:</para>
+
+    <sect1>
+      <title>Creating a JSAP to do the parsing.</title>
+
+      <para>This is generally accomplished through JSAP&#39;s no-argument
+      constructor. Depending upon the complexity of your program, however, you
+      may want to instantiate a custom JSAP subclass that also takes care of
+      steps 2 and 3 (described below) during the construction process. This
+      approach results in a much &#34;cleaner&#34; main class.</para>
+    </sect1>
+
+    <sect1>
+      <title>Defining your program&#39;s parameters.</title>
+
+      <para>As described above in the Vocabulary section, there are three
+      types of parameters you can define: Switches, FlaggedOptions, and
+      UnflaggedOptions. When you define a parameter, you tell JSAP what flags
+      (if any) it uses, what its default values are, whether it is required,
+      what its ID is, and other relevant information. See the individual
+      sections below for each type of parameter for details.</para>
+    </sect1>
+
+    <sect1>
+      <title>Registering your parameters with JSAP.</title>
+
+      <para>Each parameter you define must be registered with JSAP via its
+      registerParameter method. When a parameter is registered, its properties
+      (flags, etc.) cannot be modified; to modify them, you must first
+      unregister them from JSAP, and register them again once modified.
+      Registration can throw an exception if the parameter to be registered
+      conflicts with any other registered parameters (for example, if they use
+      the same flags, or have the same ID).</para>
+    </sect1>
+
+    <sect1>
+      <title>Parsing the command line.</title>
+
+      <para>The JSAP object provides two parse() methods to parse a command
+      line. The first takes an array of Strings as its only parameter; in most
+      uses of JSAP, this will simply be the args[] array supplied by the JVM
+      to your main() method.</para>
+
+      <para>The second parse() method takes a single String as its only
+      parameter. This method first tokenizes the String into an array, much
+      like the operating system does for the JVM in providing your main()
+      method with the args[] array, then calls the parse(String[]) method
+      described above.</para>
+
+      <para>Both of these methods return a JSAPResult object encapsulating the
+      parsed command line.</para>
+    </sect1>
+  </chapter>
+
+  <chapter>
+    <title>Short vs. Long Flags</title>
+
+    <para>Both switches and flagged options require flags. Flags can be short,
+    consisting of a single character and preceded by a single hyphen, or long,
+    consisting of more than one character and preceded by two hyphens.
+    Switches and flagged options may use short flags, long flags, or both.</para>
+
+    <para>In general, your program&#39;s most commonly used options should
+    have short flags. Long flags are generally more appropriate for
+    less-frequently used options.</para>
+
+    <para>In order to configure a parameter with no short flag, specify a
+    short flag equal to JSAP.NO_SHORTFLAG. In order to configure a parameter
+    with no long flag, specify a long flag equal to JSAP.NO_LONGFLAG.</para>
+  </chapter>
+
+  <chapter>
+    <title>Switches</title>
+
+    <para></para>
+  </chapter>
+
+  <chapter>
+    <title>Flagged Options</title>
+
+    <para></para>
+  </chapter>
+
+  <chapter>
+    <title>Unflagged Options</title>
+
+    <para></para>
+  </chapter>
+
+  <chapter>
+    <title>StringParsers</title>
+
+    <para></para>
+  </chapter>
+
+  <chapter>
+    <title>Handling Errors</title>
+
+    <para></para>
+  </chapter>
+
+  <chapter>
+    <title>DefaultSources and Configuration Files</title>
+
+    <para></para>
+  </chapter>
+
+  <chapter>
+    <title>Using ANT To Make Everything Easier</title>
+
+    <para></para>
+  </chapter>
+
+  <chapter>
+    <title>Custom StringParsers</title>
+
+    <para></para>
+  </chapter>
+</book>
