@@ -7,6 +7,7 @@
 package com.martiansoftware.jsap;
 
 import java.util.Map;
+import java.io.File;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.net.InetAddress;
@@ -1056,6 +1057,18 @@ public class JSAPResult implements ExceptionMap {
     }
 
     /**
+     * Returns the first File value associated with the specified id.
+     * @param id the id of the File value to retrieve
+     * @return the File value associated with the specified id.
+     * @see #getFile(String,File)
+     * @see #getFileArray(String)
+     * @see java.io.File
+     */
+    public File getFile(String id) {
+    	return ((File) getObject(id));
+    }
+    
+    /**
      * Returns the first Color value associated with the specified id.  If the
      * specified id does not
      * exist within this JSAPResult, or if the object(s) associated with the
@@ -1082,6 +1095,32 @@ public class JSAPResult implements ExceptionMap {
     }
 
     /**
+     * Returns the first File value associated with the specified id.  If the
+     * specified id does not
+     * exist within this JSAPResult, or if the object(s) associated with the
+     * specified id are not of
+     * type java.io.File, the specified default value is returned.
+     * @param id the id of the File value to retrieve
+     * @param defaultValue the value to return if the specified id does not
+     * exist within this
+     * JSAPResult, or if the object(s) associated with the specified id are
+     * not of type
+     * java.io.File.
+     * @return the first File value associated with the specified id.  If the
+     * specified id does not
+     * exist within this JSAPResult, or if the object(s) associated with the
+     * specified id are not of
+     * type java.io.File, the specified default value is returned.
+     * @see #getFile(String)
+     * @see #getFileArray(String)
+     * @see java.io.File
+     */
+    public File getFile(String id, File defaultValue) {
+    	File result = (File) getObject(id);
+        return ((result == null) ? defaultValue : result);
+    }
+    
+    /**
      * Returns an array of Color values associated with the specified id.  If
      * the specified id does
      * not exist within this JSAPResult, this method returns an empty array
@@ -1098,6 +1137,22 @@ public class JSAPResult implements ExceptionMap {
         return ((Color[]) getObjectArray(id, new Color[0]));
     }
 
+    /**
+     * Returns an array of File values associated with the specified id.  If
+     * the specified id does
+     * not exist within this JSAPResult, this method returns an empty array
+     * (i.e., array.length==0).
+     * @param id the id of the File value(s) to return.
+     * @return an array containing the File value(s) associated with the
+     * specified id, or an
+     * empty array if the specified id does not exist within this JSAPResult.
+     * @see #getFile(String)
+     * @see #getFile(String,File)
+     * @see java.io.File
+     */
+    public File[] getFileArray(String id) {
+        return ((File[]) getObjectArray(id, new File[0]));
+    }
     /**
      * Returns the first Date value associated with the specified id.
      * @param id the id of the Date value to retrieve

@@ -19,12 +19,12 @@ class JSAPXStream extends XStream {
 
 	public JSAPXStream() {
 		super(new DomDriver());
-		alias("JSAP", JSAPConfig.class);
-		alias("FlaggedOption", FlaggedOptionConfig.class);
-		alias("UnflaggedOption", UnflaggedOptionConfig.class);
+		alias("jsap", JSAPConfig.class);
+		alias("flaggedOption", FlaggedOptionConfig.class);
+		alias("unflaggedOption", UnflaggedOptionConfig.class);
 		alias("property", Property.class);
-		alias("QualifiedSwitch", QualifiedSwitchConfig.class);
-		alias("Switch", SwitchConfig.class);
+		alias("qualifiedSwitch", QualifiedSwitchConfig.class);
+		alias("switch", SwitchConfig.class);
 	}
 
 }

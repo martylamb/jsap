@@ -28,7 +28,10 @@ public class FileStringParser extends PropertyStringParser {
 	public static final String MUSTBEFILE = "mustBeFile";
 	public static final String MUSTBEDIRECTORY = "mustBeDirectory";
 	public static final String MUSTEXIST = "mustExist";
-	private BooleanStringParser bool = new BooleanStringParser();
+	
+	private boolean mustExist = false;
+	private boolean mustBeDirectory = false;
+	private boolean mustBeFile = false;
 	
 	/**
 	 * Creates a new FileStringParser.
@@ -38,50 +41,37 @@ public class FileStringParser extends PropertyStringParser {
 	}
 
 	public void setUp() throws ParseException {
-		
+		BooleanStringParser bool = new BooleanStringParser();
+		setMustExist(((Boolean) bool.parse(getProperty(MUSTEXIST,"false"))).booleanValue());
+		setMustBeDirectory(((Boolean) bool.parse(getProperty(MUSTBEDIRECTORY,"false"))).booleanValue());
+		setMustBeFile(((Boolean) bool.parse(getProperty(MUSTBEFILE,"false"))).booleanValue());
 	}
 	
-	public FileStringParser setMustBeDirectory(boolean mustBeDirectory) {
-		setProperty(MUSTBEDIRECTORY, mustBeDirectory + "");
-		return (this);
+	public void setMustBeDirectory(boolean mustBeDirectory) {
+		this.mustBeDirectory = mustBeDirectory;
 	}
 	
-	public FileStringParser setMustBeFile(boolean mustBeFile) {
-		setProperty(MUSTBEFILE, mustBeFile + "");
-		return (this);
+	public void setMustBeFile(boolean mustBeFile) {
+		this.mustBeFile = mustBeFile;
 	}
 	
-	public FileStringParser setMustExist(boolean mustExist) {
-		setProperty(MUSTEXIST, mustExist + "");
-		return (this);
+	public void setMustExist(boolean mustExist) {
+		this.mustExist = mustExist;
 	}
 	
 	public boolean mustBeDirectory() {
-		boolean result = false;
-		try {
-			result = ((Boolean) bool.parse(getProperty(MUSTBEDIRECTORY, "f"))).booleanValue();
-		} catch (Throwable t) {}
-		return (result);
+		return (mustBeDirectory);
 	}
 
 	public boolean mustBeFile() {
-		boolean result = false;
-		try {
-			result = ((Boolean) bool.parse(getProperty(MUSTBEFILE, "f"))).booleanValue();
-		} catch (Throwable t) {}
-		return (result);
+		return (mustBeFile);
 	}
 	
 	public boolean mustExist() {
-		boolean result = false;
-		try {
-			result = ((Boolean) bool.parse(getProperty(MUSTEXIST, "f"))).booleanValue();
-		} catch (Throwable t) {}
-		return (result);
+		return (mustExist);
 	}
 	
 	public void tearDown() {
-		
 	}
 	
 	/**
@@ -102,6 +92,16 @@ public class FileStringParser extends PropertyStringParser {
 		File result = null;
 		try {
 			result = new File(arg);
+			
+			if (mustBeDirectory() && !result.isDirectory()) {
+				throw (new ParseException(result + " is not a directory."));
+			}
+			if (mustBeFile() && result.isDirectory()) {
+				throw (new ParseException(result + " is a directory."));
+			}
+			if (mustExist() && !result.exists()) {
+				throw (new ParseException(result + " does not exist."));
+			}
 		} catch (NullPointerException e) {
 			throw (
 				new ParseException(

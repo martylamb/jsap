@@ -44,7 +44,6 @@ public class JSAPConfig {
 		
 		for (Iterator i = config.parameters(); i.hasNext();) {
 			AbstractParameterConfig cfg = (AbstractParameterConfig) i.next();
-			System.out.println(cfg.getClass());
 			jsapToConfigure.registerParameter(cfg.getConfiguredParameter());
 		}
 		jsapToConfigure.setHelp(config.getHelp());

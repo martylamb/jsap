@@ -54,7 +54,7 @@ Legal:
     <property name="exampleFiles" value="com/martiansoftware/jsap/examples/" />
     <property name="manualFiles" value="manual" />
     
-    <property name="jarname" value="${name}_${version}.jar" />
+    <property name="jarname" value="${name}-${version}.jar" />
 
 	<!-- Administrivia -->
 	<property name="url" value="http://www.martiansoftware.com/jsap" />
@@ -81,6 +81,7 @@ Legal:
 	<path id="lib.class.path">
 		<pathelement location="${lib}/ant.jar"/>
 		<pathelement location="${lib}/junit.jar"/>
+		<pathelement location="${lib}/xstream-1.0.1.jar"/>
 	</path>
 
 	<!-- print target list -->
