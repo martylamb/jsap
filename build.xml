@@ -17,6 +17,7 @@ Legal:
 <project basedir="." default="help" name="jsap">
 
 
+
 	<!-- PROPERTIES ***************************************************************************************** -->
 
 	<!-- Basics -->
@@ -61,7 +62,7 @@ Legal:
 	<property name="updates.html" value="For the latest version and documentation, please visit &lt;a href='${url}'&gt;${url}&lt;/a&gt;" />
 
 	<!-- END OF PROPERTIES ********************************************************************************** -->
-		
+
 	<target name="eclipse-setcompiler" if="eclipse.running">
 	    <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter" />
 	</target>
@@ -207,9 +208,23 @@ Targets:
 	</target>
 	
 	<target name="xmldocs">
-		<xslt basedir="doc/src" destdir="doc/src" extension=".html" style="doc/src/manual.xsl">
-  			<param name="date" expression="07-01-2000"/>
-		</xslt>
+		<!-- I give up.  I can't find a way to get the style task to work here.  If I see
+		     the message "Provider org.apache.xerces.jaxp.SAXParserFactoryImpl not found"
+		     one more time, I'm going to scream. -->
+		     
+		<!-- In order for this to work, you need the xercesImpl.jar, xalan.jar, and
+		     xml-apis.jar in your classpath.  If you can run "java org.apache.xalan.xslt.Process"
+		     (and just get a bunch of usage information), you should be good to go. -->
+		     
+		<exec executable="java">
+			<arg value="org.apache.xalan.xslt.Process" />
+			<arg value="-IN" />
+			<arg value="${doc}/src/manual.xml" />
+			<arg value="-OUT" />
+			<arg value="${doc}/manual.html" />
+			<arg value="-XSL" />
+			<arg value="${doc}/src/manual.xsl" />
+		</exec>
 	</target>
 	
 	<target name="dist" depends="build,javadoc">
