@@ -5,6 +5,9 @@
  */
 package com.martiansoftware.jsap.xml;
 
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.Iterator;
 
 import com.martiansoftware.jsap.JSAP;
@@ -15,6 +18,7 @@ import com.martiansoftware.jsap.JSAPException;
  * via an xml file.  You don't need to access this class directly;
  * instead, use JSAP's constructors that support xml.
  * 
+ * @see com.martiansoftware.jsap.JSAP(java.net.URL)
  * @author <a href="http://www.martiansoftware.com/contact.html">Marty Lamb</a>
  */
 public class JSAPConfig {
@@ -22,6 +26,30 @@ public class JSAPConfig {
 	private java.util.List parameters = new java.util.ArrayList();
 	private String help = null;
 	private String usage = null;
+	
+	/**
+	 * Loads a JSAP configuration from the xml at the specified URL, and configures
+	 * the specified JSAP object accordingly
+	 * @param jsapToConfigure the JSAP to configure
+	 * @param jsapXML the configuration
+	 * @throws IOException if an I/O error occurs
+	 * @throws JSAPException if the configuration is not valid
+	 */
+	public static void configure(JSAP jsapToConfigure, URL jsapXML) throws IOException, JSAPException {
+		JSAPXStream jsx = new JSAPXStream();
+		InputStreamReader in = new InputStreamReader(jsapXML.openStream());
+
+		JSAPConfig config = (JSAPConfig) jsx.fromXML(in);
+		in.close();
+		
+		for (Iterator i = config.parameters(); i.hasNext();) {
+			AbstractParameterConfig cfg = (AbstractParameterConfig) i.next();
+			System.out.println(cfg.getClass());
+			jsapToConfigure.registerParameter(cfg.getConfiguredParameter());
+		}
+		jsapToConfigure.setHelp(config.getHelp());
+		jsapToConfigure.setUsage(config.getUsage());
+	}
 	
 	public String getHelp() {
 		return help;
@@ -47,15 +75,5 @@ public class JSAPConfig {
 		return (parameters.iterator());
 	}
 	
-	public JSAP getJSAP() throws JSAPException {
-		JSAP result = new JSAP();
-		for (Iterator i = parameters(); i.hasNext();) {
-			AbstractParameterConfig cfg = (AbstractParameterConfig) i.next();
-			System.out.println(cfg.getClass());
-			result.registerParameter(cfg.getConfiguredParameter());
-		}
-		result.setHelp(getHelp());
-		result.setUsage(getUsage());
-		return (result);
-	}
+
 }

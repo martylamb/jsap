@@ -6,6 +6,7 @@
 package com.martiansoftware.jsap.xml;
 
 import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
 
 /**
  * Provides support for loading JSAP configurations at runtime
@@ -17,7 +18,7 @@ import com.thoughtworks.xstream.XStream;
 class JSAPXStream extends XStream {
 
 	public JSAPXStream() {
-		super();
+		super(new DomDriver());
 		alias("JSAP", JSAPConfig.class);
 		alias("FlaggedOption", FlaggedOptionConfig.class);
 		alias("UnflaggedOption", UnflaggedOptionConfig.class);

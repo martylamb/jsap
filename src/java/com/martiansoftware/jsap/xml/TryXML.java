@@ -49,8 +49,8 @@ public class TryXML {
 		jc.addParameter(uoc);
 		System.out.println(jsx.toXML(jc));
 		
-		JSAP jsap = jc.getJSAP();
-		JSAPResult result = jsap.parse("-f abc");
-		System.out.println(result.getString("flagged"));
+//		JSAP jsap = jc.getJSAP();
+//		JSAPResult result = jsap.parse("-f abc");
+//		System.out.println(result.getString("flagged"));
 	}
 }

@@ -6,9 +6,13 @@
 
 package com.martiansoftware.jsap;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.Map;
 import java.util.List;
 import java.util.Iterator;
+
+import com.martiansoftware.jsap.xml.JSAPConfig;
 import com.martiansoftware.util.StringUtils;
 
 /**
@@ -203,14 +207,40 @@ public class JSAP {
      * with registerParameter() before its parse() methods may be called.
      */
     public JSAP() {
+    	init();
+    }
+    
+    /**
+     * Creates a new JSAP configured as specified in the referenced xml.
+     * @param jsapXML reference to xml representation of the JSAP configuration
+     * @throws IOException if an I/O error occurs
+     * @throws JSAPException if the configuration is not valid
+     */
+    public JSAP(URL jsapXML) throws IOException, JSAPException {
+    	init();
+    	JSAPConfig.configure(this, jsapXML);
+    }
+
+    /**
+     * Creates a new JSAP configured as specified in the referenced xml.
+     * @param resourceName name of the resource (accessible via this JSAP's classloader)
+     * containing the xml representation of the JSAP configuration
+     * @throws IOException if an I/O error occurs
+     * @throws JSAPException if the configuration is not valid
+     */
+    public JSAP(String resourceName) throws IOException, JSAPException {
+    	this(JSAP.class.getClassLoader().getResource(resourceName));
+    }
+    
+    private void init() {
         paramsByID = new java.util.HashMap();
         paramsByShortFlag = new java.util.HashMap();
         paramsByLongFlag = new java.util.HashMap();
         unflaggedOptions = new java.util.ArrayList();
         paramsByDeclarationOrder = new java.util.ArrayList();
-        defaultSources = new java.util.ArrayList();
+        defaultSources = new java.util.ArrayList();    	
     }
-
+    
     /**
      * Sets the usage string manually, overriding the automatically-
      * generated String.  To remove the override, call setUsage(null).
