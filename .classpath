@@ -4,9 +4,6 @@
     <classpathentry kind="var" path="JRE_LIB" rootpath="JRE_SRCROOT" sourcepath="JRE_SRC"/>
     <classpathentry kind="lib" path="devlib/junit.jar"/>
     <classpathentry kind="lib" path="devlib/checkstyle-all-2.3.jar"/>
-    <classpathentry kind="lib" path="D:/java/xalan-j_2_4_0/bin/xercesImpl.jar"/>
-    <classpathentry kind="lib" path="D:/java/xalan-j_2_4_0/bin/xalan.jar"/>
-    <classpathentry kind="lib" path="D:/java/xalan-j_2_4_0/bin/xml-apis.jar"/>
     <classpathentry kind="lib" path="lib/ant.jar"/>
     <classpathentry kind="output" path="build"/>
 </classpath>

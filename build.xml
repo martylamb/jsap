@@ -24,7 +24,6 @@ Legal:
 	    <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter" />
 	</target>
 
-    <target name="init" depends="eclipse-setcompiler">
 
 		<!-- Basics -->
     	<property name="name" value="JSAP" />
@@ -69,6 +68,7 @@ Legal:
 		<property name="updates" value="For the latest version and documentation, please visit ${url}" />
 		<property name="updates.html" value="For the latest version and documentation, please visit &lt;a href='${url}'&gt;${url}&lt;/a&gt;" />
 		
+    <target name="init" depends="eclipse-setcompiler">
 
 		<!-- Create destination directories if needed. -->
         <mkdir dir="${build}"/>
