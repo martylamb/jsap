@@ -1,0 +1,26 @@
+JSAP - Java Simple Argument Parser
+Copyright (c) 2002-2004, Martian Software, Inc.
+
+
+LICENSE
+-------  
+JSAP is licensed under the Lesser GNU Public License.
+A copy of this license is available at
+http://www.fsf.org/licenses/licenses.html#LGPL
+
+
+JAVA LGPL CLARIFICATION
+-----------------------
+JSAP is Free Software. The LGPL license is sufficiently
+flexible to allow the use of JSAP in both open source
+and commercial projects. Using JSAP (by importing JSAP's
+public interfaces in your Java code), and extending JSAP
+(by subclassing) are considered by the authors of JSAP
+to be dynamic linking. Hence our interpretation of the
+LGPL is that the use of the unmodified JSAP or binary does
+not affect the license of your application code.
+
+If you modify JSAP and redistribute your modifications,
+the LGPL applies. 
+
+(based upon similar clarification at http://www.hibernate.org/ )

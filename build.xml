@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 
- ==========================================================================
+==========================================================================
 
- JSAP build file
+JSAP build file
 
 Author:
- Martin Lamb
+ Marty Lamb
+ http://www.martiansoftware.com/contact.html
 
 Legal:
- Copyright (c) 2002, Martin Lamb All rights reserved.
+ Copyright (c) 2002-2004, Martian Software, Inc.
+ This file is made available under the LGPL as described in the accompanying
+ LICENSE.TXT file.
 
 ==============================================================================
  
-
 --> 
 <project basedir="." default="help" name="jsap">
 
@@ -23,7 +25,7 @@ Legal:
 	<!-- Basics -->
    	<property name="name" value="JSAP" />
     <property name="version" value="1.0.3"/>
-    <property name="year" value="2002-2003"/>
+    <property name="year" value="2002-2004"/>
 
 	<!-- Directories -->
 	<property name="buildfile" value="build.xml"/>
@@ -34,7 +36,6 @@ Legal:
 	<property name="javadoc.tmp.src" value="${javadoc}/tmpsrc"/>
     <property name="dist" value="dist"/>
     <property name="lib" value="lib"/>
-    <property name="devlib" value="devlib"/>
 
 	<!-- Special Files -->
     <property name="testFiles" value="**/Test*" />
@@ -49,30 +50,27 @@ Legal:
 
 	<!-- END OF PROPERTIES ********************************************************************************** -->
 
+	<!-- required for build to work in eclipse -->
 	<target name="eclipse-setcompiler" if="eclipse.running">
 	    <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter" />
 	</target>
 
+	<!-- ensure required directories exist -->
     <target name="init" depends="eclipse-setcompiler">
-
-		<!-- Create destination directories if needed. -->
         <mkdir dir="${build}"/>
         <mkdir dir="${javadoc}"/>
         <mkdir dir="${dist}"/>
-        
         <!-- Who knows... we might need this for something. -->
         <tstamp/>
-        
     </target>
 
-	<path id="devlib.class.path">
-		<pathelement location="${devlib}/junit.jar"/>
-	</path>
-
+	<!-- jars required for build -->
 	<path id="lib.class.path">
 		<pathelement location="${lib}/ant.jar"/>
+		<pathelement location="${lib}/junit.jar"/>
 	</path>
 
+	<!-- print target list -->
 	<target name="help">
 		<echo>
 
@@ -85,7 +83,7 @@ Targets:
   compile-tests - compiles the JSAP API and JUnit test cases
   compile-all	- compiles the JSAP API, JUnit test cases, and examples
   test          - compiles the JSAP API and tests it
-  build         - compiles the JSAP API and builds JSAP.jar
+  jar           - compiles the JSAP API and builds JSAP.jar
   javadoc       - compiles the JSAP API and generates javadoc documentation
   dist			- compiles the JSAP API, builds the jar file, runs javadoc, and
   				  creates source and binary distribution files.
@@ -94,6 +92,7 @@ Targets:
 		</echo>
 	</target>
 
+	<!-- delete all intermediate files -->
     <target name="clean" depends="init">
         <delete dir="${build}" verbose="true"/>
         <delete dir="${javadoc}" verbose="true"/>
@@ -103,6 +102,7 @@ Targets:
         <mkdir dir="${dist}"/>
     </target>
     
+    <!-- compile the JSAP API -->
     <target name="compile-api" depends="init" >
         <javac destdir="${build}" srcdir="${src}">
         	<exclude name="${testFiles}" />
@@ -111,12 +111,10 @@ Targets:
         </javac>
     </target>
 
+	<!-- compile the JSAP API and JUnit tests -->
     <target name="compile-tests" depends="init" >
         <javac destdir="${build}" srcdir="${src}">
         	<exclude name="${exampleFiles}" />
-        	<classpath>
-        		<pathelement location="${devlib}/junit.jar"/>
-        	</classpath>
         	<classpath refid="lib.class.path" />
         </javac>
         <copy todir="${build}">
@@ -126,25 +124,27 @@ Targets:
   		</copy>
     </target>
 
+	<!-- compile the JSAP API, JUnit tests, and examples -->
     <target name="compile-all" depends="init" >
         <javac destdir="${build}" srcdir="${src}">
-        	<classpath refid="devlib.class.path" />
         	<classpath refid="lib.class.path" />
         </javac>
     </target>
 
+	<!-- run the JUnit tests -->
 	<target name="test" depends="compile-tests" >
         <junit printsummary="on">
             <test name="com.martiansoftware.jsap.TestAll"/>
             <formatter type="plain" usefile="false"/>
-            <classpath refid="devlib.class.path" />
+            <classpath refid="lib.class.path" />
             <classpath>
                 <pathelement location="${build}"/>
             </classpath>
         </junit>
     </target>
 
-    <target name="build" depends="clean,test">
+	<!-- make the jar -->
+    <target name="jar" depends="clean,test">
         <mkdir dir="${dist}"/>
         <jar basedir="${build}" jarfile="${dist}/${jarname}">
         	<exclude name="${testFiles}" />
@@ -152,6 +152,7 @@ Targets:
         </jar>
     </target> 
 
+	<!-- generate javadocs -->
     <target name="javadoc" depends="compile-api">
     	<delete dir="${javadoc}"/>
         <mkdir dir="${javadoc}"/>
@@ -169,12 +170,16 @@ Targets:
         </javadoc>
     </target>
 
-	<target name="dist" depends="build,javadoc">
+	<!-- build distributable files -->
+	<target name="dist" depends="jar,javadoc">
+	
+		<!-- copy files to a temp directory for packaging -->
 		<property name="distimage" value="${dist}/${name}-${version}"/>
 
 		<delete dir="${distimage}" />
 		<mkdir dir="${distimage}" />
 		<copy todir="${distimage}" file="${buildfile}" />
+		<copy todir="${distimage}" file="LICENSE.TXT" />
 
 		<!-- copy source files into temp directory -->
 		<mkdir dir="${distimage}/${src}"/>
@@ -182,20 +187,19 @@ Targets:
 			<fileset dir="${src}" />
 		</copy>
 
-		<!-- copy jar file into temp directory -->
+		<!-- copy jar files into temp directory -->
 		<mkdir dir="${distimage}/${lib}"/>
 		<copy todir="${distimage}/${lib}" file="${dist}/${jarname}" />
-		
-		<!-- copy any libraries required for development into temp directory -->
-		<mkdir dir="${distimage}/${devlib}"/>
-		<copy todir="${distimage}/${devlib}">
-			<fileset dir="${devlib}" />
+		<copy todir="${distimage}/${lib}">
+			<fileset dir="${lib}" />
 		</copy>
 		
 		<!-- copy documentation into temp directory -->
 		<mkdir dir="${distimage}/${doc}"/>
 		<copy todir="${distimage}/${doc}">
-			<fileset dir="${doc}" />
+			<fileset dir="${doc}">
+				<exclude name="**/src/**"/>
+			</fileset>
 		</copy>
 
 		<!-- make the source zip file -->
@@ -207,16 +211,23 @@ Targets:
 		<!-- the binary distribution file should just contain the jar and the documentation. -->
 		<delete file="${distimage}/${buildfile}" />
 		<delete dir="${distimage}/${src}" />
-		<delete dir="${distimage}/${devlib}" />
+		<delete>
+			<fileset dir="${distimage}/${lib}" excludes="${jarname}" />
+		</delete>
 
 		<!-- make the binary zip file -->
 		<zip destfile="${dist}/${name}-${version}.zip" basedir="${distimage}" update="false" />
 		<tar tarfile="${dist}/${name}-${version}.tar" basedir="${distimage}"/>
-		<gzip zipfile="${name}-${version}.tar.gz" src="${distimage}.tar"/>
+		<gzip zipfile="${dist}/${name}-${version}.tar.gz" src="${distimage}.tar"/>
 
+		<!-- delete the tar files that are now gzipped -->
+		<delete>
+			<fileset dir="${dist}" includes="*.tar" />
+		</delete>
 <!--		<delete dir="${distimage}"/> -->
 	</target>
 
+	<!-- build distributable files from scratch -->
 	<target name="cleandist" depends="clean, dist">
 	</target>
 	
