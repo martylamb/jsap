@@ -22,7 +22,7 @@ Legal:
 
 	<!-- Basics -->
    	<property name="name" value="JSAP" />
-    <property name="version" value="1.0.1a"/>
+    <property name="version" value="1.0.2"/>
     <property name="year" value="2002-2003"/>
 
 	<!-- Directories -->
