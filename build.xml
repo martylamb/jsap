@@ -35,8 +35,6 @@ Legal:
     <property name="dist" value="dist"/>
     <property name="lib" value="lib"/>
     <property name="devlib" value="devlib"/>
-    <property name="dist.tmp.bin" value="${dist}/tmp-bin"/>
-    <property name="dist.tmp.src" value="${dist}/tmp-src"/>
 
 	<!-- Special Files -->
     <property name="testFiles" value="**/Test*" />
@@ -45,21 +43,9 @@ Legal:
 
 	<!-- Administrivia -->
 	<property name="url" value="http://www.martiansoftware.com/jsap" />
-		
-	<property name="author.marty" value="Martin Lamb" />
-    <property name="author.marty.html" value="&lt;a href='mailto:marty%20at%20martiansoftware.com'&gt;Martin Lamb&lt;/a&gt;" />
-        
-    <property name="authors.all" value="${author.marty}" />
-    <property name="authors.all.html" value="${author.marty.html}" />
-        
-    <property name="copyrightowners.all" value="${author.marty}" />
-    <property name="copyrightowners.all.html" value="${author.marty.html}" />
-        
-    <property name="copyright" value="Copyright (c) ${year} ${copyrightowners.all}.  All Rights Reserved." />
-    <property name="copyright.html" value="Copyright &amp;copy; ${year}, ${copyrightowners.all.html}.  All Rights Reserved." />
-
-	<property name="updates" value="For the latest version and documentation, please visit ${url}" />
-	<property name="updates.html" value="For the latest version and documentation, please visit &lt;a href='${url}'&gt;${url}&lt;/a&gt;" />
+    <property name="copyrightowners" value="Martian Software, Inc." />
+    <property name="copyright.htm" value="Copyright &amp;copy; ${year}, ${copyrightowners}.  All Rights Reserved." />
+	<property name="updates.htm" value="For the latest version and documentation, please visit &lt;a href='${url}'&gt;${url}&lt;/a&gt;" />
 
 	<!-- END OF PROPERTIES ********************************************************************************** -->
 
@@ -98,7 +84,6 @@ Targets:
   compile-api   - compiles the JSAP API
   compile-tests - compiles the JSAP API and JUnit test cases
   compile-all	- compiles the JSAP API, JUnit test cases, and examples
-  checkstyle    - compiles everything and checks the code style against Sun conventions.
   test          - compiles the JSAP API and tests it
   build         - compiles the JSAP API and builds JSAP.jar
   javadoc       - compiles the JSAP API and generates javadoc documentation
@@ -170,109 +155,69 @@ Targets:
     <target name="javadoc" depends="compile-api">
     	<delete dir="${javadoc}"/>
         <mkdir dir="${javadoc}"/>
-        <mkdir dir="${javadoc.tmp.src}"/>
-        <copy todir="${javadoc.tmp.src}">
-    		<fileset dir="${src}">
-    			<exclude name="${testFiles}" />
-    			<exclude name="${exampleFiles}" />
-			</fileset>
-  		</copy>
-  		
-  		<replace dir="${javadoc.tmp.src}" token="@@VERSION@@" value="${version}">
-  			<include name="**/*.java"/>
-  		</replace>
-  		<replace dir="${javadoc.tmp.src}" token="@@AUTHOR_MARTY@@" value="${author.marty.html}">
-  			<include name="**/*.java"/>
-  		</replace>
-  		<replace dir="${javadoc.tmp.src}" token="@@JARNAME@@" value="${jarname}">
-  			<include name="**/*.java"/>
-  		</replace>
 
         <javadoc 
         	public="true" 
         	destdir="${javadoc}" 
-        	sourcepath="${javadoc.tmp.src}" 
+        	sourcepath="${src}" 
         	packagenames="com.martiansoftware.*"
         	windowtitle="JSAP: the Java Simple Argument Parser" >
         	
+        	<link href="http://java.sun.com/j2se/1.4.2/docs/api/" />
 			<bottom>${copyright.html}&lt;br&gt;${updates.html}</bottom>
 			
         </javadoc>
-		<delete dir="${javadoc.tmp.src}" />
     </target>
 
-	<target name="checkstyle" depends="compile-all">
-		<checkstyle allowTabs="yes">
-			<fileset dir="${src}" includes="**/*.java"/>
-		</checkstyle>
-	</target>
-	
-	<target name="xmldocs">
-		<!-- I give up.  I can't find a way to get the style task to work here.  If I see
-		     the message "Provider org.apache.xerces.jaxp.SAXParserFactoryImpl not found"
-		     one more time, I'm going to scream. -->
-		     
-		<!-- In order for this to work, you need the xercesImpl.jar, xalan.jar, and
-		     xml-apis.jar in your classpath.  If you can run "java org.apache.xalan.xslt.Process"
-		     (and just get a bunch of usage information), you should be good to go. -->
-		     
-		<exec executable="java">
-			<arg value="org.apache.xalan.xslt.Process" />
-			<arg value="-IN" />
-			<arg value="${doc}/src/manual.xml" />
-			<arg value="-OUT" />
-			<arg value="${doc}/manual.html" />
-			<arg value="-XSL" />
-			<arg value="${doc}/src/manual.xsl" />
-		</exec>
-	</target>
-	
 	<target name="dist" depends="build,javadoc">
-		<delete dir="${dist.tmp.src}" />
-		<mkdir dir="${dist.tmp.src}" />
-		<mkdir dir="${dist.tmp.src}/${name}-${version}" />
-		<copy todir="${dist.tmp.src}/${name}-${version}" file="${buildfile}" />
+		<property name="distimage" value="${dist}/${name}-${version}"/>
+
+		<delete dir="${distimage}" />
+		<mkdir dir="${distimage}" />
+		<copy todir="${distimage}" file="${buildfile}" />
 
 		<!-- copy source files into temp directory -->
-		<mkdir dir="${dist.tmp.src}/${name}-${version}/${src}"/>
-		<copy todir="${dist.tmp.src}/${name}-${version}/${src}">
+		<mkdir dir="${distimage}/${src}"/>
+		<copy todir="${distimage}/${src}">
 			<fileset dir="${src}" />
 		</copy>
 
 		<!-- copy jar file into temp directory -->
-		<mkdir dir="${dist.tmp.src}/${name}-${version}/${lib}"/>
-		<copy todir="${dist.tmp.src}/${name}-${version}/${lib}" file="${dist}/${jarname}" />
+		<mkdir dir="${distimage}/${lib}"/>
+		<copy todir="${distimage}/${lib}" file="${dist}/${jarname}" />
 		
 		<!-- copy any libraries required for development into temp directory -->
-		<mkdir dir="${dist.tmp.src}/${name}-${version}/${devlib}"/>
-		<copy todir="${dist.tmp.src}/${name}-${version}/${devlib}">
+		<mkdir dir="${distimage}/${devlib}"/>
+		<copy todir="${distimage}/${devlib}">
 			<fileset dir="${devlib}" />
 		</copy>
 		
 		<!-- copy documentation into temp directory -->
-		<mkdir dir="${dist.tmp.src}/${name}-${version}/${doc}"/>
-		<copy todir="${dist.tmp.src}/${name}-${version}/${doc}">
+		<mkdir dir="${distimage}/${doc}"/>
+		<copy todir="${distimage}/${doc}">
 			<fileset dir="${doc}" />
 		</copy>
 
 		<!-- make the source zip file -->
-		<zip destfile="${dist}/${name}-${version}-${src}.zip" basedir="${dist.tmp.src}" update="false" />
-		<tar tarfile="${dist}/${name}-${version}-${src}.tar" basedir="${dist.tmp.src}"/>
+		<zip destfile="${dist}/${name}-${version}-${src}.zip" basedir="${distimage}" update="false" />
+		<tar tarfile="${dist}/${name}-${version}-${src}.tar" basedir="${distimage}"/>
 		<gzip zipfile="${name}-${version}-${src}.tar.gz" src="${name}-${version}-${src}.tar"/>
 		
 		<!-- delete the buildfile, source files and development libaries from the temp directory. -->
 		<!-- the binary distribution file should just contain the jar and the documentation. -->
-		<delete file="${dist.tmp.src}/${name}-${version}/${buildfile}" />
-		<delete dir="${dist.tmp.src}/${name}-${version}/${src}" />
-		<delete dir="${dist.tmp.src}/${name}-${version}/${devlib}" />
+		<delete file="${distimage}/${buildfile}" />
+		<delete dir="${distimage}/${src}" />
+		<delete dir="${distimage}/${devlib}" />
 
 		<!-- make the binary zip file -->
-		<zip destfile="${dist}/${name}-${version}.zip" basedir="${dist.tmp.src}" update="false" />
-		<tar tarfile="${dist}/${name}-${version}.tar" basedir="${dist.tmp.src}"/>
-		<gzip zipfile="${name}-${version}.tar.gz" src="${name}-${version}.tar"/>
+		<zip destfile="${dist}/${name}-${version}.zip" basedir="${distimage}" update="false" />
+		<tar tarfile="${dist}/${name}-${version}.tar" basedir="${distimage}"/>
+		<gzip zipfile="${name}-${version}.tar.gz" src="${distimage}.tar"/>
 
-<!--		<delete dir="${dist.tmp.src}"/> -->
+<!--		<delete dir="${distimage}"/> -->
 	</target>
 
+	<target name="cleandist" depends="clean, dist">
+	</target>
 	
 </project>
