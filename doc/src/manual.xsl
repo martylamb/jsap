@@ -59,6 +59,29 @@
 	</li>
 </xsl:template>
 
+<xsl:template match="console">
+	<br/>
+	<center>
+		<table width="80%" cellpadding="0" cellspacing="0" border="1">
+			<tr>
+				<td bgcolor="#000000" align="left">
+					<font color="#ffffff" size="2">
+						<xsl:apply-templates/><br/>
+					</font>
+				</td>
+			</tr>
+		</table>
+	</center>
+</xsl:template>
+
+<xsl:template match="console/input">
+	<pre><br/>[mlamb@kang]$ <b><xsl:apply-templates/></b></pre>
+</xsl:template>
+
+<xsl:template match="console/output">
+	<pre><br/><xsl:apply-templates/></pre>
+</xsl:template>
+
 <xsl:template match="example-src">
 	<center>
 		<table width="80%" cellpadding="10" cellspacing="0" border="1">

@@ -9,10 +9,16 @@
 					Why do we need another command line parser?
 				</title>
 				<p>
-					Put simply, I got tired of writing simple command line parsers for every java utility program I wrote.  I would usually just throw together something simple, requiring a certain number of arguments and deciding that args[0] would always mean, say, an input file, and args[1] would be an output file.  It was fine for simpler utilities with just a few parameters, but it didn't handle switches - and if I wanted anything other than a String from the command line, I had to write that parsing into the program, too.  What annoyed me was that none of this had anything to do with the actual task for which the utility was intended.
+					Put simply, I got tired of writing simple command line parsers for every java utility program I wrote.
+					I wanted a simple tool that would support complex command lines - and return more than just Strings.
+					If one of the options for a program, for example, is a number, it should be
+					retrievable by the program AS a number.  JSAP does this, and allows developers to add new command line
+					data types as needed.
 				</p>
 				<p>
-					I found several parsers on the Internet, all of which handled switches, but none of which had the versatility I wanted in terms of return types and configuration files.  Hence JSAP - the Java Simple Argument Parser.
+					I also wanted the ability to read default values from a configuration file, which could be overridden
+					by the command line.  JSAP supports this, and in fact supports multiple, prioritized configuration
+					files as well.
 				</p>
 			</section>
 			<section>
@@ -20,10 +26,18 @@
 					So what does JSAP actually <i>do</i> then?
 				</title>
 				<p>
-					JSAP not only guarantees that your command line was successfully parsed, but it instantiates objects of types specified by the developer based upon that command line.  If you tell JSAP that one of your parameters is an Integer, for example, and the user does not provide a String that can be converted to an Integer when invoking the program, JSAP will throw a ParseException when you have it parse the command line.  If no exception is thrown, you are guaranteed an Integer when you request that parameter's value from your program.  There's a pretty big (and growing) list of return types suppored by JSAP; you may want to <link target="optionparsers">skip ahead a little and check it out</link>.
+					JSAP not only guarantees that your command line was successfully parsed, but it instantiates objects of 
+					types specified by the developer based upon that command line.  If you tell JSAP that one of your 
+					parameters is an Integer, for example, and the user does not provide a String that can be converted to 
+					an Integer when invoking the program, JSAP will alert your program to the fact that there was a problem
+					with the command line.  If JSAP indicates that your command line was successfully parsed, you are 
+					guaranteed an Integer when you request that parameter's value from your program.  There's a pretty big 
+					(and growing) list of return types suppored by JSAP; you may want to <link target="optionparsers">skip 
+					ahead a little and check it out</link>.
 				</p>
 				<p>
-					JSAP provides not only for default values for its parameters, but for an entire <i>chain</i> of defaults.  With a couple extra lines of code, JSAP will, for example:
+					JSAP provides not only for default values for its parameters, but for an entire <i>chain</i> of defaults.  
+					With a couple extra lines of code, JSAP will, for example:
 					<ol>
 						<li>Parse the command line.</li>
 						<li>For any omitted parameters, look for values in ~/.yourProgramName.conf</li>
@@ -39,9 +53,9 @@
 		<body>
 			<section>
 				<p>
-					This chapter should get you up and running with JSAP very quickly.  It starts out with the most basic functionality
-so you can start using it within five minutes.  We'll start with a simple example and gradually build upon 
-it in order to demonstrate the various features of JSAP.
+					This chapter should get you up and running with JSAP very quickly.  It starts out with the most basic 
+					functionality so you can start using it within five minutes.  We'll start with a simple example and 
+					gradually build upon it in order to demonstrate the various features of JSAP.
 				</p>
 				<p>
 					Everyone else begins with a "Hello, World!" program, so we will, too.  
@@ -52,6 +66,11 @@ it in order to demonstrate the various features of JSAP.
 		System.out.println("Hello, World!");
 	}
 }</example-src>
+				<console id="1">
+					<input>java HelloWorld_1</input>
+					<output>Hello, World!</output>
+				</console>
+
 			</section>
 		</body>
 	</chapter>
