@@ -16,58 +16,56 @@ Legal:
 --> 
 <project basedir="." default="help" name="jsap">
 
-	<!-- see checkstyle.sourceforge.net for details -->
-	<taskdef name="checkstyle" classname="com.puppycrawl.tools.checkstyle.CheckStyleTask"/>
 
+	<!-- PROPERTIES ***************************************************************************************** -->
 
+	<!-- Basics -->
+   	<property name="name" value="JSAP" />
+    <property name="version" value="1.0.alpha"/>
+    <property name="year" value="2002"/>
+
+	<!-- Directories -->
+	<property name="buildfile" value="build.xml"/>
+    <property name="src" value="src"/>
+    <property name="build" value="build"/>
+    <property name="doc" value="doc"/>
+    <property name="javadoc" value="${doc}/javadoc"/>
+	<property name="javadoc.tmp.src" value="${javadoc}/tmpsrc"/>
+    <property name="dist" value="dist"/>
+    <property name="lib" value="lib"/>
+    <property name="devlib" value="devlib"/>
+    <property name="dist.tmp.bin" value="${dist}/tmp-bin"/>
+    <property name="dist.tmp.src" value="${dist}/tmp-src"/>
+
+	<!-- Special Files -->
+    <property name="testFiles" value="**/Test*" />
+    <property name="exampleFiles" value="com/martiansoftware/jsap/examples/" />
+    <property name="jarname" value="${name}_${version}.jar" />
+
+	<!-- Administrivia -->
+	<property name="url" value="http://www.martiansoftware.com/jsap" />
+		
+	<property name="author.marty" value="Martin Lamb" />
+    <property name="author.marty.html" value="&lt;a href='mailto:marty%20at%20martiansoftware.com'&gt;Martin Lamb&lt;/a&gt;" />
+        
+    <property name="authors.all" value="${author.marty}" />
+    <property name="authors.all.html" value="${author.marty.html}" />
+        
+    <property name="copyrightowners.all" value="${author.marty}" />
+    <property name="copyrightowners.all.html" value="${author.marty.html}" />
+        
+    <property name="copyright" value="Copyright (c) ${year} ${copyrightowners.all}.  All Rights Reserved." />
+    <property name="copyright.html" value="Copyright &amp;copy; ${year}, ${copyrightowners.all.html}.  All Rights Reserved." />
+
+	<property name="updates" value="For the latest version and documentation, please visit ${url}" />
+	<property name="updates.html" value="For the latest version and documentation, please visit &lt;a href='${url}'&gt;${url}&lt;/a&gt;" />
+
+	<!-- END OF PROPERTIES ********************************************************************************** -->
+		
 	<target name="eclipse-setcompiler" if="eclipse.running">
 	    <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter" />
 	</target>
 
-
-		<!-- Basics -->
-    	<property name="name" value="JSAP" />
-        <property name="version" value="1.0.alpha"/>
-        <property name="year" value="2002"/>
-
-		<!-- Directories -->
-		<property name="buildfile" value="build.xml"/>
-        <property name="src" value="src"/>
-        <property name="build" value="build"/>
-        <property name="doc" value="doc"/>
-        <property name="javadoc" value="${doc}/javadoc"/>
-		<property name="javadoc.tmp.src" value="${javadoc}/tmpsrc"/>
-        <property name="dist" value="dist"/>
-        <property name="lib" value="lib"/>
-        <property name="devlib" value="devlib"/>
-        <property name="dist.tmp.bin" value="${dist}/tmp-bin"/>
-        <property name="dist.tmp.src" value="${dist}/tmp-src"/>
-
-		<!-- Special Files -->
-        <property name="testFiles" value="**/_Test*" />
-        <property name="testConfFiles" value="**/_Test*.conf" />
-        <property name="exampleFiles" value="com/martiansoftware/jsap/examples/" />
-        
-        <property name="jarname" value="${name}_${version}.jar" />
-
-		<!-- Administrivia -->
-		<property name="url" value="http://www.martiansoftware.com/jsap" />
-		
-		<property name="author.marty" value="Martin Lamb" />
-        <property name="author.marty.html" value="&lt;a href='mailto:marty%20at%20martiansoftware.com'&gt;Martin Lamb&lt;/a&gt;" />
-        
-        <property name="authors.all" value="${author.marty}" />
-        <property name="authors.all.html" value="${author.marty.html}" />
-        
-        <property name="copyrightowners.all" value="${author.marty}" />
-        <property name="copyrightowners.all.html" value="${author.marty.html}" />
-        
-     	<property name="copyright" value="Copyright (c) ${year} ${copyrightowners.all}.  All Rights Reserved." />
-        <property name="copyright.html" value="Copyright &amp;copy; ${year}, ${copyrightowners.all.html}.  All Rights Reserved." />
-
-		<property name="updates" value="For the latest version and documentation, please visit ${url}" />
-		<property name="updates.html" value="For the latest version and documentation, please visit &lt;a href='${url}'&gt;${url}&lt;/a&gt;" />
-		
     <target name="init" depends="eclipse-setcompiler">
 
 		<!-- Create destination directories if needed. -->
@@ -151,7 +149,7 @@ Targets:
 
 	<target name="test" depends="compile-tests" >
         <junit printsummary="on">
-            <test name="com.martiansoftware.jsap._TestEverything"/>
+            <test name="com.martiansoftware.jsap.TestEverything"/>
             <formatter type="plain" usefile="false"/>
             <classpath refid="devlib.class.path" />
             <classpath>
@@ -189,8 +187,15 @@ Targets:
   			<include name="**/*.java"/>
   		</replace>
 
-        <javadoc public="true" destdir="${javadoc}" sourcepath="${javadoc.tmp.src}" packagenames="com.martiansoftware.*">
+        <javadoc 
+        	public="true" 
+        	destdir="${javadoc}" 
+        	sourcepath="${javadoc.tmp.src}" 
+        	packagenames="com.martiansoftware.*"
+        	windowtitle="JSAP: the Java Simple Argument Parser" >
+        	
 			<bottom>${copyright.html}&lt;br&gt;${updates.html}</bottom>
+			
         </javadoc>
 		<delete dir="${javadoc.tmp.src}" />
     </target>
