@@ -604,6 +604,8 @@ ${run:java com.martiansoftware.jsap.examples.HelloWorld_5 --nosuchflag}</screen>
   </chapter>
 
   <chapter>
-    <para></para>
+    <title>Reporting Problems</title>
+
+    <para>Please send any problem reports to jsap at martiansoftware dot com.</para>
   </chapter>
 </book>
