@@ -7,7 +7,7 @@
 <project basedir="." default="help" name="jsap">
 
     <target name="init">
-        <property name="version" value="0_8"/>
+        <property name="version" value="1.0"/>
         <property name="src" value="src"/>
         <property name="build" value="build"/>
         <property name="javadoc" value="doc/javadoc"/>
@@ -70,8 +70,9 @@ Targets:
     </target>
 
     <target depends="compile" name="javadoc">
+    	<delete dir="${javadoc}"/>
         <mkdir dir="${javadoc}"/>
-        <javadoc destdir="${javadoc}" excludepackagenames="com.ntpgroup.jsap.examples" packagenames="com.ntpgroup.*,com.ntpgroup.arguments.*" sourcepath="${src}"/>
+        <javadoc public="true" destdir="${javadoc}" excludepackagenames="com.martiansoftware.jsap.junit" packagenames="com.martiansoftware.*,com.martiansoftware.jsap.*" sourcepath="${src}"/>
     </target>    
 
     <target depends="init" name="clean">
