@@ -130,9 +130,9 @@
 
         <listitem>
           <para>An option that is not preceded by a flag, and whose meaning is
-          conveyed by its position in the command line. In the command
-          &#34;java -cp myjar.jar MyClass&#34;, &#34;MyClass&#34; is an
-          unflagged option.</para>
+          conveyed by its position in the command line relative to other
+          Unflagged Options. In the command &#34;java -cp myjar.jar
+          MyClass&#34;, &#34;MyClass&#34; is an unflagged option.</para>
         </listitem>
       </varlistentry>
 
@@ -173,15 +173,15 @@
     up and running with JSAP very quickly. We&#39;ll start with a simple
     example and gradually build upon it in order to demonstrate some of the
     basic features of JSAP. You&#39;ll have to read further for some of the
-    cooler features.</para>
+    more interesting features.</para>
 
     <sect1>
       <title>HelloWorld_1</title>
 
-      <para> Everyone else begins with a &#34;Hello, World!&#34; program, so
-      we will, too.</para>
+      <para>Everyone else begins with a &#34;Hello, World!&#34; program, so we
+      will, too.</para>
 
-      <programlisting>${source:com/martiansoftware/jsap/examples/HelloWorld_1.java}</programlisting>
+      <programlisting>@@Manual_HelloWorld_1@@</programlisting>
 
       <screen>${run:java com.martiansoftware.jsap.examples.HelloWorld_1}</screen>
 
@@ -192,7 +192,7 @@
     <sect1>
       <title>HelloWorld_2</title>
 
-      <programlisting>${source:com/martiansoftware/jsap/examples/HelloWorld_2.java}</programlisting>
+      <programlisting>@@Manual_HelloWorld_2@@</programlisting>
 
       <para>That&#39;s pretty verbose. Later on you&#39;ll see ways to trim
       this down quite a bit. Here&#39;s what&#39;s going on:</para>
@@ -260,7 +260,7 @@ ${run:java com.martiansoftware.jsap.examples.HelloWorld_2 -n 5}</screen>
     <sect1>
       <title>HelloWorld_3</title>
 
-      <programlisting>${source:com/martiansoftware/jsap/examples/HelloWorld_3.java}</programlisting>
+      <programlisting>@@Manual_HelloWorld_3@@</programlisting>
 
       <para>What did we do? We created a new &#34;switch&#34; to determine how
       verbose we&#39;re going to be with our greeting, registered it with
@@ -292,15 +292,62 @@ ${run:java com.martiansoftware.jsap.examples.HelloWorld_3 -vn 2}</screen>
     <sect1>
       <title>HelloWorld_4</title>
 
-      <programlisting>${source:com/martiansoftware/jsap/examples/HelloWorld_4.java}</programlisting>
+      <para>Here we&#39;ve added an UnflaggedOption to greet specific names.
+      It&#39;s marked as &#34;greedy&#34;, so any number of names on the
+      command line are associated with this option.</para>
+
+      <programlisting>@@Manual_HelloWorld_4@@</programlisting>
 
       <screen>${run:java com.martiansoftware.jsap.examples.HelloWorld_4 -n 2 --verbose Bender Fry Leela}
 
 ${run:java com.martiansoftware.jsap.examples.HelloWorld_4 Kif -n 3}
 
 ${run:java com.martiansoftware.jsap.examples.HelloWorld_4 -v -n 2}</screen>
+    </sect1>
 
-      <para></para>
+    <sect1>
+      <title>HelloWorld_5</title>
+
+      <para>All or the previous examples showed command lines flawlessly typed
+      by the user. This, of course, never happens. One way to handle this is
+      to print usage information:</para>
+
+      <programlisting>@@Manual_HelloWorld_5@@</programlisting>
+
+      <screen>${run:java com.martiansoftware.jsap.examples.HelloWorld_5 -n 2 -n 4}
+
+${run:java com.martiansoftware.jsap.examples.HelloWorld_5 --nosuchflag}</screen>
+    </sect1>
+
+    <sect1>
+      <title>HelloWorld_6</title>
+
+      <para>Of course, sometimes usage information doesn&#39;t provide enough
+      detail. How about some actual program help?</para>
+
+      <programlisting>@@Manual_HelloWorld_6@@</programlisting>
+
+      <screen>${run:java com.martiansoftware.jsap.examples.HelloWorld_5 -n 2 -n 4}
+
+${run:java com.martiansoftware.jsap.examples.HelloWorld_5 --nosuchflag}</screen>
+
+      <para>In HelloWorld_3 you learned how to add a switch (verbose). Combine
+      a -h / --help switch with the getHelp() method as used here, and
+      you&#39;ve made your program much friendlier.</para>
+    </sect1>
+
+    <sect1>
+      <title>HelloWorld_7</title>
+
+      <para>Showing the expected input of your program can be helpful, but it
+      can be even more helpful to tell the user specifically what they did
+      wrong. It&#39;s pretty easy:</para>
+
+      <programlisting>@@Manual_HelloWorld_7@@</programlisting>
+
+      <screen>${run:java com.martiansoftware.jsap.examples.HelloWorld_5 -n 2 -n 4}
+
+${run:java com.martiansoftware.jsap.examples.HelloWorld_5 --nosuchflag}</screen>
     </sect1>
   </chapter>
 
@@ -361,6 +408,18 @@ ${run:java com.martiansoftware.jsap.examples.HelloWorld_4 -v -n 2}</screen>
       <para>Both of these methods return a JSAPResult object encapsulating the
       parsed command line.</para>
     </sect1>
+
+    <sect1>
+      <title>Using the JSAPResult</title>
+
+      <para>The result of JSAP.parse() is a JSAPResult object. This contains
+      all of the values for each command line parameter. There are a large
+      number of accessor methods available for reading the values:
+      getString(), getBoolean(), getInteger(), getInetAddress(), getColor(),
+      ...far too many to include here, including Iterators and arrays for
+      reading multivalue parameters. The javadocs are pretty useful for this
+      class.</para>
+    </sect1>
   </chapter>
 
   <chapter>
@@ -383,48 +442,168 @@ ${run:java com.martiansoftware.jsap.examples.HelloWorld_4 -v -n 2}</screen>
   <chapter>
     <title>Switches</title>
 
-    <para></para>
+    <para>A Switch is just what it sounds like: a setting that is either on or
+    off. If a switch is present on the command line,
+    JSAPResult.getBoolean(&#34;yourSwitchID&#34;) will return true. Otherwise,
+    it will return false.</para>
   </chapter>
 
   <chapter>
     <title>Flagged Options</title>
 
-    <para></para>
+    <para>A Flagged Option is a value preceded by either a long or short flag
+    indicating the value&#39;s meaning (see the example in Chapter 2). The
+    FlaggedOption class provides a setAllowMultipleDeclarations(boolean)
+    method that informs JSAP whether the FlaggedOption may be repeated on the
+    command line. For example, if your program uses a FlaggedOption to specify
+    an input file (say, &#34;-i file&#34;), multiple declarations will allow
+    your users to enter &#34;-i file1 -i file2 -i file3 ...&#34;. The multiple
+    values can be accessed through JSAPResult&#39;s getXXXArray() methods.</para>
   </chapter>
 
   <chapter>
     <title>Unflagged Options</title>
 
-    <para></para>
+    <para>Unflagged Options are values whose meanings are indicated by their
+    position on the command line relative to other Unflagged Options (see
+    example in Chapter 2). JSAP expects Unflagged Options on the command line
+    in the order in which they were registered with the JSAP.</para>
+
+    <para>&#34;Greedy&#34; Unflagged Options (set via
+    UnflaggedOption.setGreedy(boolean)) consume all remaining unflagged values
+    from the command line as multiple values. Obviously, your JSAP can have
+    only one greedy Unflagged Option, and it must be the last Unflagged Option
+    registered with the JSAP.</para>
   </chapter>
 
   <chapter>
     <title>StringParsers</title>
 
-    <para></para>
+    <para>All String-to-Object conversions are handled by StringParsers. The
+    type of Object you want to read from the command line determines which
+    StringParser you should use with your Option. If you need an int, use
+    IntegerStringParser. If you need an InetAddress, use
+    InetAddressStringParser. JSAP comes with quite a few - see the
+    com.martiansoftware.jsap.stringparsers package.</para>
+
+    <para>Of course, you may want to read your own object types from the
+    command line, or at least read a type that JSAP doesn&#39;t support out of
+    the box. No problem. Just extend com.martiansoftware.jsap.StringParser.
+    The only method you have to implement is:</para>
+
+    <programlisting>public abstract Object parse(String arg) throws com.martiansoftware.jsap.ParseException;</programlisting>
+
+    <para>You can now use your own StringParser with any JSAP option. JSAP
+    won&#39;t have a built-in accessor method for the class of the object
+    you&#39;re returning, so you&#39;ll have to use JSAPResult.getObject() or
+    JSAPResult.getObjectArray() and re-cast the result to obtain the objects.</para>
   </chapter>
 
   <chapter>
     <title>Handling Errors</title>
 
-    <para></para>
+    <para>Users can botch program input in more ways than you could ever
+    imagine. To detect an error, check JSAPResult.success() after parsing the
+    command line. It will return false if there were any problems.</para>
+
+    <para>Once you detect a problem, you have a number of options:</para>
+
+    <itemizedlist>
+      <listitem>
+        <para>Display program usage (see HelloWorld_5 example)</para>
+      </listitem>
+
+      <listitem>
+        <para>Display help information (see HelloWorld_6 example)</para>
+      </listitem>
+
+      <listitem>
+        <para>Display messages specific to the user&#39;s errors (see
+        HelloWorld_7 example)</para>
+      </listitem>
+
+      <listitem>
+        <para>Obtain a list of parameter IDs for the problematic items through
+        JSAPResult.getBadParameterIDIterator(). Then obtain the individual
+        exceptions for each ID through JSAPResult.getExceptionIterator(String
+        id) and related methods. After that, you&#39;re on your own.</para>
+      </listitem>
+
+      <listitem>
+        <para>Any combination of the above.</para>
+      </listitem>
+    </itemizedlist>
   </chapter>
 
   <chapter>
     <title>DefaultSources and Configuration Files</title>
 
-    <para></para>
+    <para>Default program behavior can be configured in one or more files that
+    the command line merely overrides. JSAP provides a
+    registerDefaultSource(DefaultSource) method to support this. At the time
+    of this writing, the only concrete implementation of DefaultSource is
+    PropertyDefaultSource, which reads files in java.util.Properties format.</para>
+
+    <para>Multiple DefaultSources may be registered with a JSAP. When a
+    default value is sought, the DefaultSources are checked in the order in
+    which they were registered. The first default value encountered by JSAP is
+    used.</para>
+
+    <para>Yes, it&#39;s implemented through JSAP.registerDefaultSource().
+    Defaultsare checked in the order in which they are registered with the
+    JSAP.Right now the only type of DefaultSource implemented is based
+    onProperty files. When you create the PropertyDefaultSource, however,
+    youcan specify whether or not it should throw exceptions for problems
+    suchas the property file not existing. If you tell it to ignore
+    exceptions,you can make this work across platforms.For example, you might
+    want to check your user&#39;s home directory first. You can obtain the
+    users&#39; home directory through the System properties,so this would work
+    cross-platform right away (you would of course needto append
+    File.separator and the name of the file you&#39;re looking for). This
+    would be the first DefaultSource you register.Then you might want to
+    register /etc/yourprogram.conf as a source. Thiswill just be ignored on
+    Windows if you tell this DefaultSource not tothrow exceptions.Then you
+    might want to use the &#34;All Users&#34; directory on Windows, so youcan
+    get the user&#39;s home again, then use File operations to
+    obtain&#34;..\\All Users\\yourprogram.conf&#34; and register yet another
+    source.Note that the order in which these last two are done doesn&#39;t
+    matter; oneither linux or Windows, at least one of them will be
+    ignored.There&#39;s no automatic checking of any location; it&#39;s up to
+    the developerto provide the list of places to check. That might be a nice
+    thing toadd to the TO DO list</para>
+
+    <sect1>
+      <title>PropertyDefaultSource</title>
+
+      <para>PropertyDefaultSource reads default values from text files
+      consisting of zero or more lines of &#34;key=value&#34;-type
+      assignments. Property names may be parameter IDs, long flags, or short
+      flags for the parameters they address. JSAP interprets them in that
+      order (ID, then long flag, then short flag).</para>
+
+      <para>When you create a PropertyDefaultSource, you can tell it not to
+      throw Exceptions. This allows you to specify a number of possible
+      locations for files that don&#39;t have to exist.</para>
+
+      <para>A typical order in which to register PropertyDefaultSources is:<orderedlist><listitem><para>.yourprogramname
+      in the user&#39;s home directory (obtained via System properties)</para></listitem><listitem><para>/etc/yourprogramname.conf
+      on *nix systems</para></listitem><listitem><para>$YOURPROGRAM_HOME/yourprogramname.conf
+      if your program makes use of an environment variable to point to its
+      home directory</para></listitem></orderedlist></para>
+
+      <para>Note: if anyone has suggestions for a search order example for
+      Windows or Mac, please let me know.</para>
+    </sect1>
   </chapter>
 
   <chapter>
     <title>Using ANT To Make Everything Easier</title>
 
-    <para></para>
+    <para>The Ant task is still experimental. It used to work quite well, but
+    it hasn&#39;t kept up with recent changes. It&#39;s on my list.</para>
   </chapter>
 
   <chapter>
-    <title>Custom StringParsers</title>
-
     <para></para>
   </chapter>
 </book>

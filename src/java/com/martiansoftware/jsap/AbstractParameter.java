@@ -135,7 +135,7 @@ public abstract class AbstractParameter {
      * @param defaultValue the default value for this parameter.
      * @see #setDefault(String)
      */
-    public final void setDefault(String defaultValue) {
+    protected final void _setDefault(String defaultValue) {
         if (defaultValue == JSAP.NO_DEFAULT) {
             this.defaultValue = null;
         } else {
@@ -151,7 +151,7 @@ public abstract class AbstractParameter {
      * @param defaultValues the default values for this parameter.
      * @see #setDefault(String)
      */
-    public final void setDefault(String[] defaultValues) {
+    protected final void _setDefault(String[] defaultValues) {
         this.defaultValue = defaultValues;
     }
 

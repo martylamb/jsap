@@ -38,6 +38,12 @@ Legal:
     <property name="dist" value="dist"/>
     <property name="lib" value="lib"/>
 
+	<!-- Special Tasks -->
+	<taskdef
+    	name="snip"
+     	classname="com.martiansoftware.snip.Snip" 
+     	classpath="${lib}/snip-0.1.jar"/>
+
 	<!-- Special Files -->
     <property name="testFiles" value="**/Test*" />
     <property name="exampleFiles" value="com/martiansoftware/jsap/examples/" />
@@ -171,6 +177,13 @@ Targets:
         </javadoc>
     </target>
 
+	<!-- generate manual -->
+	<target name="manual" depends="compile-api">
+		<snip>
+     		<fileset dir="${javasrc}" includes="**/*.java" />
+ 		</snip>
+	</target>
+	
 	<!-- build distributable files -->
 	<target name="dist" depends="jar,javadoc">
 	

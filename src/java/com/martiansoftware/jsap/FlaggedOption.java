@@ -235,6 +235,34 @@ public final class FlaggedOption extends Option implements Flagged {
     }
 
     /**
+     * Sets one or more default values for this parameter.  This method
+     * should be used whenever a parameter has more than one default
+     * value.
+     * @param defaultValues the default values for this parameter.
+     * @see #setDefault(String)
+     */
+    public FlaggedOption setDefault(String[] defaultValues) {
+    	_setDefault(defaultValues);
+    	return (this);
+    }
+    
+    /**
+     * Sets a default value for this parameter.  The default is specified
+     * as a String, and is parsed as a single value specified on the
+     * command line.  In other words, default values for "list"
+     * parameters or parameters allowing multiple declarations should be
+     * set using setDefault(String[]), as JSAP
+     * would otherwise treat the entire list of values as a single value.
+     *
+     * @param defaultValue the default value for this parameter.
+     * @see #setDefault(String)
+     */
+    public FlaggedOption setDefault(String defaultValue) {
+    	_setDefault(defaultValue);
+    	return (this);
+    }    
+    
+    /**
      * Sets the StringParser to which this FlaggedOption's parse() method
      * should delegate.
      * @param stringParser the StringParser to which this Option's parse()

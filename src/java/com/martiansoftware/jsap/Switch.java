@@ -157,4 +157,32 @@ public class Switch extends AbstractParameter implements Flagged {
 		buf.append("]");
 		return (buf.toString());
 	}
+	
+	/**
+	 * Sets a default value for this parameter.  The default is specified
+	 * as a String, and is parsed as a single value specified on the
+	 * command line.  In other words, default values for "list"
+	 * parameters or parameters allowing multiple declarations should be
+	 * set using setDefault(String[]), as JSAP
+	 * would otherwise treat the entire list of values as a single value.
+	 *
+	 * @param defaultValue the default value for this parameter.
+	 * @see #setDefault(String)
+	 */
+	public Switch setDefault(String defaultValue) {
+		_setDefault(defaultValue);
+		return (this);
+	}    
+
+	/**
+	 * Sets one or more default values for this parameter.  This method
+	 * should be used whenever a parameter has more than one default
+	 * value.
+	 * @param defaultValues the default values for this parameter.
+	 * @see #setDefault(String)
+	 */
+	public Switch setDefault(String[] defaultValues) {
+		_setDefault(defaultValues);
+		return (this);
+	}
 }
