@@ -5,6 +5,8 @@
  */
 package com.martiansoftware.jsap.xml;
 
+import com.martiansoftware.jsap.AbstractParameter;
+import com.martiansoftware.jsap.Flagged;
 import com.martiansoftware.jsap.JSAP;
 
 /**
