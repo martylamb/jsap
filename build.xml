@@ -150,7 +150,7 @@ Targets:
 
 	<target name="test" depends="compile-tests" >
         <junit printsummary="on">
-            <test name="com.martiansoftware.jsap.TestEverything"/>
+            <test name="com.martiansoftware.jsap.TestAll"/>
             <formatter type="plain" usefile="false"/>
             <classpath refid="devlib.class.path" />
             <classpath>
