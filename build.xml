@@ -185,6 +185,9 @@ Targets:
   		<replace dir="${javadoc.tmp.src}" token="@@AUTHOR_MARTY@@" value="${author.marty.html}">
   			<include name="**/*.java"/>
   		</replace>
+  		<replace dir="${javadoc.tmp.src}" token="@@JARNAME@@" value="${jarname}">
+  			<include name="**/*.java"/>
+  		</replace>
 
         <javadoc public="true" destdir="${javadoc}" sourcepath="${javadoc.tmp.src}" packagenames="com.martiansoftware.*">
 			<bottom>${copyright.html}&lt;br&gt;${updates.html}</bottom>

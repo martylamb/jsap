@@ -24,17 +24,24 @@ Legal:
 	
 	<target name="test">
 	
-		<jsap srcdir="${src}" classname="com.martiansoftware.jsap.examples.MyJSAP">
-			<flaggedoption id="verbose" longflag="verbose" stringparser="IntegerStringParser">
+		<jsap srcdir="${src}" classname="com.martiansoftware.jsap.examples.ExampleAntJSAP">
 			
-				<default>default value 1</default>
-				<property name="something" value="somethingelse" />
+			<!-- create a switch flagged by "v" or "verbose" -->
+			<switch id="verbose" shortflag="v" longflag="verbose"/>
+			
+			<!-- create a required flaggedoption looking for an integer, flagged by "n" (e.g. "-n 5") -->
+			<flaggedoption id="num" required="true" shortflag="n" stringparser="IntegerStringParser">
+				<default>5</default>
 			</flaggedoption>
-			<flaggedoption id="testoption2" shortflag="t"/>
-			<unflaggedoption id="testoption3" required="true"/>
-			<switch id="myswitch" shortflag="v"/>
-			<flaggedoption id="dateoption" shortflag="d" stringparser="DateStringParser">
+			
+			<!-- create an unflaggedoption that reads all of the unflagged arguments from the command line -->
+			<unflaggedoption id="files" greedy="true" />
+			
+			<!-- create a flaggedoption looking for a Date in "MM/DD/YY" format, flagged by "d"
+			     or "date", defaulting to Christmas, 2002. -->
+			<flaggedoption id="date" shortflag="d" longflag="date" stringparser="DateStringParser">
 				<property name="format" value="MM/DD/YYYY"/>
+				<default>12/25/2002</default>
 			</flaggedoption>
 				
 		</jsap>
