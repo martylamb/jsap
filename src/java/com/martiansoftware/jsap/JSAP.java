@@ -6,7 +6,6 @@
 
 package com.martiansoftware.jsap;
 
-import java.util.Locale;
 import java.util.Map;
 import java.util.List;
 import java.util.Iterator;
@@ -204,40 +203,6 @@ public class JSAP {
      * with registerParameter() before its parse() methods may be called.
      */
     public JSAP() {
-        init();
-    }
-
-    /**
-     * Creates a pre-configured JSAP with an xml file using the default locale.
-     */
-    public JSAP(String xmlconfig) throws JSAPException {
-        processConfig(xmlconfig, Locale.getDefault());
-    }
-    
-    /**
-     * Creates a pre-configured JSAP with an xml file using a certain locale.
-     */
-    public JSAP(String xmlconfig, Locale locale) throws JSAPException {
-        processConfig (xmlconfig, locale);
-    }
-
-    /**
-     * Processes an xml config file using a certain locale.
-     */
-    private void processConfig (String xmlconfig, Locale locale) throws JSAPException {
-        init();
-        // Processing configuration XML file:
-        // DOM variant:
-        DOMConfigHandler handler = new DOMConfigHandler(xmlconfig, locale);
-        handler.setup(this);
-        // SAX variant:
-        //SAXConfigHandler handler = new SAXConfigHandler(this, xmlconfig);
-    }
-    
-    /**
-     * Initializes JSAP.
-     */
-    private void init() {
         paramsByID = new java.util.HashMap();
         paramsByShortFlag = new java.util.HashMap();
         paramsByLongFlag = new java.util.HashMap();

@@ -32,7 +32,6 @@ public class TestAll extends TestCase {
         suite.addTest(TestDefaults.suite());
         suite.addTest(TestCommandLineTokenizer.suite());
         suite.addTest(TestUsageString.suite());
-        suite.addTest(TestJSAPXMLConfig.suite());
         suite.addTest(com.martiansoftware.jsap.stringparsers.TestAll.suite());
         suite.addTest(com.martiansoftware.jsap.defaultsources.TestAll.suite());
         return (suite);

@@ -63,6 +63,8 @@ import java.io.PrintStream;
  * (com.martiansoftware.jsap.FlaggedOption).</li>
  * <li><b>unflaggedoption</b> - declares an UnflaggedOption
  * (com.martiansoftware.jsap.UnflaggedOption).</li>
+ * <li><b>qualifiedswitch</b> - declares a QualifiedSwitch
+ * (com.martiansoftware.jsap.QualifiedSwitch).</li>
  * </ul>
  *
  * <p>These nested elements support the following attributes:</p>
@@ -70,16 +72,18 @@ import java.io.PrintStream;
  * <center>
  * <table width="95%" border="1" cellpadding="0" cellspacing="0">
  * <tr>
- *    <td align="center" width="20%"><b>Attribute</b></td>
- *    <td align="center" width="20%"><b>Description</b></td>
- *    <td align="center" width="20%"><b>switch</b></td>
- *    <td align="center" width="20%"><b>flaggedoption</b></td>
- *    <td align="center" width="20%"><b>unflaggedoption</b></td>
+ *    <td align="center"><b>Attribute</b></td>
+ *    <td align="center"><b>Description</b></td>
+ *    <td align="center"><b>switch</b></td>
+ *    <td align="center"><b>flaggedoption</b></td>
+ *    <td align="center"><b>unflaggedoption</b></td>
+ *    <td align="center"><b>qualifiedswitch</b></td>
  * </tr>
  * <tr>
  *    <td align="center"><b>id</b></td>
  *    <td align="left">Unique id for this parameter.  This must be unique among
  * all parameters defined in this ANT task.</td>
+ *    <td align="center">Required</td>
  *    <td align="center">Required</td>
  *    <td align="center">Required</td>
  *    <td align="center">Required</td>
@@ -95,6 +99,8 @@ import java.io.PrintStream;
  *    <td align="left">Either <b>shortflag</b> or <b>longflag</b> is required.
  * Both may be specified.</td>
  *    <td align="center">N/A</td>
+ *    <td align="left">Either <b>shortflag</b> or <b>longflag</b> is required.
+ * Both may be specified.</td>
  * </tr>
  * <tr>
  *    <td align="center"><b>longflag</b></td>
@@ -105,12 +111,15 @@ import java.io.PrintStream;
  *    <td align="left">Either <b>shortflag</b> or <b>longflag</b> is required.
  * Both may be specified.</td>
  *    <td align="center">N/A</td>
+ *    <td align="left">Either <b>shortflag</b> or <b>longflag</b> is required.
+ * Both may be specified.</td>
  * </tr>
  * <tr>
  *    <td align="center"><b>required</b></td>
  *    <td align="left">"true" or "false" (default false).  Indicates whether the
  * specified parameter is required.</td>
  *    <td align="center">N/A</td>
+ *    <td align="center">Optional</td>
  *    <td align="center">Optional</td>
  *    <td align="center">Optional</td>
  * </tr>
@@ -123,6 +132,7 @@ import java.io.PrintStream;
  *    <td align="center">N/A</td>
  *    <td align="center">Optional</td>
  *    <td align="center">Optional</td>
+ *    <td align="center">Optional</td>
  * </tr>
  * <tr>
  *    <td align="center"><b>listseparator</b></td>
@@ -130,6 +140,7 @@ import java.io.PrintStream;
  * parameters.
  * Default is JSAP.DEFAULT_LISTSEPARATOR</td>
  *    <td align="center">N/A</td>
+ *    <td align="center">Optional</td>
  *    <td align="center">Optional</td>
  *    <td align="center">Optional</td>
  * </tr>
@@ -146,6 +157,7 @@ import java.io.PrintStream;
  *    <td align="center">N/A</td>
  *    <td align="center">Optional</td>
  *    <td align="center">Optional</td>
+ *    <td align="center">Optional</td>
  * </tr>
  * <tr>
  *    <td align="center"><b>greedy</b></td>
@@ -155,6 +167,7 @@ import java.io.PrintStream;
  *    <td align="center">N/A</td>
  *    <td align="center">N/A</td>
  *    <td align="center">Optional</td>
+ *    <td align="center">N/A</td>
  * </tr>
  * </table>
  * </center>
