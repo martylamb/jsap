@@ -68,6 +68,7 @@ class Parser {
         this.result = new JSAPResult();
         this.unflaggedOptions = config.getUnflaggedOptionsIterator();
         advanceUnflaggedOption();
+        
     }
 
     /**
@@ -102,6 +103,7 @@ class Parser {
             if (((param instanceof FlaggedOption)
                 && (!((FlaggedOption) param).allowMultipleDeclarations()))
                 || (param instanceof Switch)
+				|| (param instanceof QualifiedSwitch)
                 || ((param instanceof UnflaggedOption)
                 && (!((UnflaggedOption) param).isGreedy()))) {
                 result.addException(param.getID(), 
@@ -109,6 +111,10 @@ class Parser {
             }
         }
 
+        if (param instanceof QualifiedSwitch) {
+        	result.registerQualifiedSwitch(param.getID(), true);
+        }
+        
         try {
             result.add(param.getID(), param.parse(valueToParse));
         }
@@ -190,6 +196,7 @@ class Parser {
                 new JSAPException("This Parser has already run."));
         }
         else {
+        	preregisterQualifiedSwitches();
             int z = args.length;
             int i = 0;
             while (i < z) {
@@ -203,6 +210,20 @@ class Parser {
     }
 
     /**
+     * Loops through all parameters, informing the JSAPResult
+     * of any QualifiedSwitches so it can assume they're not present.
+     */
+    private void preregisterQualifiedSwitches() {
+    	for (Iterator iter = config.getIDMap().idIterator(); iter.hasNext();) {
+    		String thisID = (String) iter.next();
+    		AbstractParameter param = config.getByID(thisID);
+    		if (param instanceof QualifiedSwitch) {
+    			result.registerQualifiedSwitch(thisID, false);
+    		}
+    	}
+    		
+    }
+    /**
      * Parses the long form of an Option or Switch (i.e., preceded by a double 
      * hyphen).
      *
@@ -211,6 +232,7 @@ class Parser {
      * @return the index of the next argument to parse
      */
     private int parseLongForm(String[] args, int index) {
+    	// TODO: work with qualifiedswitch
         int equalsIndex = args[index].indexOf('=');
         int colonIndex = args[index].indexOf(':'); // KPB
         String paramFlag = null;
@@ -254,21 +276,19 @@ class Parser {
                         + "\" does not take any parameters."));         
                 }
                 else {
-                    // KPB<<<<<
-                    if (paramColon != null) {
-                        // we have a QualifiedSwitch
-                        processParameter(param, paramColon); // ':' must be part of the argument
-                    }
-                    else {
-                        processParameter(param, null);
-                    }
-                    //>>>>>KPB                    
+                    processParameter(param, null);
                 }
-
-                // it's an option
-            }
-            else {
-                if (equalsIndex == -1) {
+            } else if (param instanceof QualifiedSwitch) {
+            	String paramValue = null;
+            	if (colonIndex == -1) {
+            		processParameter(param, null);
+            	} else {
+            		processParameter(param, args[index-1].substring(colonIndex + 1));
+            	}
+            	
+            } else {
+            	// it's an option
+            	if (equalsIndex == -1) {
                     // no "=" supplied on command line, so next item must 
                     // contain the value
 
@@ -341,24 +361,35 @@ class Parser {
                             new SyntaxException("Switch \"" 
                             + paramFlag 
                             + "\" does not take any parameters."));
-                    }
-                    else {
-                        // KPB-start
-                        // Qualified switches have a format like "-o:value"
-                        if (parseTo >= "-o:".length() && args[index].charAt(charPos+1) == ':') {
-                            // we have a QualifiedSwitch
-                            processParameter(param, args[index].substring(charPos+1)); // ':' must be part of the argument
-                            break; // args[index] completely parsed, so get out of loop
-                        }
-                        else {
+                    } else {
+//                        // KPB-start
+//                        // Qualified switches have a format like "-o:value"
+//                        if (parseTo >= "-o:".length() && args[index].charAt(charPos+1) == ':') {
+//                            // we have a QualifiedSwitch
+//                            processParameter(param, args[index].substring(charPos+1)); 
+//                            break; // args[index] completely parsed, so get out of loop
+//                        }
+//                        else {
                             processParameter(param, null);
-                        }
-                        //>>>>>KPB
+//                        }
+//                        //>>>>>KPB
                     }
                     // flag is not a switch, so we first check to make sure there IS
                     // a value specified.
-                }
-                else {
+                } else if(option instanceof QualifiedSwitch) {
+                	// flag is a QualifiedSwitch.
+                	if ((args[index].length() > (charPos + 1))
+							&& args[index].charAt(charPos+1) == ':') {
+                		// the QualifiedSwitch is, in fact, qualified
+                		processParameter(param, args[index].substring(charPos+2));// ':' must be part of the argument
+                		break; // args[index] completely parsed, so get out of loop
+                	}
+                	else {
+                		processParameter(param, null);
+                	}
+                	
+                } else {
+                	// it's an option
                     String paramEquals = null;
 
                     if (charPos != (parseTo - 1)) {

@@ -1,0 +1,86 @@
+body { background-image: url("/images/wave.png"); color: black; background: white;  }
+
+.blue { color: #33275b; background: white }
+.green { color: #80c254; background: white; }
+.green-on-blue { color: #80c254; background: #33275b; }
+
+a:link { color: #80c254; background: white; }
+a:link img, a:visited img { border-style: none }
+a:visited { color: #33275b; background: white; }
+
+pre.programlisting { margin: 1em 1em 1em 1em; padding: 0 1em 0 1em; border: 2px dashed #33275b;font-family: courier, monospace; color: #33275b; background: #e3f4b0; }
+
+pre.screen { margin: 1em 1em 1em 1em; padding: 0 1em 0 1em; border: 2px dashed #33275b;font-family: courier, monospace; color: #ffffff; background: #000000; }
+
+
+
+
+
+.menu { background: #33275b; color: white; font-family: helvetica, sans-serif }
+.menu a { background: #33275b; color: white; text-decoration: none }
+a.menucurrent { background: #33275b; color : #80c254; font-family: helvetica, sans-serif; font-weight: bold; text-decoration: none }
+.menu a:hover { font-weight: bold }
+.menu a:visited { background: #33275b; color: white; text-decoration: none }
+a.menucurrent:visited { background: #33275b; color : #80c254; font-family: helvetica, sans-serif; font-weight: bold; text-decoration: none }
+
+.summary { margin: 0 0 0; font-size: 80%; font-family: helvetica, sans-serif; color: #80c254; background: white }
+.labsummary { margin: 0 0 0; font-size: 50%; font-family: helvetica, sans-serif; color: #33275b; background: white }
+div.submenu { margin: 0 0 1em; font-size: 80%; font-family: helvetica, sans-serif; color: white; background: #80c254; border-top: 2px solid #80c254;  }
+a.submenu { text-decoration: none; color: white; background: #80c254; }
+.submenu a:visited { text-decoration: none; color: white; background: #80c254; }
+b.cursubmenu {text-decoration: none; color: #80c254; background: white; }
+
+
+div.caption { font-stype: italic; color: #33275b; text-align: center; background: white }
+div.console { margin: 1em 1em 1em 1em; padding: 1em 1em 0 1em; border: 2px dashed #e3f4b0; font-family: courier, monospace; color: white; background: black; }
+div.console-input { font-family: courier, monospace; color: white; background: black; }
+div.console-output { font-family: courier, monospace; color: white; background: black; }
+pre.console-output { font-family: courier, monospace; color: white; background: black; }
+
+div.quote { float: right; width: 200px; text-align: right; 
+   font-size: 140%; font-family: serif; font-weight: bold; font-style: italic; 
+   padding: 1em; text-indent: -0.5em; background: white; 
+   color: #80c254; margin: 0.2em -1px 0.2em 0.5em;}
+
+div.footer-right { padding: 0.5em 0 0; text-align: right; border-top: 2px solid #33275b; }
+
+p.menu1 { width: 125px; float: left; text-align: right; position: absolute; top: 60px; left: 0px }
+p.menu2 { width: 120px; float: left; text-align: right; position: absolute; top: 80px; left: 0px }
+p.menu3 { width: 112px; float: left; text-align: right; position: absolute; top: 100px; left: 0px }
+p.menu4 { width: 108px; float: left; text-align: right; position: absolute; top: 120px; left: 0px }
+p.menu5 { width: 105px; float: left; text-align: right; position: absolute; top: 140px; left: 0px }
+p.menu6 { width: 100px; float: left; text-align: right; position: absolute; top: 160px; left: 0px }
+p.menu7 { width: 97px; float: left; text-align: right; position: absolute; top: 180px; left: 0px }
+ 
+div.main { background: white; color: black; position: absolute; top: 0px; left: 170px; margin-right: 160px; font-family: helvetica, sans-serif } 
+p {margin: 0 0 1em; font-family: Book Antiqua, New York, New Century Schoolbook, Times New Roman, Times, serif; }
+li { font-family: Book Antiqua, New York, New Century Schoolbook, Times New Roman, Times, serif; }
+h1 { margin: 1em 0 0; font-size: 150%; font-family: helvetica, sans-serif; color: #33275b; background: white; font-weight: normal; border-bottom: 2px solid #80c254 }
+h2 { margin: 2em 0 0; font-size: 125%; font-family: helvetica, sans-serif; color: #33275b; background: white; font-weight: normal; border-bottom: 2px solid #80c254 }
+p.title2 { margin: 1em 0 1em; font-size: 125%; font-family: helvetica, sans-serif; color: #33275b; background: white; margin-bottom: 0.25em; border-bottom: 2px solid #80c254 }
+p.author { font-size: 80%; font-family: helvetica, sans-serif; font-style: italic; color: #33275b; background: white }
+p.section { margin: 1em 0 1em; font-size: 120%; font-family: helvetica, sans-serif; color: #33275b; background: white; margin-bottom: 0 }
+
+.contactinfo { display: table-row;  }
+.contactinfo-key { display: table-cell; width: 175px; font-weight: bold  }
+.contactinfo-value {  display: table-cell: width: 350px; padding-left: 20px; font-style: italic }
+.contactinfo-archive {  display: table-cell; padding-left: 20px }
+
+div.osicertified { float: right; margin: 0 0 0 0 }
+
+div.pipeline { 	font-size: 75%; 
+				width: 97px; 
+				float: left; 
+				text-align: left; 
+				position: absolute; 
+				top: 220px; 
+				left: 2px 
+				color: #e3f4b0				
+				
+				}
+
+.todo { border-top: 1px solid #80c254 }
+.todo-date { font-weight: bold; color: #80c254 }
+.todo-title { font-weight: bold; }
+.todo-desc {  }
+hr { color: #80c254; background: white; }

@@ -130,7 +130,7 @@ public class Switch extends AbstractParameter implements Flagged {
 	 * @throws ParseException if the specified parameter cannot be parsed.
 	 */
 	protected List parse(String arg) throws ParseException {
-		List result = new java.util.ArrayList();
+		List result = new java.util.ArrayList(1);
 		result.add((new BooleanStringParser()).parse(arg));
 		return (result);
 	}

@@ -6,16 +6,18 @@
 
 package com.martiansoftware.jsap;
 
+import com.martiansoftware.jsap.FlaggedOption;
+
 import com.martiansoftware.jsap.stringparsers.BooleanStringParser;
 import com.martiansoftware.jsap.stringparsers.StringStringParser;
 import com.martiansoftware.jsap.stringparsers.EnumeratedStringParser;
 import java.util.List;
 
 /**
- * An ExtenedSwitch is a parameter that has something in comming with a Switch,
+ * A QualifiedSwitch is a parameter that has something in common with a Switch,
  * i.e., its presence or absence is significant, but different from a "pure"
  * Switch it can have an additional value prefixed by a ':' sign that qualifies
- * this Switch.
+ * the Switch - making it behave like a FlaggedOption if a value is specified.
  * <p>
  * The following possibilities are provided for ExtendedSwitches:<br>
  * "-s:value" is an ExtendedSwitch with only one qualifying value.
@@ -59,66 +61,56 @@ import java.util.List;
  * @see com.martiansoftware.jsap.stringparsers.BooleanStringParser
  * @see com.martiansoftware.jsap.stringparsers.EnumeratedStringParser
  */
-public final class QualifiedSwitch extends Switch {
+public final class QualifiedSwitch extends FlaggedOption {
 
     /**
      * The current short flag for this UnflaggedOption.  
          * Default is JSAP.NO_SHORTFLAG.
      */
-    private char shortFlag = JSAP.NO_SHORTFLAG;
+//    private char shortFlag = JSAP.NO_SHORTFLAG;
 
     /**
      * The current long flag for this UnflaggedOption.  
          *Default is JSAP.NO_LONGFLAG.
      */
-    private String longFlag = JSAP.NO_LONGFLAG;
+//    private String longFlag = JSAP.NO_LONGFLAG;
 
-    private String qualifyingValues; // the qualifying values that are allowed for the switch
-    boolean checkEnumeratedValues = false; // tells the parser if the qualifyingValues are enumerated values
+//    private String qualifyingValues; // the qualifying values that are allowed for the switch
+//    boolean checkEnumeratedValues = false; // tells the parser if the qualifyingValues are enumerated values
+
+	
+	/**
+	 * A shortcut constructor that creates a new QualifiedSwitch and configures
+	 * its most commonly used settings.
+	 * @param id the unique ID for this FlaggedOption.
+	 * @param stringParser the StringParser this FlaggedOption should use.
+	 * @param defaultValue the default value for this FlaggedOption (may be
+	 * null).
+	 * @param required if true, this FlaggedOption is required.
+	 * @param shortFlag the short flag for this option (may be set to
+	 * JSAP.NO_SHORTFLAG for none).
+	 * @param longFlag the long flag for this option (may be set to
+	 * JSAP.NO_LONGFLAG for none).
+	 */
+	public QualifiedSwitch(
+			String id,
+			StringParser stringParser,
+			String defaultValue,
+			boolean required,
+			char shortFlag,
+			String longFlag) {
+	
+			super(id, stringParser, defaultValue, required, shortFlag, longFlag);
+	}
+
 
     /**
-     * Creates a new ExtendSwitch with the specified unique ID
-     * and a qualifying value.
+     * A shortcut constructor that creates a new QualifiedSwitch
      * 
-     * @param id the unique ID for this QualifiedSwitch.
-     * @param values the qualifying values; if the format is "<value>" that value
-     *               can be an aritrary string without spaces or with spaces
-     *               if the value is surrounded by '"' in the command line<br> 
-     *               if the format is "value1", "value1;" or "value1;value2;..valuen"
-     *               than only one or these predifined values is allowed to appear in the command line.
+     * @param id the unique ID for this QualifiedSwitch.         
      */
-    public QualifiedSwitch(String id, String values) {
-        super(id);
-        setDefault("FALSE");
-        qualifyingValues = values;
-		if (qualifyingValues.startsWith("<") && !qualifyingValues.endsWith(">")) {
-			throw new IllegalArgumentException("Qualifying value for a switch starts with '<' but does not end with '>'");
-		}
-		if (qualifyingValues.endsWith(">") && !qualifyingValues.startsWith("<")) {
-			throw new IllegalArgumentException("Qualifying value for a switch ends with '>' but does not start with '<'");
-		}
-        checkEnumeratedValues = !(qualifyingValues.startsWith("<") && !qualifyingValues.endsWith(">"));
-    }
-
-    /**
-     * A shortcut constructor that creates a new Switch and configures all of 
-     * its settings.
-     * 
-     * @param id the unique ID for this Switch.         
-     * @param shortFlag the short flag for this Switch (may be set to 
-     *                  JSAP.NO_SHORTFLAG for none).
-     * @param longFlag the long flag for this Switch (may be set to 
-     *                 JSAP.NO_LONGFLAG for none).
-     * @param values the qualifying value; if the format is "value" that value
-     *               can be an aritrary string without spaces or with spaces
-     *               if the value is surrounded by '"' in the command line<br> 
-     *               if the format is "value1", "value1;" or "value1;value2;..valuen"
-     *               than only one or these predifined values is allowed to appear in the command line.
-     * */
-    public QualifiedSwitch(String id, char shortFlag, String longFlag, String values) {
-        this(id, values);
-        setShortFlag(shortFlag);
-        setLongFlag(longFlag);
+    public QualifiedSwitch(String id) {
+    	super(id);
     }   
 
     /**
@@ -133,50 +125,50 @@ public final class QualifiedSwitch extends Switch {
      * @return an ArrayList containing the parse results.
      * @throws ParseException if the specified parameter cannot be parsed.
      */
-    protected final List parse(String arg) throws ParseException {
-    	List result = new java.util.ArrayList();
-        if (arg != null && arg.startsWith(":")) {
-            result.add(Boolean.TRUE); // flag is present
-            if (checkEnumeratedValues) {
-                result.add((new EnumeratedStringParser(qualifyingValues)).parse(arg.substring(1))); // ad the value allowed
-            }
-            else {
-                result.add((new StringStringParser()).parse(arg.substring(1))); // add arbitrary string value
-            }
-        }
-        else {
-            result.add((new BooleanStringParser()).parse(arg));
-        }
-        return result;
-    }
+//    protected final List parse(String arg) throws ParseException {
+//    	List result = new java.util.ArrayList();
+//        if (arg != null && arg.startsWith(":")) {
+//            result.add(Boolean.TRUE); // flag is present
+//            if (checkEnumeratedValues) {
+//                result.add((new EnumeratedStringParser(qualifyingValues)).parse(arg.substring(1))); // ad the value allowed
+//            }
+//            else {
+//                result.add((new StringStringParser()).parse(arg.substring(1))); // add arbitrary string value
+//            }
+//        }
+//        else {
+//            result.add((new BooleanStringParser()).parse(arg));
+//        }
+//        return result;
+//    }
 
-    /**
-     * Returns usage instructions for this Switch.
-     * @return usage instructions for this Switch based upon its current 
-     * configuration.
-     */
-    public String getSyntax() {
-        StringBuffer buf = new StringBuffer();
-        boolean shortFlag = false;
-        buf.append("[");
-        if (getShortFlag() != JSAP.NO_SHORTFLAG) {
-            buf.append("-" + getShortFlag());
-            shortFlag = true;
-        }
-        if (getLongFlag() != JSAP.NO_LONGFLAG) {
-            if (shortFlag) {
-                buf.append("|");
-            }
-            buf.append("--" + getLongFlag());
-        }
-        buf.append("[:");
-        if (checkEnumeratedValues) {
-            buf.append(qualifyingValues.replace(';', '|'));
-        }
-        else {
-            buf.append(qualifyingValues);
-        }
-        buf.append("]]");
-        return(buf.toString());
-    }
+//    /**
+//     * Returns usage instructions for this Switch.
+//     * @return usage instructions for this Switch based upon its current 
+//     * configuration.
+//     */
+//    public String getSyntax() {
+//        StringBuffer buf = new StringBuffer();
+//        boolean shortFlag = false;
+//        buf.append("[");
+//        if (getShortFlag() != JSAP.NO_SHORTFLAG) {
+//            buf.append("-" + getShortFlag());
+//            shortFlag = true;
+//        }
+//        if (getLongFlag() != JSAP.NO_LONGFLAG) {
+//            if (shortFlag) {
+//                buf.append("|");
+//            }
+//            buf.append("--" + getLongFlag());
+//        }
+//        buf.append("[:");
+//        if (checkEnumeratedValues) {
+//            buf.append(qualifyingValues.replace(';', '|'));
+//        }
+//        else {
+//            buf.append(qualifyingValues);
+//        }
+//        buf.append("]]");
+//        return(buf.toString());
+//    }
 }

@@ -17,7 +17,7 @@ package com.martiansoftware.jsap;
  * @see com.martiansoftware.jsap.Flagged
  * @see com.martiansoftware.jsap.Option
  */
-public final class FlaggedOption extends Option implements Flagged {
+public class FlaggedOption extends Option implements Flagged {
 
     /**
      * The current short flag for this FlaggedOption.  Default is

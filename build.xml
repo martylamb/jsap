@@ -202,7 +202,10 @@ Targets:
     			<filter token="Manual_HelloWorld_7" value="${snip.Manual_HelloWorld_7}"/>
   			</filterset>
   		</copy>
- 		<rundoc prompt="[mlamb@morbo]$" format="docbook">
+
+		<copy overwrite="true" verbose="true" file="${src}/doc/manual.css" todir="${build}/manual"/>
+
+ 		<rundoc prompt="[mlamb@morbo]$ " format="docbook">
        		<fileset file="${build}/manual/manual.xml"/>
        		<env key="CLASSPATH" value="${build}"/>
 		</rundoc>
@@ -210,6 +213,12 @@ Targets:
  			<arg value="html-nochunks"/>
  			<arg value="manual.xml"/>
  		</exec>
+  		<replace file="${build}/manual/manual.html"
+			token="&#xef;&#xbf;&#xbd;"
+			value=" " />
+  		<replace file="${build}/manual/manual.html"
+			token="&lt;head&gt;"
+			value="&lt;head&gt;&lt;link rel='stylesheet' type='text/css' href='manual.css'/&gt;" />
 		<copy overwrite="true" verbose="true" file="${build}/manual/manual.html" todir="${doc}"/>
  		
 	</target>

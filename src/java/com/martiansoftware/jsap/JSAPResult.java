@@ -32,6 +32,12 @@ public class JSAPResult implements ExceptionMap {
     private Map allResults = null;
 
     /**
+     * Contains a map of the QualifiedSwitch IDs with Booleans
+     * indicating whether they were present.
+     */
+    private Map qualifiedSwitches = null;
+    
+    /**
      * Contains all of the exceptions, as a Map of Lists, keyed by
      * parameter ID.
      * "General" exceptions that are not associated with a specific parameter
@@ -52,6 +58,7 @@ public class JSAPResult implements ExceptionMap {
         allResults = new java.util.HashMap();
         allExceptions = new java.util.HashMap();
         chronologicalErrorMessages = new java.util.LinkedList();
+        qualifiedSwitches = new java.util.HashMap();
     }
 
     /**
@@ -170,7 +177,11 @@ public class JSAPResult implements ExceptionMap {
      * @see #getBooleanArray(String)
      */
     public boolean getBoolean(String id) {
-        return (((Boolean) getObject(id)).booleanValue());
+    	Boolean b = (Boolean) qualifiedSwitches.get(id);
+    	if (b == null) {
+    		b = (Boolean) getObject(id);
+    	}
+        return (b.booleanValue());
     }
 
     /**
@@ -194,8 +205,11 @@ public class JSAPResult implements ExceptionMap {
      * @see #getBooleanArray(String)
      */
     public boolean getBoolean(String id, boolean defaultValue) {
-        Boolean result = (Boolean) getObject(id);
-        return ((result == null) ? defaultValue : result.booleanValue());
+        Boolean b = (Boolean) qualifiedSwitches.get(id); 
+        if (b == null) {
+        	b = (Boolean) getObject(id);
+        }
+        return ((b == null) ? defaultValue : b.booleanValue());
     }
 
     /**
@@ -1239,4 +1253,13 @@ public class JSAPResult implements ExceptionMap {
         return (allExceptions.size() == 0);
     }
 
+    /**
+     * Informs the JSAPResult of a QualifiedSwitch (necessary
+     * for getBoolean() to work properly for QualifiedSwitches)
+     * @param qsid the ID of the QualifiedSwitch
+     * @param present boolean indicating whether the QualifiedSwitch is present
+     */
+    void registerQualifiedSwitch(String qsid, boolean present) {
+    	qualifiedSwitches.put(qsid, new Boolean(present));
+    }
 }
