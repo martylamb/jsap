@@ -184,7 +184,7 @@ Targets:
         <javadoc public="true" destdir="${javadoc}" sourcepath="${javadoc.tmp.src}" packagenames="com.martiansoftware.*">
 			<bottom>${copyright.html}&lt;br&gt;${updates.html}</bottom>
         </javadoc>
-		<delete dir="${javadoc-tmpsrc}" />
+		<delete dir="${javadoc.tmp.src}" />
     </target>
 
 	<target name="checkstyle" depends="compile-all">
