@@ -6,7 +6,7 @@
 		<body>
 			<section>
 				<title>
-					Why do we need another command line parser?
+					Why did you write another command line parser?
 				</title>
 				<p>
 					Put simply, I got tired of writing simple command line parsers for every java utility program I wrote.
@@ -49,13 +49,41 @@
 		</body>
 	</chapter>
 	<chapter number="1">
+		<title>Vocabulary</title>
+		<body>
+			<section>
+				<p>Before continuing, some explanation of the vocabulary used in this manual is required:
+					<ul>
+						<li><b>Argument</b> - A single token from the command line.  In most cases the JVM will provide this to
+							you as an array of Strings in your main() method.</li>
+						<li><b>Parameter</b> - One or more <b>arguments</b> that must be taken together to have meaning.  For example,
+							in the command "java -cp myjar.jar MyClass", the arguments "-cp" and "myjar.jar" comprise a single parameter
+							defining the classpath.  The argument "MyClass" comprises another parameter indicating the class to load and run.</li>
+						<li><b>Switch</b> - A single-argument <b>parameter</b> whose presence alone conveys meaning.  For example,
+							in the command "java -version", the "-version" switch tells the JVM to print its version information and exit.</li>
+						<li><b>Option</b> - A <b>parameter</b> whose content conveys meaning.  In the command "java -cp myjar.jar MyClass",
+							the "-cp myjar.jar" parameter is an option, as is the "MyClass" parameter.</li>
+						<li><b>Flagged Option</b> - An <b>option</b> that is preceded by a "flag" to indicate which option is being set.  In
+							the command "java -cp myjar.jar MyClass", the "-cp myjar.jar" option is flagged by "-cp".</li>
+						<li><b>Unflagged Option</b> - An <b>option</b> that is not preceded by a flag, and whose meaning is conveyed by its
+							position in the command line.  In the command "java -cp myjar.jar MyClass", the "MyClass" is an unflagged option.</li>
+						<li><b>Short Flag</b> - A single-character flag preceded by a single dash.</li>
+						<li><b>Long Flag</b> - A multi-character flag preceded by a double dash.</li>
+					</ul>
+				</p>
+			</section>
+		</body>
+	</chapter>							
+							
+	<chapter number="2">
 		<title>Up and Running in Five Minutes.  Really.</title>
 		<body>
 			<section>
 				<p>
-					This chapter should get you up and running with JSAP very quickly.  It starts out with the most basic 
-					functionality so you can start using it within five minutes.  We'll start with a simple example and 
-					gradually build upon it in order to demonstrate the various features of JSAP.
+					If you're the type of developer who likes to take a quick look at example code and tweak it for your needs,
+					this chapter should get you up and running with JSAP very quickly.  We'll start with a simple example and 
+					gradually build upon it in order to demonstrate some of the basic features of JSAP.  You'll have
+					to read further for some of the cooler features.
 				</p>
 				<p>
 					Everyone else begins with a "Hello, World!" program, so we will, too.  
@@ -71,10 +99,324 @@
 					<output>Hello, World!</output>
 				</console>
 
+				<p>
+					Not only is this completely uninteresting, but it doesn't use JSAP.  Let's tweak it a little.
+				</p>
+				<example-src id="2" caption='A slightly more interesting version'>package com.martiansoftware.jsap.examples;
+
+import com.martiansoftware.jsap.JSAP;
+import com.martiansoftware.jsap.JSAPResult;
+import com.martiansoftware.jsap.FlaggedOption;
+import com.martiansoftware.jsap.stringparsers.IntegerStringParser;
+
+public class HelloWorld_2 {
+
+	/** 
+	 * Repeats the "Hello World" text multiple times.
+	 * @param args the command line.
+	 * @throws Exception for reasons made clear later in the manual.
+	 */
+	public static void main(String[] args) throws Exception {
+		JSAP jsap = new JSAP();
+		
+		// create a flagged option we'll access using the id "count".
+		// it's going to be an integer, with a default value of 1.
+		// it's required (no big deal since we have a default value)
+		// its short flag is "n", so program usage is "java HelloWorld1 -n 5"
+		//    to print our message five times.
+		// it has no long flag.
+		FlaggedOption opt1 = new FlaggedOption(
+								"count",
+								new IntegerStringParser(), 
+								"1", 
+								true, 
+								'n', 
+								JSAP.NO_LONGFLAG);
+
+		jsap.registerParameter(opt1);
+
+		JSAPResult config = jsap.parse(args);	
+
+		for (int i = 0; i &lt; config.getInt("count"); ++i) {
+			System.out.println("Hello, World!");
+		}
+		
+	}
+	
+}</example-src>
+				<p>That's pretty verbose.  Later on you'll see ways to trim this down quite a bit.  Here's what's going on:
+					<ol>
+						<li>We create a new JSAP to do the parsing.</li>
+						<li>We create a new flagged option so we can tell the program how many times to print the message.
+							It has an ID of "count", which is only used internally by our program to retrieve the value.  It's
+							using an IntegerStringParser to convert the value to an Integer, and it has a default value of 1.
+							It's required, but only by our program (that is, since we're specifying a default value, it's not
+							actually required on the command line).  It has a short flag "n", so the syntax is "-n 5" to print
+							the message five times, for example.  It has no long flag.</li>
+						<li>We register the flagged option with the parser we created in the beginning.</li>
+						<li>We tell the parser to parse the command line arguments, and store the result in a variable called "config".</li>
+						<li>We print the message.</li>
+					</ol>
+				</p>
+				<p>The output of the program looks like this:</p>
+				<console id="2">
+					<input>java HelloWorld_2</input>
+					<output>Hello, World!</output>
+					<input>java HelloWorld_2 -n 5</input>
+					<output>Hello, World!
+Hello, World!
+Hello, World!
+Hello, World!
+Hello, World!
+					</output>
+				</console>
+
+				<p>So far, so good.  Let's add a switch.</p>
+				<example-src id="3" caption="This JSAP thing looks promising.">package com.martiansoftware.jsap.examples;
+
+import com.martiansoftware.jsap.JSAP;
+import com.martiansoftware.jsap.JSAPResult;
+import com.martiansoftware.jsap.FlaggedOption;
+import com.martiansoftware.jsap.Switch;
+import com.martiansoftware.jsap.stringparsers.IntegerStringParser;
+
+public class HelloWorld_3 {
+
+	/** 
+	 * Repeats the "Hello World" text multiple times.
+	 * Decides whether to say "Hi" or "Hello" depending upon verbose switch.
+	 * @param args the command line.
+	 * @throws Exception for reasons made clear later in the manual.
+	 */
+	public static void main(String[] args) throws Exception {
+		JSAP jsap = new JSAP();
+		
+		// create a flagged option we'll access using the id "count".
+		// it's going to be an integer, with a default value of 1.
+		// it's required (no big deal since we have a default value)
+		// its short flag is "n", so program usage is "java HelloWorld1 -n 5"
+		//    to print our message five times.
+		// it has no long flag.
+		FlaggedOption opt1 = new FlaggedOption(
+								"count",
+								new IntegerStringParser(), 
+								"1", 
+								true, 
+								'n', 
+								JSAP.NO_LONGFLAG);
+
+		jsap.registerParameter(opt1);
+		
+		// create a switch we'll access using the id "verbose".
+		// it has the short flag "-v" and the long flag "--verbose"
+		Switch sw1 = new Switch("verbose", 'v', "verbose");
+
+		jsap.registerParameter(sw1);
+		
+		JSAPResult config = jsap.parse(args);	
+
+		for (int i = 0; i &lt; config.getInt("count"); ++i) {
+			System.out.println((config.getBoolean("verbose") ? "Hello" : "Hi")
+								+ ", World!");
+		}
+		
+	}
+	
+}
+</example-src>
+				<p>What did we do?  We created a new "switch" to determine how verbose we're going to be with our greeting, registered
+				it with JSAP, and read its value inside the print loop.  That might still seem like a lot of code for this little
+				feature, but let's look at all the ways we can invoke the program now:</p>
+				<console id="3">
+					<input>java HelloWorld_3 -n 2</input>
+					<output>Hi, World!
+Hi, World!</output>
+					<input>java HelloWorld_3 -n 3 -v</input>
+					<output>Hello, World!
+Hello, World!
+Hello, World!</output>
+					<input>java HelloWorld_3 --verbose</input>
+					<output>Hello, World!</output>
+					<input>java HelloWorld_3 -vn 2</input>
+					<output>Hello, World!
+Hello, World!</output>
+
+				</console>
+				<p>That last one is the most interesting - note that we were able to combine multiple short flags ("v" and "n").
+				JSAP allows this for as many short flags as you want - provided that <b>at most one</b> of them is an option (as opposed to a switch) and
+				it's the last one in the list.
+				</p>
+				<p>For the final example, we'll use an unflagged option to specify to whom we really want to say hello.  It will be optional,
+				defaulting to "World" for backwards compatibility.  :)  We'll also make it <b>greedy</b>, so it consumes the rest of the
+				command line to allow multiple values.</p>
+				<example-src id="3" caption="Can't this guy come up with a real-world example?">package com.martiansoftware.jsap.examples;
+
+import com.martiansoftware.jsap.JSAP;
+import com.martiansoftware.jsap.JSAPResult;
+import com.martiansoftware.jsap.FlaggedOption;
+import com.martiansoftware.jsap.UnflaggedOption;
+import com.martiansoftware.jsap.Switch;
+import com.martiansoftware.jsap.stringparsers.IntegerStringParser;
+import com.martiansoftware.jsap.stringparsers.StringStringParser;
+
+public class HelloWorld_4 {
+
+	/** 
+	 * Repeats the "Hello World" text multiple times.
+	 * Decides whether to say "Hi" or "Hello" depending upon verbose switch.
+	 * @param args the command line.
+	 * @throws Exception for reasons made clear later in the manual.
+	 */
+	public static void main(String[] args) throws Exception {
+		JSAP jsap = new JSAP();
+		
+		// create a flagged option we'll access using the id "count".
+		// it's going to be an integer, with a default value of 1.
+		// it's required (no big deal since we have a default value)
+		// its short flag is "n", so program usage is "java HelloWorld1 -n 5"
+		//    to print our message five times.
+		// it has no long flag.
+		FlaggedOption opt1 = new FlaggedOption(
+								"count",
+								new IntegerStringParser(), 
+								"1", 
+								true, 
+								'n', 
+								JSAP.NO_LONGFLAG);
+
+		jsap.registerParameter(opt1);
+		
+		// create a switch we'll access using the id "verbose".
+		// it has the short flag "-v" and the long flag "--verbose"
+		Switch sw1 = new Switch("verbose", 'v', "verbose");
+
+		jsap.registerParameter(sw1);
+		
+		// create an unflagged option called "names" that we'll use to
+		// say hello to particular people.
+		// to make it more interesting, we'll allow multiple names.
+		UnflaggedOption opt2 = new UnflaggedOption(
+								"names",
+								new StringStringParser(),
+								"World",
+								true, 
+								true);
+
+		jsap.registerParameter(opt2);
+		
+		JSAPResult config = jsap.parse(args);	
+
+		String[] names = config.getStringArray("names");
+		for (int i = 0; i &lt; config.getInt("count"); ++i) {
+			for (int j = 0; j &lt; names.length; ++j) {
+				System.out.println((config.getBoolean("verbose") ? "Hello" : "Hi")
+								+ ", "
+								+ names[j]
+								+ "!");
+			}
+		}
+		
+	}
+	
+}
+</example-src>
+
+				<console id="4">
+					<input>java HelloWorld_4 -n 2 --verbose Bender Fry Leela</input>
+					<output>Hello, Bender!
+Hello, Fry!
+Hello, Leela!
+Hello, Bender!
+Hello, Fry!
+Hello, Leela!</output>
+					<input>java HelloWorld_4 Kif -n 3</input>
+					<output>Hi, Kif!
+Hi, Kif!
+Hi, Kif!</output>
+				</console>
+				
 			</section>
 		</body>
 	</chapter>
 	<chapter number="3">
-		<title>So long,</title>
+		<title>How it Works</title>
+		<body>
+			<section>
+				<p>This chapter will describe the basic flow of JSAP.</p>
+			</section>
+		</body>
 	</chapter>
+	<chapter number="4">
+		<title>Short vs. Long Flags</title>
+		<body>
+			<section>
+				<p>This chapter will explain the difference between short and long flags.</p>
+			</section>
+		</body>
+	</chapter>
+	<chapter number="5">
+		<title>Switches</title>
+		<body>
+			<section>
+				<p>This chapter will describe how to use switches.</p>
+			</section>
+		</body>
+	</chapter>
+	<chapter number="6">
+		<title>Flagged Options</title>
+		<body>
+			<section>
+				<p>This chapter will describe how to use flagged options.</p>
+			</section>
+		</body>
+	</chapter>
+	<chapter number="7">
+		<title>Unflagged Options</title>
+		<body>
+			<section>
+				<p>This chapter will describe how to use unflagged options.</p>
+			</section>
+		</body>
+	</chapter>
+	<chapter number="8">
+		<title>StringParsers</title>
+		<body>
+			<section>
+				<p>This chapter will describe the built-in StringParsers.</p>
+			</section>
+		</body>
+	</chapter>
+	<chapter number="9">
+		<title>Handling Errors</title>
+		<body>
+			<section>
+				<p>This chapter will describe how to handle bad command lines.</p>
+			</section>
+		</body>
+	</chapter>
+	<chapter number="10">
+		<title>DefaultSources and Configuration Files</title>
+		<body>
+			<section>
+				<p>This chapter will describe how to use DefaultSources and configuration files in your application.</p>
+			</section>
+		</body>
+	</chapter>
+	<chapter number="11">
+		<title>Using ANT to Make Everything Easier</title>
+		<body>
+			<section>
+				<p>This chapter will describe how to use the custom ANT task to build your JSAPs for you.</p>
+			</section>
+		</body>
+	</chapter>
+	<chapter number="12">
+		<title>Custom StringParsers</title>
+		<body>
+			<section>
+				<p>This chapter will explain how to build your own StringParsers.</p>
+			</section>
+		</body>
+	</chapter>
+	
 </manual>		

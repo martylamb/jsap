@@ -40,6 +40,11 @@
 	<xsl:apply-templates/>
 </xsl:template>
 
+<xsl:template match="b">
+	<b>
+	<xsl:apply-templates/>
+	</b>
+</xsl:template>
 
 <xsl:template match="p">
 	<p>
@@ -118,7 +123,7 @@
 		<xsl:text>Chapter </xsl:text>
         <xsl:value-of select="@number"/>
         <xsl:text>:</xsl:text>
-        <xsl:value-of select="/manual/chapter/title"/>
+        <xsl:value-of select="./title"/>
         </a>
 		<br/>
 	</xsl:for-each>
