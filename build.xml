@@ -257,6 +257,8 @@ Targets:
 
 		<!-- make the source zip file -->
 		<zip destfile="${dist}/${name}-${version}-${src}.zip" basedir="${dist.tmp.src}" update="false" />
+		<tar tarfile="${dist}/${name}-${version}-${src}.tar" basedir="${dist.tmp.src}"/>
+		<gzip zipfile="${name}-${version}-${src}.tar.gz" src="${name}-${version}-${src}.tar"/>
 		
 		<!-- delete the buildfile, source files and development libaries from the temp directory. -->
 		<!-- the binary distribution file should just contain the jar and the documentation. -->
@@ -266,6 +268,8 @@ Targets:
 
 		<!-- make the binary zip file -->
 		<zip destfile="${dist}/${name}-${version}.zip" basedir="${dist.tmp.src}" update="false" />
+		<tar tarfile="${dist}/${name}-${version}.tar" basedir="${dist.tmp.src}"/>
+		<gzip zipfile="${name}-${version}.tar.gz" src="${name}-${version}.tar"/>
 
 <!--		<delete dir="${dist.tmp.src}"/> -->
 	</target>
