@@ -340,28 +340,28 @@ public class JSAP {
      * @return an IDMap based upon this JSAP's current configuration.
      */
     public IDMap getIDMap() {
-        List ids = new java.util.ArrayList(paramsByDeclarationOrder);
-//        for (Iterator i = paramsByDeclarationOrder.iterator(); i.hasNext();) {
-//            AbstractParameter param = (AbstractParameter) i.next();
-//            ids.add(param.getID());
-//        }
+        List ids = new java.util.ArrayList(paramsByDeclarationOrder.size());
+        for (Iterator i = paramsByDeclarationOrder.iterator(); i.hasNext();) {
+            AbstractParameter param = (AbstractParameter) i.next();
+            ids.add(param.getID());
+        }
 
-        Map byShortFlag = new java.util.HashMap(paramsByShortFlag);
-//        for (Iterator i = paramsByShortFlag.keySet().iterator();
-//          i.hasNext();) {
-//            Character c = (Character) i.next();
-//            byShortFlag.put(
-//                c,
-//                ((AbstractParameter) paramsByShortFlag.get(c)).getID());
-//        }
+        Map byShortFlag = new java.util.HashMap();
+        for (Iterator i = paramsByShortFlag.keySet().iterator();
+          i.hasNext();) {
+            Character c = (Character) i.next();
+            byShortFlag.put(
+                c,
+                ((AbstractParameter) paramsByShortFlag.get(c)).getID());
+        }
 
-        Map byLongFlag = new java.util.HashMap(paramsByLongFlag);
-//        for (Iterator i = paramsByLongFlag.keySet().iterator(); i.hasNext();) {
-//            String s = (String) i.next();
-//            byLongFlag.put(
-//                s,
-//                ((AbstractParameter) paramsByLongFlag.get(s)).getID());
-//        }
+        Map byLongFlag = new java.util.HashMap();
+        for (Iterator i = paramsByLongFlag.keySet().iterator(); i.hasNext();) {
+            String s = (String) i.next();
+            byLongFlag.put(
+                s,
+                ((AbstractParameter) paramsByLongFlag.get(s)).getID());
+        }
 
         return (new IDMap(ids, byShortFlag, byLongFlag));
     }

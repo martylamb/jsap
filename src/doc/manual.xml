@@ -181,11 +181,9 @@
       <para>Everyone else begins with a &#34;Hello, World!&#34; program, so we
       will, too.</para>
 
-      <programlisting>@@Manual_HelloWorld_1@@</programlisting>
+      <programlisting>@Manual_HelloWorld_1@</programlisting>
 
-      <screen>${run:java com.martiansoftware.jsap.examples.HelloWorld_1}
-<prompt>[mlamb@morbo]</prompt><command>this is my command
-<computeroutput>this is the computer output</computeroutput></command></screen>
+      <screen>@@rundoc:java com.martiansoftware.jsap.examples.Manual_HelloWorld_1@@</screen>
 
       <para>Not only is this completely uninteresting, but it doesn&#39;t use
       JSAP. Let&#39;s tweak it a little.</para>
@@ -194,7 +192,7 @@
     <sect1>
       <title>HelloWorld_2</title>
 
-      <programlisting>@@Manual_HelloWorld_2@@</programlisting>
+      <programlisting>@Manual_HelloWorld_2@</programlisting>
 
       <para>That&#39;s pretty verbose. Later on you&#39;ll see ways to trim
       this down quite a bit. Here&#39;s what&#39;s going on:</para>
@@ -252,9 +250,9 @@
 
       <para>The output of the program looks like this:</para>
 
-      <screen>${run:java com.martiansoftware.jsap.examples.HelloWorld_2}
+      <screen>@@rundoc:java com.martiansoftware.jsap.examples.Manual_HelloWorld_2@@
 
-${run:java com.martiansoftware.jsap.examples.HelloWorld_2 -n 5}</screen>
+@@rundoc:java com.martiansoftware.jsap.examples.Manual_HelloWorld_2 -n 5@@</screen>
 
       <para>So far, so good. Let&#39;s add a switch.</para>
     </sect1>
@@ -262,7 +260,7 @@ ${run:java com.martiansoftware.jsap.examples.HelloWorld_2 -n 5}</screen>
     <sect1>
       <title>HelloWorld_3</title>
 
-      <programlisting>@@Manual_HelloWorld_3@@</programlisting>
+      <programlisting>@Manual_HelloWorld_3@</programlisting>
 
       <para>What did we do? We created a new &#34;switch&#34; to determine how
       verbose we&#39;re going to be with our greeting, registered it with
@@ -270,13 +268,13 @@ ${run:java com.martiansoftware.jsap.examples.HelloWorld_2 -n 5}</screen>
       like a lot of code for this little feature, but let&#39;s look at all
       the ways we can invoke the program now:</para>
 
-      <screen>${run:java com.martiansoftware.jsap.examples.HelloWorld_3 -n 2}
+      <screen>@@rundoc:java com.martiansoftware.jsap.examples.Manual_HelloWorld_3 -n 2@@
 
-${run:java com.martiansoftware.jsap.examples.HelloWorld_3 -n 3 -v}
+@@rundoc:java com.martiansoftware.jsap.examples.Manual_HelloWorld_3 -n 3 -v@@
 
-${run:java com.martiansoftware.jsap.examples.HelloWorld_3 --verbose}
+@@rundoc:java com.martiansoftware.jsap.examples.Manual_HelloWorld_3 --verbose@@
 
-${run:java com.martiansoftware.jsap.examples.HelloWorld_3 -vn 2}</screen>
+@@rundoc:java com.martiansoftware.jsap.examples.Manual_HelloWorld_3 -vn 2@@</screen>
 
       <para>That last one is the most interesting - note that we were able to
       combine multiple short flags (&#34;v&#34; and &#34;n&#34;). JSAP allows
@@ -298,13 +296,13 @@ ${run:java com.martiansoftware.jsap.examples.HelloWorld_3 -vn 2}</screen>
       It&#39;s marked as &#34;greedy&#34;, so any number of names on the
       command line are associated with this option.</para>
 
-      <programlisting>@@Manual_HelloWorld_4@@</programlisting>
+      <programlisting>@Manual_HelloWorld_4@</programlisting>
 
-      <screen>${run:java com.martiansoftware.jsap.examples.HelloWorld_4 -n 2 --verbose Bender Fry Leela}
+      <screen>@@rundoc:java com.martiansoftware.jsap.examples.Manual_HelloWorld_4 -n 2 --verbose Bender Fry Leela@@
 
-${run:java com.martiansoftware.jsap.examples.HelloWorld_4 Kif -n 3}
+@@rundoc:java com.martiansoftware.jsap.examples.Manual_HelloWorld_4 Kif -n 3@@
 
-${run:java com.martiansoftware.jsap.examples.HelloWorld_4 -v -n 2}</screen>
+@@rundoc:java com.martiansoftware.jsap.examples.Manual_HelloWorld_4 -v -n 2@@</screen>
     </sect1>
 
     <sect1>
@@ -314,11 +312,11 @@ ${run:java com.martiansoftware.jsap.examples.HelloWorld_4 -v -n 2}</screen>
       by the user. This, of course, never happens. One way to handle this is
       to print usage information:</para>
 
-      <programlisting>@@Manual_HelloWorld_5@@</programlisting>
+      <programlisting>@Manual_HelloWorld_5@</programlisting>
 
-      <screen>${run:java com.martiansoftware.jsap.examples.HelloWorld_5 -n 2 -n 4}
+      <screen>@@rundoc:java com.martiansoftware.jsap.examples.Manual_HelloWorld_5 -n 2 -n 4@@
 
-${run:java com.martiansoftware.jsap.examples.HelloWorld_5 --nosuchflag}</screen>
+@@rundoc:java com.martiansoftware.jsap.examples.Manual_HelloWorld_5 --nosuchflag@@</screen>
     </sect1>
 
     <sect1>
@@ -327,11 +325,11 @@ ${run:java com.martiansoftware.jsap.examples.HelloWorld_5 --nosuchflag}</screen>
       <para>Of course, sometimes usage information doesn&#39;t provide enough
       detail. How about some actual program help?</para>
 
-      <programlisting>@@Manual_HelloWorld_6@@</programlisting>
+      <programlisting>@Manual_HelloWorld_6@</programlisting>
 
-      <screen>${run:java com.martiansoftware.jsap.examples.HelloWorld_5 -n 2 -n 4}
+      <screen>@@rundoc:java com.martiansoftware.jsap.examples.Manual_HelloWorld_6 -n 2 -n 4@@
 
-${run:java com.martiansoftware.jsap.examples.HelloWorld_5 --nosuchflag}</screen>
+@@rundoc:java com.martiansoftware.jsap.examples.Manual_HelloWorld_6 --nosuchflag@@</screen>
 
       <para>In HelloWorld_3 you learned how to add a switch (verbose). Combine
       a -h / --help switch with the getHelp() method as used here, and
@@ -345,11 +343,11 @@ ${run:java com.martiansoftware.jsap.examples.HelloWorld_5 --nosuchflag}</screen>
       can be even more helpful to tell the user specifically what they did
       wrong. It&#39;s pretty easy:</para>
 
-      <programlisting>@@Manual_HelloWorld_7@@</programlisting>
+      <programlisting>@Manual_HelloWorld_7@</programlisting>
 
-      <screen>${run:java com.martiansoftware.jsap.examples.HelloWorld_5 -n 2 -n 4}
+      <screen>@@rundoc:java com.martiansoftware.jsap.examples.Manual_HelloWorld_7 -n 2 -n 4@@
 
-${run:java com.martiansoftware.jsap.examples.HelloWorld_5 --nosuchflag}</screen>
+@@rundoc:java com.martiansoftware.jsap.examples.Manual_HelloWorld_7 --nosuchflag@@</screen>
     </sect1>
   </chapter>
 
