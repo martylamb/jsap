@@ -71,5 +71,17 @@ public abstract class PropertyStringParser extends StringParser {
     public String getProperty(String key) {
         return (getProperties().getProperty(key));
     }
+    
+    /**
+     * Returns the property associated with the specified key, or the specified
+     * default value if no such property exists.
+     * @param key the key of the desired property
+     * @param defaultValue the default value to return if no such property exists
+     * @return the requested property, or the specified default value if no such property exists.
+     */
+    public String getProperty(String key, String defaultValue) {
+    	String result = getProperty(key);
+    	return (result == null ? defaultValue : result);
+    }
 
 }

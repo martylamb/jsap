@@ -32,21 +32,21 @@ public class ParseException extends JSAPException {
     }
 
     /**
-     * Creates a new ParseException encapsulating the specified exception.
-     * @param rootCause the exception to encapsulate.
+     * Creates a new ParseException encapsulating the specified Throwable.
+     * @param rootCause the Throwable to encapsulate.
      */
-    public ParseException(Exception rootCause) {
-        super(rootCause);
+    public ParseException(Throwable cause) {
+        super(cause);
     }
 
     /**
      * Creates a new ParseException with the specified message encapsulating the
-     * specified exception.
+     * specified Throwable.
      * @param msg the message for this ParseException.
-     * @param rootCause the exception to encapsulate.
+     * @param cause the Throwable to encapsulate.
      */
-    public ParseException(String msg, Exception rootCause) {
-        super(msg, rootCause);
+    public ParseException(String msg, Throwable cause) {
+        super(msg, cause);
     }
 
 }

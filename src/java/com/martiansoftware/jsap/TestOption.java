@@ -10,7 +10,7 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import java.util.ArrayList;
+import java.util.List;
 import com.martiansoftware.jsap.stringparsers.StringStringParser;
 
 /**
@@ -56,7 +56,7 @@ public class TestOption extends TestCase {
 
         option.setListSeparator(' ');
         option.setList(true);
-        ArrayList parseResult = null;
+        List parseResult = null;
 
         try {
             parseResult = option.parse("this is a test");

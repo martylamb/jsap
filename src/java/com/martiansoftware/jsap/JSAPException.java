@@ -20,12 +20,6 @@ package com.martiansoftware.jsap;
 public class JSAPException extends Exception {
 
     /**
-     * The underlying exception that caused this JSAPException.
-     * This may be null.
-     */
-    private Exception rootCause = null;
-
-    /**
      * Creates a new JSAPException.
      */
     public JSAPException() {
@@ -41,30 +35,21 @@ public class JSAPException extends Exception {
     }
 
     /**
-     * Creates a new JSAPException encapsulating the specified exception.
-     * @param rootCause the exception to encapsulate.
+     * Creates a new JSAPException encapsulating the specified Throwable.
+     * @param cause the Throwable to encapsulate.
      */
-    public JSAPException(Exception rootCause) {
-        super();
-        this.rootCause = rootCause;
+    public JSAPException(Throwable cause) {
+        super(cause);
     }
 
     /**
      * Creates a new JSAPException with the specified message encapsulating
-     * the specified exception.
+     * the specified Throwable.
      * @param msg the message for this JSAPException.
-     * @param rootCause the exception to encapsulate.
+     * @param cause the Throwable to encapsulate.
      */
-    public JSAPException(String msg, Exception rootCause) {
-        super(msg);
-        this.rootCause = rootCause;
+    public JSAPException(String msg, Throwable cause) {
+        super(msg, cause);
     }
 
-    /**
-     * Returns the underlying exception, if any, that caused this JSAPException.
-     * @return the underlying exception, if any, that caused this JSAPException.
-     */
-    public Exception getRootCause() {
-        return (rootCause);
-    }
 }

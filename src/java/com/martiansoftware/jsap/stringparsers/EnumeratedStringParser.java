@@ -37,7 +37,7 @@ public class EnumeratedStringParser extends StringParser {
 	 *        to make things more readable, e.g., "value_1; value_2";<br>
 	 *        option values have to be constructed using Java identifier characters<br>
 	 *        if the checkOptionChars parameter tells the parser to do this.
-	 * @param caseSensitive tells the parser wether the option value is case sensitive
+	 * @param caseSensitive tells the parser whether the option value is case sensitive
 	 * @param checkOptionChars tells the parser whether to check for Java identifier conformant characters.
 	 * @throws IllegalArgumentException if the option value string has wrong format<br>
 	 *         or is empty

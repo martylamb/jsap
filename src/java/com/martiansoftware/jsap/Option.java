@@ -6,7 +6,7 @@
 
 package com.martiansoftware.jsap;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The base class from which FlaggedOption and UnflaggedOption are derived.
@@ -143,14 +143,14 @@ public abstract class Option extends AbstractParameter {
     /**
      * Delegates the parsing of a single argument to the current StringParser,
      * and stores the result in the
-     * specified ArrayList.  List options are broken into multiple arguments,
+     * specified List.  List options are broken into multiple arguments,
      * resulting in multiple calls
      * to this method.
-     * @param result the ArrayList to which the result should be appended.
+     * @param result the List to which the result should be appended.
      * @param argToParse the argument to parse.
      * @throws ParseException if the specified argument cannot be parsed.
      */
-    private void storeParseResult(ArrayList result, String argToParse)
+    private void storeParseResult(List result, String argToParse)
         throws ParseException {
         Object parseResult = getStringParser().parse(argToParse);
         if (parseResult != null) {
@@ -163,13 +163,13 @@ public abstract class Option extends AbstractParameter {
      * List options are tokenized
      * before the parse call is delegated to the StringParser.
      * @param arg the argument to parse.
-     * @return an ArrayList of objects resulting from the parse.
+     * @return a List of objects resulting from the parse.
      * @throws ParseException if the specified argument (or one of its tokens,
      * in the case of a list) cannot
      * be parsed.
      */
-    protected final ArrayList parse(String arg) throws ParseException {
-        ArrayList result = new ArrayList();
+    protected final List parse(String arg) throws ParseException {
+        List result = new java.util.ArrayList();
         if (getStringParser() == null) {
             boolean wasLocked = this.locked();
             setLocked(false);

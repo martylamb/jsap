@@ -6,7 +6,7 @@
 
 package com.martiansoftware.jsap;
 
-import java.util.ArrayList;
+import java.util.List;
 /**
  * <p>A utility class to parse a command line contained in a single String into
  * an array of argument tokens, much as the JVM (or more accurately, your
@@ -42,12 +42,12 @@ public class CommandLineTokenizer {
      * StringBuffer is not empty, its contents are appended to the resulting
      * array (temporarily stored in the specified ArrayList).  The StringBuffer
      * is then emptied in order to begin storing the next argument.
-     * @param resultBuffer the ArrayList temporarily storing the resulting
+     * @param resultBuffer the List temporarily storing the resulting
      * argument array.
      * @param buf the StringBuffer storing the current argument.
      */
     private static void appendToBuffer(
-        ArrayList resultBuffer,
+        List resultBuffer,
         StringBuffer buf) {
         if (buf.length() > 0) {
             resultBuffer.add(buf.toString());
@@ -66,7 +66,7 @@ public class CommandLineTokenizer {
      * @return an argument array representing the specified command line.
      */
     public static String[] tokenize(String commandLine) {
-        ArrayList resultBuffer = new ArrayList();
+        List resultBuffer = new java.util.ArrayList();
 
         if (commandLine != null) {
             int z = commandLine.length();

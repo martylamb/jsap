@@ -7,7 +7,7 @@
 package com.martiansoftware.jsap;
 
 import com.martiansoftware.jsap.stringparsers.BooleanStringParser;
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A Switch is a parameter whose presence alone is significant; another 
@@ -129,8 +129,8 @@ public class Switch extends AbstractParameter implements Flagged {
 	 * @return an ArrayList containing a single Boolean.
 	 * @throws ParseException if the specified parameter cannot be parsed.
 	 */
-	protected ArrayList parse(String arg) throws ParseException {
-		ArrayList result = new ArrayList();
+	protected List parse(String arg) throws ParseException {
+		List result = new java.util.ArrayList();
 		result.add((new BooleanStringParser()).parse(arg));
 		return (result);
 	}

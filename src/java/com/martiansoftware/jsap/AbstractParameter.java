@@ -6,7 +6,7 @@
 
 package com.martiansoftware.jsap;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>Top-level abstraction of a <b>parameter</b>.  A <b>parameter</b> consists
@@ -193,10 +193,10 @@ public abstract class AbstractParameter {
      * multiple values.
      *
      * @param   arg the argument to parse.
-     * @return  an ArrayList of values resulting from the parse.
+     * @return  a List of values resulting from the parse.
      * @throws  ParseException if the specified argument cannot be parsed.
      */
-    protected abstract ArrayList parse(String arg) throws ParseException;
+    protected abstract List parse(String arg) throws ParseException;
 
     /**
      * A convenience method for automatically generating syntax

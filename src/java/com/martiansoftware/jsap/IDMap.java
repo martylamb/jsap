@@ -6,8 +6,8 @@
 
 package com.martiansoftware.jsap;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Iterator;
 
 /**
@@ -24,37 +24,35 @@ public class IDMap {
     /**
      * A list of the unique IDs of all the parameters stored in this IDMap.
      */
-    private ArrayList ids = null;
+    private List ids = null;
 
     /**
-     * A HashMap associating short flags with parameter IDs.
+     * A Map associating short flags with parameter IDs.
      */
-    private HashMap byShortFlag = null;
+    private Map byShortFlag = null;
 
     /**
-     * A HashMap associating long flags with parameter IDs.
+     * A Map associating long flags with parameter IDs.
      */
-    private HashMap byLongFlag = null;
+    private Map byLongFlag = null;
 
     /**
      * Creates a new IDMap.
-     * @param ids an ArrayList of the unique IDs of all the parameters to store
+     * @param ids a List of the unique IDs of all the parameters to store
      * in this IDMap.
-     * @param byShortFlag a HashMap with keys equal to the short flags of the
+     * @param byShortFlag a Map with keys equal to the short flags of the
      * parameters (as Character objects),
      * and values equal to the unique IDs of the parameters associated with
      * those short flags.
-     * @param byLongFlag a HashMap with keys equal to the long flags of the
+     * @param byLongFlag a Map with keys equal to the long flags of the
      * parameters (as Strings),
      * and values equal to the unique IDs of the parameters associated with
      * those short flags.
-     * @see java.util.ArrayList
-     * @see java.util.HashMap
      */
-    public IDMap(ArrayList ids, HashMap byShortFlag, HashMap byLongFlag) {
-        this.ids = (ArrayList) ids.clone();
-        this.byShortFlag = (HashMap) byShortFlag.clone();
-        this.byLongFlag = (HashMap) byLongFlag.clone();
+    public IDMap(List ids, Map byShortFlag, Map byLongFlag) {
+        this.ids = new java.util.ArrayList(ids);
+        this.byShortFlag = new java.util.HashMap(byShortFlag);
+        this.byLongFlag = new java.util.HashMap(byLongFlag);
     }
 
     /**

@@ -9,7 +9,7 @@ package com.martiansoftware.jsap;
 import com.martiansoftware.jsap.stringparsers.BooleanStringParser;
 import com.martiansoftware.jsap.stringparsers.StringStringParser;
 import com.martiansoftware.jsap.stringparsers.EnumeratedStringParser;
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * An ExtenedSwitch is a parameter that has something in comming with a Switch,
@@ -20,9 +20,9 @@ import java.util.ArrayList;
  * The following possibilities are provided for ExtendedSwitches:<br>
  * "-s:value" is an ExtendedSwitch with only one qualifying value.
  * Depending on the constructor parameter (see constructor javadoc)
- * this value can be an arbitray string without spaces or with spaces
+ * this value can be an arbitrary string without spaces or with spaces
  * if the value is surrounded by '"' signs. An example is -d:"C:\Program Files\test".<br>
- * On the other hand this value can be a predifined name provided by the programmer in
+ * On the other hand this value can be a predefined name provided by the programmer in
  * the constructor, thus only this value is allowed in the command line. An example is
  * "-g:none".
  * <p>
@@ -75,7 +75,6 @@ public final class QualifiedSwitch extends Switch {
 
     private String qualifyingValues; // the qualifying values that are allowed for the switch
     boolean checkEnumeratedValues = false; // tells the parser if the qualifyingValues are enumerated values
-    private ArrayList result = new ArrayList(); // takes the parse results
 
     /**
      * Creates a new ExtendSwitch with the specified unique ID
@@ -134,7 +133,8 @@ public final class QualifiedSwitch extends Switch {
      * @return an ArrayList containing the parse results.
      * @throws ParseException if the specified parameter cannot be parsed.
      */
-    protected final ArrayList parse(String arg) throws ParseException {
+    protected final List parse(String arg) throws ParseException {
+    	List result = new java.util.ArrayList();
         if (arg != null && arg.startsWith(":")) {
             result.add(Boolean.TRUE); // flag is present
             if (checkEnumeratedValues) {

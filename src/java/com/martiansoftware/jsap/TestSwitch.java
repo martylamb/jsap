@@ -10,7 +10,7 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Tests the Switch class.
@@ -62,22 +62,22 @@ public class TestSwitch extends TestCase {
     }
 
     /**
-     * Utility method to ensure that the specified ArrayList contains a single,
+     * Utility method to ensure that the specified List contains a single,
      * true boolean.
-     * @param a the ArrayList to test.
+     * @param a the List to test.
      */
-    private void ensureTrueArrayList(ArrayList a) {
+    private void ensureTrueList(List a) {
         assertNotNull(a);
         assertEquals(1, a.size());
         assertEquals(a.get(0), new Boolean(true));
     }
 
     /**
-     * Utility method to ensure that the specified ArrayList contains a single,
+     * Utility method to ensure that the specified List contains a single,
      * false boolean.
-     * @param a the ArrayList to test.
+     * @param a the List to test.
      */
-    private void ensureFalseArrayList(ArrayList a) {
+    private void ensureFalseList(List a) {
         assertNotNull(a);
         assertEquals(1, a.size());
         assertEquals(a.get(0), new Boolean(false));
@@ -89,9 +89,9 @@ public class TestSwitch extends TestCase {
     public void testSwitchParse() {
         try {
             Switch mySwitch = new Switch("mySwitch");
-            ensureTrueArrayList(mySwitch.parse(null));
-            ensureTrueArrayList(mySwitch.parse("true"));
-            ensureFalseArrayList(mySwitch.parse("false"));
+            ensureTrueList(mySwitch.parse(null));
+            ensureTrueList(mySwitch.parse("true"));
+            ensureFalseList(mySwitch.parse("false"));
         } catch (JSAPException e) {
             fail(e.getMessage());
         }

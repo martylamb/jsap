@@ -6,8 +6,7 @@
 
 package com.martiansoftware.jsap;
 
-import java.util.HashMap;
-import java.util.ArrayList;
+import java.util.Map;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.net.InetAddress;
@@ -27,19 +26,19 @@ import java.util.List;
 public class JSAPResult implements ExceptionMap {
 
     /**
-     * Contains all of the results, as a HashMap of ArrayLists keyed by
+     * Contains all of the results, as a Map of Lists keyed by
      * parameter ID.
      */
-    private HashMap allResults = null;
+    private Map allResults = null;
 
     /**
-     * Contains all of the exceptions, as a HashMap of ArrayLists, keyed by
+     * Contains all of the exceptions, as a Map of Lists, keyed by
      * parameter ID.
      * "General" exceptions that are not associated with a specific parameter
      * have a null
      * key.
      */
-    private HashMap allExceptions = null;
+    private Map allExceptions = null;
 
     /**
      * A chronological listing of all of the exceptions thrown during parsing.
@@ -50,8 +49,8 @@ public class JSAPResult implements ExceptionMap {
      *  Creates new JSAPResult
      */
     protected JSAPResult() {
-        allResults = new HashMap();
-        allExceptions = new HashMap();
+        allResults = new java.util.HashMap();
+        allExceptions = new java.util.HashMap();
         chronologicalErrorMessages = new java.util.LinkedList();
     }
 
@@ -60,15 +59,15 @@ public class JSAPResult implements ExceptionMap {
      * the specified id, if any.
      * @param id the unique ID of the parameter with which the specified values
      * are associated.
-     * @param values an ArrayList containing the additional values to associate
+     * @param values a List containing the additional values to associate
      * with the specified ID.
      */
-    protected void add(String id, ArrayList values) {
-        ArrayList al = null;
+    protected void add(String id, List values) {
+        List al = null;
         if (allResults.containsKey(id)) {
-            al = (ArrayList) allResults.get(id);
+            al = (List) allResults.get(id);
         } else {
-            al = new ArrayList();
+            al = new java.util.ArrayList();
             allResults.put(id, al);
         }
         al.addAll(values);
@@ -85,11 +84,11 @@ public class JSAPResult implements ExceptionMap {
      * @see com.martiansoftware.jsap.ExceptionMap#addException(String,Exception)
      */
     public void addException(String id, Exception exception) {
-        ArrayList el = null;
+        List el = null;
         if (allExceptions.containsKey(id)) {
-            el = (ArrayList) allExceptions.get(id);
+            el = (List) allExceptions.get(id);
         } else {
-            el = new ArrayList();
+            el = new java.util.ArrayList();
             allExceptions.put(id, el);
         }
         el.add(exception);
@@ -108,7 +107,7 @@ public class JSAPResult implements ExceptionMap {
      */
     public Object getObject(String id) {
         Object result = null;
-        ArrayList al = (ArrayList) allResults.get(id);
+        List al = (List) allResults.get(id);
         if ((al != null) && (al.size() > 0)) {
             result = al.get(0);
         }
@@ -126,9 +125,9 @@ public class JSAPResult implements ExceptionMap {
      * the specified ID, an empty (zero-length) array is returned.
      */
     public Object[] getObjectArray(String id) {
-        ArrayList al = (ArrayList) allResults.get(id);
+        List al = (List) allResults.get(id);
         if (al == null) {
-            al = new ArrayList();
+            al = new java.util.ArrayList(0);
         }
         return (al.toArray());
     }
@@ -156,9 +155,9 @@ public class JSAPResult implements ExceptionMap {
      * array and the size of this list..
      */
     public Object[] getObjectArray(String id, Object[] a) {
-        ArrayList al = (ArrayList) allResults.get(id);
+        List al = (List) allResults.get(id);
         if (al == null) {
-            al = new ArrayList();
+            al = new java.util.ArrayList();
         }
         return (al.toArray(a));
     }
@@ -267,7 +266,7 @@ public class JSAPResult implements ExceptionMap {
      */
     public String getQualifiedSwitchValue(String id) {
     	Object result = null;
-    	ArrayList al = (ArrayList) allResults.get(id);
+    	List al = (List) allResults.get(id);
     	if ((al != null) && (al.size() == 2)) {
     		result = al.get(1);
     	}
@@ -1155,7 +1154,7 @@ public class JSAPResult implements ExceptionMap {
      */
     public Exception getException(String id) {
         Exception result = null;
-        ArrayList el = (ArrayList) allExceptions.get(id);
+        List el = (List) allExceptions.get(id);
         if ((el != null) && (el.size() > 0)) {
             result = (Exception) el.get(0);
         }
@@ -1177,7 +1176,7 @@ public class JSAPResult implements ExceptionMap {
      */
     public Exception[] getExceptionArray(String id) {
         Exception[] result = new Exception[0];
-        ArrayList el = (ArrayList) allExceptions.get(id);
+        List el = (List) allExceptions.get(id);
         if (el != null) {
             result = (Exception[]) el.toArray(result);
         }
@@ -1195,9 +1194,9 @@ public class JSAPResult implements ExceptionMap {
      * parameter ID
      */
     public Iterator getExceptionIterator(String id) {
-        ArrayList el = (ArrayList) allExceptions.get(id);
+        List el = (List) allExceptions.get(id);
         if (el == null) {
-            el = new ArrayList();
+            el = new java.util.ArrayList();
         }
         return (el.iterator());
     }

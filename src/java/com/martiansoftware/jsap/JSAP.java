@@ -6,8 +6,8 @@
 
 package com.martiansoftware.jsap;
 
-import java.util.HashMap;
-import java.util.ArrayList;
+import java.util.Map;
+import java.util.List;
 import java.util.Iterator;
 import com.martiansoftware.util.StringUtils;
 
@@ -59,33 +59,33 @@ public class JSAP {
     /**
      * Map of this JSAP's AbstractParameters keyed on their unique ID.
      */
-    private HashMap paramsByID = null;
+    private Map paramsByID = null;
 
     /**
      * Map of this JSAP's AbstractParameters keyed on their short flag.
      */
-    private HashMap paramsByShortFlag = null;
+    private Map paramsByShortFlag = null;
 
     /**
      * Map of this JSAP's AbstractParameters keyed on their long flag.
      */
-    private HashMap paramsByLongFlag = null;
+    private Map paramsByLongFlag = null;
 
     /**
-     * ArrayList of this JSAP's UnflaggedOptions, in order of declaration.
+     * List of this JSAP's UnflaggedOptions, in order of declaration.
      */
-    private ArrayList unflaggedOptions = null;
+    private List unflaggedOptions = null;
 
     /**
-     * ArrayList of all of this JSAP's AbstractParameters, in order of
+     * List of all of this JSAP's AbstractParameters, in order of
      * declaration.
      */
-    private ArrayList paramsByDeclarationOrder = null;
+    private List paramsByDeclarationOrder = null;
 
     /**
-     * ArrayList of all of this JSAP's DefaultSources, in order of declaration.
+     * List of all of this JSAP's DefaultSources, in order of declaration.
      */
-    private ArrayList defaultSources = null;
+    private List defaultSources = null;
 
     /**
      * If not null, overrides the automatic usage info.
@@ -195,12 +195,12 @@ public class JSAP {
      * with registerParameter() before its parse() methods may be called.
      */
     public JSAP() {
-        paramsByID = new HashMap();
-        paramsByShortFlag = new HashMap();
-        paramsByLongFlag = new HashMap();
-        unflaggedOptions = new ArrayList();
-        paramsByDeclarationOrder = new ArrayList();
-        defaultSources = new ArrayList();
+        paramsByID = new java.util.HashMap();
+        paramsByShortFlag = new java.util.HashMap();
+        paramsByLongFlag = new java.util.HashMap();
+        unflaggedOptions = new java.util.ArrayList();
+        paramsByDeclarationOrder = new java.util.ArrayList();
+        defaultSources = new java.util.ArrayList();
     }
 
     /**
@@ -340,28 +340,28 @@ public class JSAP {
      * @return an IDMap based upon this JSAP's current configuration.
      */
     public IDMap getIDMap() {
-        ArrayList ids = new ArrayList();
-        for (Iterator i = paramsByDeclarationOrder.iterator(); i.hasNext();) {
-            AbstractParameter param = (AbstractParameter) i.next();
-            ids.add(param.getID());
-        }
+        List ids = new java.util.ArrayList(paramsByDeclarationOrder);
+//        for (Iterator i = paramsByDeclarationOrder.iterator(); i.hasNext();) {
+//            AbstractParameter param = (AbstractParameter) i.next();
+//            ids.add(param.getID());
+//        }
 
-        HashMap byShortFlag = new HashMap();
-        for (Iterator i = paramsByShortFlag.keySet().iterator();
-            i.hasNext();) {
-            Character c = (Character) i.next();
-            byShortFlag.put(
-                c,
-                ((AbstractParameter) paramsByShortFlag.get(c)).getID());
-        }
+        Map byShortFlag = new java.util.HashMap(paramsByShortFlag);
+//        for (Iterator i = paramsByShortFlag.keySet().iterator();
+//          i.hasNext();) {
+//            Character c = (Character) i.next();
+//            byShortFlag.put(
+//                c,
+//                ((AbstractParameter) paramsByShortFlag.get(c)).getID());
+//        }
 
-        HashMap byLongFlag = new HashMap();
-        for (Iterator i = paramsByLongFlag.keySet().iterator(); i.hasNext();) {
-            String s = (String) i.next();
-            byLongFlag.put(
-                s,
-                ((AbstractParameter) paramsByLongFlag.get(s)).getID());
-        }
+        Map byLongFlag = new java.util.HashMap(paramsByLongFlag);
+//        for (Iterator i = paramsByLongFlag.keySet().iterator(); i.hasNext();) {
+//            String s = (String) i.next();
+//            byLongFlag.put(
+//                s,
+//                ((AbstractParameter) paramsByLongFlag.get(s)).getID());
+//        }
 
         return (new IDMap(ids, byShortFlag, byLongFlag));
     }
