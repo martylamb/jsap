@@ -24,7 +24,7 @@ Legal:
 
 	<!-- Basics -->
    	<property name="name" value="JSAP" />
-    <property name="version" value="1.0.3"/>
+    <property name="version" value="1.03"/>
     <property name="year" value="2002-2004"/>
 
 	<!-- Directories -->
@@ -61,7 +61,6 @@ Legal:
     <property name="copyrightowners" value="Martian Software, Inc." />
     <property name="copyright.htm" value="Copyright &amp;copy; ${year}, ${copyrightowners}.  All Rights Reserved." />
 	<property name="updates.htm" value="For the latest version and documentation, please visit &lt;a href='${url}'&gt;${url}&lt;/a&gt;" />
-
 	<!-- END OF PROPERTIES ********************************************************************************** -->
 
 	<!-- required for build to work in eclipse -->
@@ -210,31 +209,22 @@ Targets:
 		
 		<!-- anyone want to write a non-platform-specific task to do this? -->
  		<exec dir="${build}/manual" executable="xmlto">
- 			<arg value="html-nochunks"/>
+ 			<arg value="html"/>
  			<arg value="manual.xml"/>
  		</exec>
-
-		<!-- I don't know why, but for some reason xmlto puts character \xa0
-		     in several places where a space would suffice.  If there's a reason
-		     for this, it escapes me... but the replace task can't handle it,
-		     so I again resort to platform-specific operations.  -->
-		<exec dir="${build}/manual"
-				executable="sed"
-				output="${build}/manual/manual2.html">
-			<arg value="-e"/>
-			<arg value="s/\xa0/ /g"/>
-			<arg value="manual.html"/>
-		</exec>
 		
-  		<replace file="${build}/manual/manual2.html"
+  		<replace encoding="ISO8859_1" dir="${build}/manual" includes="*.html"
 			token="&lt;head&gt;"
 			value="&lt;head&gt;&lt;link rel='stylesheet' type='text/css' href='manual.css'/&gt;" />
 			
-  		<replace file="${build}/manual/manual2.html"
+  		<replace encoding="ISO8859_1" dir="${build}/manual" includes="*.html"
 			token="&#x09;"
 			value="    " />
 			
-		<copy overwrite="true" verbose="true" file="${build}/manual/manual2.html" tofile="${doc}/manual.html"/>
+
+		<copy overwrite="true" verbose="true" todir="${doc}">
+			<fileset dir="${build}/manual" includes="*.html"/>
+		</copy>
 		<copy overwrite="true" verbose="true" file="${src}/doc/manual.css" todir="${doc}"/>
  		
 	</target>

@@ -18,8 +18,7 @@ import java.util.List;
  * <br>
  * An example of a command line using a Switch is "dosomething -v", where 
  * "-v" might mean "verbose."  
- * @author  @@AUTHOR_MARTY@@
- * @version @@VERSION@@
+ * @author <a href="http://www.martiansoftware.com/contact.html">Marty Lamb</a>
  * @see com.martiansoftware.jsap.Flagged
  * @see com.martiansoftware.jsap.stringparsers.BooleanStringParser
  */

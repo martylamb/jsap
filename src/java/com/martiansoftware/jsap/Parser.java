@@ -18,8 +18,7 @@ import java.util.Iterator;
  * The class that performs the actual parsing on a set of arguments.  This is 
  * created and managed by a JSAP;
  * developers should never need to access this class directly.
- * @author  @@AUTHOR_MARTY@@
- * @version @@VERSION@@
+ * @author <a href="http://www.martiansoftware.com/contact.html">Marty Lamb</a>
  * @see com.martiansoftware.jsap.JSAP
  */
 class Parser {

@@ -1,0 +1,58 @@
+<html><head><link rel='stylesheet' type='text/css' href='manual.css'/><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>HelloWorld_3</title><meta name="generator" content="DocBook XSL Stylesheets V1.61.2"><link rel="home" href="index.html" title="JSAP - Java Simple Argument Parser (v1.03)"><link rel="up" href="ch03.html" title="Chapter 3. Quick Start"><link rel="previous" href="ch03s02.html" title="HelloWorld_2"><link rel="next" href="ch03s04.html" title="HelloWorld_4"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">HelloWorld_3</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch03s02.html">Prev</a> </td><th width="60%" align="center">Chapter 3. Quick Start</th><td width="20%" align="right"> <a accesskey="n" href="ch03s04.html">Next</a></td></tr></table><hr></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="id3320254"></a>HelloWorld_3</h2></div></div><div></div></div><pre class="programlisting">
+    public static void main(String[] args) throws Exception {
+        JSAP jsap = new JSAP();
+        
+        FlaggedOption opt1 = new FlaggedOption("count")
+                                .setStringParser(new IntegerStringParser())
+                                .setDefault("1") 
+                                .setRequired(true) 
+                                .setShortFlag('n') 
+                                .setLongFlag(JSAP.NO_LONGFLAG);
+        
+        jsap.registerParameter(opt1);
+        
+        // create a switch we'll access using the id "verbose".
+        // it has the short flag "-v" and the long flag "--verbose"
+        // this will govern whether we say "Hi" or "Hello".
+        Switch sw1 = new Switch("verbose")
+                        .setShortFlag('v')
+                        .setLongFlag("verbose");
+        
+        jsap.registerParameter(sw1);
+        
+        JSAPResult config = jsap.parse(args);    
+
+        for (int i = 0; i &lt; config.getInt("count"); ++i) {
+            System.out.println((config.getBoolean("verbose") ? "Hello" : "Hi")
+                                + ", World!");
+        }
+        
+    }</pre><p>What did we do? We created a new <tt class="classname">Switch</tt> to
+      determine how verbose we're going to be with our greeting,
+      registered it with <tt class="classname">JSAP</tt>, and read its value
+      inside the print loop. That might still seem like a lot of code for this
+      little feature, but let's look at all the ways we can invoke the
+      program now:</p><pre class="screen"><tt class="prompt">[mlamb@morbo]$ </tt><b class="command">java com.martiansoftware.jsap.examples.Manual_HelloWorld_3 -n 2</b>
+<tt class="computeroutput">Exception in thread "main" java.lang.NoClassDefFoundError: com/martiansoftware/jsap/examples/Manual_HelloWorld_3
+</tt>
+
+<tt class="prompt">[mlamb@morbo]$ </tt><b class="command">java com.martiansoftware.jsap.examples.Manual_HelloWorld_3 -n 3 -v</b>
+<tt class="computeroutput">Exception in thread "main" java.lang.NoClassDefFoundError: com/martiansoftware/jsap/examples/Manual_HelloWorld_3
+</tt>
+
+<tt class="prompt">[mlamb@morbo]$ </tt><b class="command">java com.martiansoftware.jsap.examples.Manual_HelloWorld_3 --verbose</b>
+<tt class="computeroutput">Exception in thread "main" java.lang.NoClassDefFoundError: com/martiansoftware/jsap/examples/Manual_HelloWorld_3
+</tt>
+
+<tt class="prompt">[mlamb@morbo]$ </tt><b class="command">java com.martiansoftware.jsap.examples.Manual_HelloWorld_3 -vn 2</b>
+<tt class="computeroutput">Exception in thread "main" java.lang.NoClassDefFoundError: com/martiansoftware/jsap/examples/Manual_HelloWorld_3
+</tt></pre><p>That last one is the most interesting - note that we were able to
+      combine multiple short flags ("<b class="command">v</b>" and "<b class="command">n</b>").
+      <tt class="classname">JSAP</tt> allows this for as many short flags as you
+      want - provided that at most one of them is an <tt class="classname">Option</tt>
+      (as opposed to a <tt class="classname">Switch</tt>) and it's the last
+      one in the list.</p><p>For the next example, we'll use an unflagged option to specify
+      to whom we really want to say hello. It will be optional, defaulting to
+      "World" for backwards compatibility with our earlier examples.
+      :) We'll also make it greedy, so it consumes the rest of the command
+      line to allow multiple values.</p></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch03s02.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ch03.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ch03s04.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">HelloWorld_2 </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> HelloWorld_4</td></tr></table></div></body></html>

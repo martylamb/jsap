@@ -12,20 +12,27 @@ import com.martiansoftware.jsap.StringParser;
 import com.martiansoftware.jsap.ParseException;
 
 /**
- * A String parser that scans arguments for valid enumerated option values.<br>
- * These values are provided in the constructor together with one or to parameters<br>
+ * A StringParser that enforces a limited set of String options for its
+ * values.<br>
+ * These values are provided in the constructor together with one or two parameters<br>
  * that control the processing of these values.
  * <p>
- * Helper class for JSAP command line argument parsing.
- * 
- * @author Klaus-Peter Berg, Siemens AG, Munich Germany
+ * EnumeratedStringParser was generously 
+ * contributed to JSAP by Klaus-Peter Berg of Siemens AG, Munich, Germany.
+ * @since 1.03
+ * @author  Klaus-Peter Berg, Siemens AG, Munich, Germany
  * @version 2.0
  */
 public class EnumeratedStringParser extends StringParser {
 
-	private static final char VALUE_SEPARATOR = ';'; // char used to separate enumerated values
+	/**
+	 * char used to separate enumerated values when they are supplied 
+	 * to the constructor
+	 */
+	public static final char CONSTRUCTOR_VALUE_SEPARATOR = ';';
+	
 
-	private String[] validOptionValuesArray;
+	private String[] validOptionValuesArray = null;
 	private boolean isCaseSensitive;
 	private boolean checkOptionChars;
 
@@ -52,7 +59,7 @@ public class EnumeratedStringParser extends StringParser {
 
 		this.isCaseSensitive = caseSensitive;
 		this.checkOptionChars = checkOptionChars;
-		if (validOptionValues.indexOf(VALUE_SEPARATOR) == -1) {
+		if (validOptionValues.indexOf(CONSTRUCTOR_VALUE_SEPARATOR) == -1) {
 			validOptionValuesArray = new String[1];	// we assume to have only one valid option value
 			if (isValidOptionName(validOptionValues)) {
 				validOptionValuesArray[0] = validOptionValues;
@@ -84,7 +91,7 @@ public class EnumeratedStringParser extends StringParser {
 	}
 
 	/**
-	 * Constructs a new instance of EnumeratedParameterParser with parameter "checkOptionChars" set to true.
+	 * Constructs a new instance of EnumeratedStringParser with parameter "checkOptionChars" set to true.
 	 * 
 	 * @param validOptions a string that contains valid values for an option <br>
 	 *        in the format "value_1;value_2;..;value_n"; spaces between values are allowed <br>
@@ -99,7 +106,7 @@ public class EnumeratedStringParser extends StringParser {
 	}
 
 	/**
-	 * Constructs a new instance of EnumeratedParameterParser with parameter<br>
+	 * Constructs a new instance of EnumeratedStringParser with parameter<br>
 	 * "caseSensitive" set to false<br> and "checkOptionChars" set to true.<br>
 	 * All command line arguments for this parser and the values provided<br>
 	 * by the user in this constructor are converted to lower case.
@@ -114,18 +121,15 @@ public class EnumeratedStringParser extends StringParser {
 	public EnumeratedStringParser(String validOptionValues) throws IllegalArgumentException {
 		this(validOptionValues, false, true);
 	}
-	
 
 	/**
-	 * Parses the specified argument into an Object of the appropriate type.<br>  
-	 * If the specified argument cannot be converted into the desired Object, 
+	 * Parses the specified argument, making sure it matches one of the valid
+	 * options supplied to its constructor.<br>  
+	 * If the specified argument is not a valid option, 
 	 * a ParseException is thrown.
-	 * <p>
-	 * <b>Note:</b> this method MAY BE CALLED with a <b>null</b> argument.
 	 * 
-	 * @param arg the argument to convert to an Object of class appropriate to 
-	 * the StringParser subclass.
-	 * @return the Object resulting from the parsed argument.
+	 * @param arg the argument to parse
+	 * @return the String resulting from the parsed argument.
 	 * @throws ParseException if the specified argument cannot be parsed.
 	 */
 	public Object parse(String arg) throws ParseException {
@@ -176,5 +180,4 @@ public class EnumeratedStringParser extends StringParser {
 		}
 		return true;
 	}
-
 }

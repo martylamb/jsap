@@ -8,59 +8,46 @@ package com.martiansoftware.jsap;
 
 import com.martiansoftware.jsap.FlaggedOption;
 
-import com.martiansoftware.jsap.stringparsers.BooleanStringParser;
-import com.martiansoftware.jsap.stringparsers.StringStringParser;
-import com.martiansoftware.jsap.stringparsers.EnumeratedStringParser;
-import java.util.List;
-
 /**
  * A QualifiedSwitch is a parameter that has something in common with a Switch,
  * i.e., its presence or absence is significant, but different from a "pure"
- * Switch it can have an additional value prefixed by a ':' sign that qualifies
- * the Switch - making it behave like a FlaggedOption if a value is specified.
+ * Switch it can have an additional value (or values) prefixed by a ':' sign 
+ * that qualifies the Switch - making it behave like a FlaggedOption if a value 
+ * is specified.
  * <p>
- * The following possibilities are provided for ExtendedSwitches:<br>
- * "-s:value" is an ExtendedSwitch with only one qualifying value.
- * Depending on the constructor parameter (see constructor javadoc)
- * this value can be an arbitrary string without spaces or with spaces
- * if the value is surrounded by '"' signs. An example is -d:"C:\Program Files\test".<br>
- * On the other hand this value can be a predefined name provided by the programmer in
- * the constructor, thus only this value is allowed in the command line. An example is
- * "-g:none".
+ * QualifiedSwitch in fact extends FlaggedOption, providing all of its 
+ * functionality including the ability to use any StringParser to parse its 
+ * optional value(s).
+ * Values are retrieved from the JSAPResult in the same manner they would
+ * be retrieved for an equivalent FlaggedOption.
  * <p>
- * "-s:value1|value2|..|valuen according to SUN' s java -verbose[:class|gc|jni] 
- * where the ExtendedSwitch is allowed to take only one of the predefinded values provided
- * ba the programmer in the constructor.<br>
- * For the exact format of defining possible values for ExtendedSwitches see
- * constructor's javadoc.
+ * Additionally, the QualifiedSwitch's presence on the command line can be
+ * determined via JSAPResult.getBoolean(id).  This presents a small challenge
+ * in the unlikely event that you're also using a BooleanStringParser with
+ * the QualifiedSwitch; if you are, JSAPResult.getBoolean(id) will <b>not</b>
+ * return the optional values, but will still signify the QualifiedSwitch's
+ * presence.  Boolean optional values can be retrieved via 
+ * JSAPResult.getBooleanArray(id).  The first boolean in the array will be the
+ * first optionally specified boolean value qualifying the switch.
  * <p>
- * ExtendedSwitches use StringStringParser, BooleanParser and EnumeratedParser internally,
- * so their results can be obtained using several JSAPResult methods:
+ * The following are some examples of a QualifiedSwitch's use:
+ * <ul>
+ * <li><b>-s:value</b> is a QualifiedSwitch with only one qualifying value.</li>
+ * <li><b>-s</b> has no qualifying value.</li>
+ * <li><b>--qswitch:a,b,c</b> (configured with <code>setList(true)</code>
+ * and <code>setListSeparator(',')</code>) has three qualifying values.</li>
+ * </ul> 
  * <p>
- * getObjectArray() in order to check first for presence or absence of the QualifiedSwitch,
- * and second, if the QualifiedSwitch is ON, to get the qualifying value.<br>
- * <code>
- * Object[] qualifiedSwitchResult = jsapResult.getObjectArray("id"); 
- * boolean qualifiedSwitchIsOn = ((Boolean)qualifiedSwitchResult[0]).booleanValue();
- * if (qualifiedSwitchIsOn) {
- *    // we have a value
- *    String qualifiedSwitch_Value = (String)qualifiedSwitchResult[1];
- * }
- * </code>
+ * Please note that QualifiedSwitch is currently <b>experimental</b>, although
+ * it has no known problems.
  * <p>
- * Another method is to make use of the fact that QualifiedSwitch extends Switch, so we can code<br>
- * <code>
- * boolean qualifiedSwitchIsOn = jsapResult.getBoolean("id");
- * String qualifiedSwitch_Value = jsapResult.getQualifiedSwitchValue("id"); // may be null is switch is off
- * </code>
- * 
+ * QualifiedSwitch and its supporting code in other JSAP classes was generously 
+ * contributed to JSAP by Klaus P. Berg of Siemens AG, Munich, Germany.
+ * @since 1.03
  * @author  Klaus P. Berg, Siemens AG, Munich, Germany
- * @version @@VERSION@@
- * @see com.martiansoftware.jsap.Flagged
- * @see com.martiansoftware.jsap.stringparsers.StringStringParser
- * @see com.martiansoftware.jsap.stringparsers.BooleanStringParser
- * @see com.martiansoftware.jsap.stringparsers.EnumeratedStringParser
+ * @author <a href="http://www.martiansoftware.com/contact.html">Marty Lamb</a>
  */
+ /* ML - switched superclass from Switch to FlaggedOption */
 public final class QualifiedSwitch extends FlaggedOption {
 
     /**
@@ -113,6 +100,46 @@ public final class QualifiedSwitch extends FlaggedOption {
     	super(id);
     }   
 
+    /**
+     * Returns syntax instructions for this QualifiedSwitch.
+     * @return syntax instructions for this QualifiedSwitch based upon its current
+     * configuration.
+     */
+    public String getSyntax() {
+    	StringBuffer result = new StringBuffer();
+    	if (!required()) {
+    		result.append("[");
+    	}
+
+    	if ((getLongFlag() != JSAP.NO_LONGFLAG)
+		|| (getShortFlag() != JSAP.NO_SHORTFLAG)) {
+    		if (getLongFlag() == JSAP.NO_LONGFLAG) {
+    			result.append("-" + getShortFlag());
+    		} else if (getShortFlag() == JSAP.NO_SHORTFLAG) {
+    			result.append("--" + getLongFlag());
+    		} else {
+    			result.append(
+    					"(-" + getShortFlag() + "|--" + getLongFlag() + ")");
+    		}
+    	}
+    	result.append("[:");
+    	String id = getID();
+    	char sep = this.getListSeparator();
+    	if (this.isList()) {
+    		result.append(
+    				id + "1" + sep + id + "2" + sep + "..." + sep + id + "N ");
+    	} else {
+    		result.append("<" + id + ">");
+    	}
+    	if (!required()) {
+    		result.append("]");
+    	}
+    	result.append("]");
+    	return (result.toString());
+    } 
+    
+    
+    
     /**
      * Creates a new QualifiedSwitchValuesParser to which it delegates the parsing of 
      * the specified argument.

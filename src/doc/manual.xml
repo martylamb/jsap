@@ -2,7 +2,48 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
 "http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
 <book>
-  <title>JSAP - Java Simple Argument Parser</title>
+  <title>JSAP - Java Simple Argument Parser (v1.03)</title>
+
+  <preface>
+    <title>Formalities</title>
+
+    <para>This document is current as of February 24, 2004. The most
+    up-to-date copy of this document is available at <ulink
+    url="http://www.martiansoftware.com/jsap/doc/manual.html">http://www.martiansoftware.com/jsap/doc/index.html</ulink>.</para>
+
+    <para>Copyright (c) 2004, <ulink
+    url="http://www.martiansoftware.com/contact.html">Marty Lamb</ulink>. This
+    document is licensed under a <ulink
+    url="http://creativecommons.org/licenses/by-sa/1.0/">Creative Commons
+    License</ulink>.</para>
+
+    <section>
+      <title>License</title>
+
+      <para>JSAP is licensed under the Lesser GNU Public License. A copy of
+      this license is available at <ulink
+      url="http://www.fsf.org/licenses/licenses.html#LGPL">http://www.fsf.org/licenses/licenses.html#LGPL</ulink>.</para>
+
+      <note>
+        <para>There has been much discussion recently regarding the LGPL and
+        Java-based projects. As a result, the following LGPL clarification
+        applies (based upon a similar clarification at <ulink
+        url="http://www.hibernate.org">http://www.hibernate.org</ulink>):</para>
+
+        <para>JSAP is Free Software. The LGPL license is sufficiently flexible
+        to allow the use of JSAP in both open source and commercial projects.
+        Using JSAP (by importing JSAP&#39;s public interfaces in your Java
+        code), and extending JSAP (by subclassing) are considered by the
+        authors of JSAP to be dynamic linking. Hence our interpretation of the
+        LGPL is that the use of the unmodified JSAP source or binary, or the
+        rebundling of unmodified JSAP classes into your program&#39;s .jar
+        file, does not affect the license of your application code.</para>
+
+        <para>If you modify JSAP and redistribute your modifications, the LGPL
+        applies. </para>
+      </note>
+    </section>
+  </preface>
 
   <chapter>
     <title>Introduction</title>
