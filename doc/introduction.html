@@ -3,6 +3,31 @@
 <HTML>
   <HEAD>
     <TITLE></TITLE>
+
+<style type="text/css">
+
+.sidebar-left {
+    float: left;
+    border: solid 1px black;
+}
+
+.sidebar-right {
+    float: right;
+	border: solid 1px black;
+}
+
+.example-code {
+	
+    width: 80%;
+	white-space: pre;
+	background-color: #eeeeee;
+	border: solid 1px black;
+}
+
+.example-caption {
+}
+</style>
+
   </HEAD>
   <BODY>
 
@@ -10,45 +35,73 @@
   
 <h2>Why do we need another command line parser?</h2>
 
-While there are indeed several (good) command line parsers available for Java developers, they are generally ports
-of older, non-object-oriented parsers originally developed for use in other languages.  As a result, they fail to
-take full advantage of the features Java has to offer.
-<br><br>
-Perhaps the most powerful feature of JSAP is the ability to subclass its base Option class.  Developers can specify
-that Options must return Strings, Integers, URLs, Dates, or any other class that can be instantiated from a String
-on the command line.  If JSAP indicates that the command line was parsed successfully, the developer can rest
-assured that each Option was successfully instantiated - that is, a URL specified for a URLOption has already
-been instantiated by the time the JSAP.parse() method returns, so the developer needn't worry about catching a
-MalformedURLException, and can instead focus on developing the main application.  A number of basic Option classes 
-such as those listed above are included in the standard JSAP distribution.
-<br><br>
-This document should get you up and running with JSAP very quickly.  It starts out with the most basic functionality
-so you can start using it within five minutes.  We'll start with a simple example and gradually build upon 
-it in order to demonstrate the various features of JSAP.
-<br><br>
+<p>Put simply, I got tired of writing simple command line parsers for every java utility program I wrote.  I would
+usually just throw together something simple, requiring a certain number of arguments and deciding that args[0]
+would always mean, say, an input file, and args[1] would be an output file.  It was fine for simpler utilities
+with just a few parameters, but it didn't handle switches - and if I wanted anything other than a String from the
+command line, I had to write that parsing into the program, too.  What annoyed me was that none of this had
+anything to do with the actual task for which the utility was intended.</p>
+
+<p>I found several parsers on the Internet, all of which handled switches, but none of which had the versatility
+I wanted in terms of return types and configuration files.  Hence JSAP - the Java Simple Argument Parser.</p>
+
+<h2>So what does JSAP actually <i>do</i>, then?</h2>
+
+<p>JSAP not only guarantees that your command line was successfully parsed, but it instantiates objects of
+types specified by the developer based upon that command line.  If you tell JSAP that one of your parameters is
+an Integer, for example, and the user does not provide a String that can be converted to an Integer when invoking
+the program, JSAP will throw a ParseException when you have it parse the command line.  If no exception is thrown, 
+you are guaranteed an Integer when you request that parameter's value from your program.  There's a pretty big 
+(and growing) list of return types suppored by JSAP; you may want to <a href="#optionparsers">skip ahead a little and check it out</a>.</p>
+
+<div class="sidebar"><table width=200><tr><td><p>JSAP provides not only for default values for its parameters, but for an entire <i>chain</i> of defaults.  With 
+a couple extra lines of code, JSAP will, for example:</p></td></tr></table></div>
+
+<ol>
+	<li>Parse the command line.</li>
+	<li>For any omitted parameters, look for values in ~/.yourProgramName.conf</li>
+	<li>For any <i>still</i> omitted parameters, look for values in /etc/yourProgramName.conf</li>
+	<li>For any <i>still</i> omitted parameters, use the default values (if any) specified by the developer.
+</ol>
+
 <h2>Chapter 1:  Up and Running in Five Minutes.  Really.</h2>
 
-Everyone else begins with a "Hello, World!" program, so we will, too.  
-<br><br>
-<center><table width="80%" cellpadding=10 cellspacing=0 border=1><tr><td bgcolor="#eeeeee"><pre>
+<p>This chapter should get you up and running with JSAP very quickly.  It starts out with the most basic functionality
+so you can start using it within five minutes.  We'll start with a simple example and gradually build upon 
+it in order to demonstrate the various features of JSAP.</p>
+
+<p>Everyone else begins with a "Hello, World!" program, so we will, too.</p>  
+
+<center>
+		<table width="80%" cellpadding=10 cellspacing=0 border=1>
+			   <tr>
+			   	   <td bgcolor="#eeeeee">
+			   	   	   <pre>
 public class HelloWorld_1 {
 
     public static void main(String[] args){
         System.out.println("Hello, World!");
     }
-
-}</pre></td></tr></table></center>
+}</pre></td>
+				</tr>
+		</table>
+</center>
 <br>
 
-This program's output is:<br><br>
-<center><table width="80%" cellpadding=10 cellspacing=0 border=1><tr><td bgcolor="#eeeeee"><pre>
+<p>This program's output is:</p>
+<center>
+		<table width="80%" cellpadding=10 cellspacing=0 border=1><tr><td bgcolor="#eeeeee">
+			   <pre>
 > java HelloWorld_1
-<b>Hello, World!</b></pre></td></tr></table></center>
+<b>Hello, World!</b></pre>
+		  </td></tr></table>
+</center>
 <br>
+
 Not only is this completely uninteresting, but it doesn't use JSAP.  Let's use JSAP to give the user a
 little more control.
 <br><br>
-<center><table width="80%" cellpadding=10 cellspacing=0 border=1><tr><td bgcolor="#eeeeee"><pre>
+<div class="example-code">
     import com.ntpgroup.jsap.*;
 	
     public static void main(String[] args) throws Exception {
@@ -65,7 +118,7 @@ little more control.
         
         System.out.println(", World!");
     }
-</pre></td></tr></table></center>
+</div>
 <br>
 
 Its simplest output is:

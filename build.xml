@@ -193,6 +193,12 @@ Targets:
 		</checkstyle>
 	</target>
 	
+	<target name="xmldocs">
+		<xslt processor="trax" basedir="doc/src" destdir="doc/src" extension=".html" style="doc/src/manual.xsl">
+  			<param name="date" expression="07-01-2000"/>
+		</xslt>
+	</target>
+	
 	<target name="dist" depends="build,javadoc">
 		<delete dir="${dist.tmp.src}" />
 		<mkdir dir="${dist.tmp.src}" />
