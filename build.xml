@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Written to assume that classpath is rooted in the current directory. -->
+<!-- So this should be OK if you make this script in the root of a filesystem. -->
+<!-- If not, you may prefer to adjust the basedir, or move some directories around. -->
+<!-- The idea is that both Ant and NetBeans have to know what the package root is -->
+<!-- for the classes in your application. -->
+<project basedir="." default="help" name="jsap">
+
+    <target name="init">
+        <property name="version" value="0_8"/>
+        <property name="src" value="src"/>
+        <property name="build" value="build"/>
+        <property name="javadoc" value="doc/javadoc"/>
+        <property name="dist" value="dist"/>
+        <property name="devlib" value="devlib"/>
+        <mkdir dir="${build}"/>
+        <mkdir dir="${javadoc}"/>
+        <mkdir dir="${dist}"/>
+        <tstamp/>
+    </target>
+
+  <target name="help">
+    <echo>
+
+----------------------------------------------------------------------
+
+Targets:
+
+  clean         - delete all intermediate &amp; compiled files
+  compile       - compiles the JSAP API
+  build         - compiles the JSAP API and builds JSAP.jar
+  javadoc       - compiles the JSAP API and generates javadoc documentation
+  test          - compiles the JSAP API and tests it
+  all           - do everything listed above
+
+----------------------------------------------------------------------
+        </echo>
+    </target>
+
+    <target depends="init" name="compile">
+        <!-- Compile the java code from ${src} into ${build} -->
+        <javac destdir="${build}" srcdir="${src}">
+            <exclude name="com/ntpgroup/jsap/examples/"/>
+        </javac>
+    </target>
+
+    <target depends="init" name="testcompile">
+        <!-- Compile the java code from ${src} into ${build} -->
+        <javac classpath="${devlib}/junit.jar" destdir="${build}" srcdir="${src}">
+            <exclude name="com/ntpgroup/jsap/examples/"/>
+        </javac>
+    </target>
+
+
+    <target depends="testcompile" name="test">
+        <junit printsummary="on">
+            <test name="com.martiansoftware.jsap.junit.TestEverything"/>
+            <formatter type="plain" usefile="false"/>
+            <classpath>
+                <pathelement location="${build}"/>
+                <pathelement location="${devlib}/junit.jar "/>
+            </classpath>
+        </junit>
+    </target>
+
+    <target depends="compile" name="build">
+        <!-- Create the distribution directory -->
+        <mkdir dir="${dist}"/>
+        <jar basedir="${build}" jarfile="${dist}/jsap_${version}.jar"/>
+    </target>
+
+    <target depends="compile" name="javadoc">
+        <mkdir dir="${javadoc}"/>
+        <javadoc destdir="${javadoc}" excludepackagenames="com.ntpgroup.jsap.examples" packagenames="com.ntpgroup.*,com.ntpgroup.arguments.*" sourcepath="${src}"/>
+    </target>    
+
+    <target depends="init" name="clean">
+        <delete dir="${build}" verbose="true"/>
+        <delete dir="${javadoc}" verbose="true"/>
+        <delete dir="${dist}" verbose="true"/>
+        <mkdir dir="${build}"/>
+        <mkdir dir="${javadoc}"/>
+        <mkdir dir="${dist}"/>
+    </target>
+
+    <target depends="clean,build,javadoc" name="all">
+    </target>
+
+</project>
