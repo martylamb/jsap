@@ -23,7 +23,6 @@ Legal:
 	<target name="eclipse-setcompiler" if="eclipse.running">
 	    <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter" />
 	</target>
-	
 
     <target name="init" depends="eclipse-setcompiler">
 
@@ -85,6 +84,9 @@ Legal:
 		<pathelement location="${devlib}/junit.jar"/>
 	</path>
 
+	<path id="lib.class.path">
+		<pathelement location="${lib}/ant.jar"/>
+	</path>
 
 	<target name="help">
 		<echo>
@@ -121,6 +123,7 @@ Targets:
         <javac destdir="${build}" srcdir="${src}">
         	<exclude name="${testFiles}" />
         	<exclude name="${exampleFiles}" />
+        	<classpath refid="lib.class.path" />
         </javac>
     </target>
 
@@ -130,6 +133,7 @@ Targets:
         	<classpath>
         		<pathelement location="${devlib}/junit.jar"/>
         	</classpath>
+        	<classpath refid="lib.class.path" />
         </javac>
         <copy todir="${build}">
     		<fileset dir="${src}">
@@ -141,6 +145,7 @@ Targets:
     <target name="compile-all" depends="init" >
         <javac destdir="${build}" srcdir="${src}">
         	<classpath refid="devlib.class.path" />
+        	<classpath refid="lib.class.path" />
         </javac>
     </target>
 

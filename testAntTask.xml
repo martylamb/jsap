@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+ ==========================================================================
+
+ JSAP build file
+
+Author:
+ Martin Lamb
+
+Legal:
+ Copyright (c) 2002, Martin Lamb All rights reserved.
+
+==============================================================================
+ 
+
+--> 
+<project basedir="." default="test" name="testAntTask">
+
+	<property name="build" value="build"/>
+	
+	<taskdef name="jsap" classname="com.martiansoftware.jsap.ant.JSAPAntTask" classpath="${build}"/>
+	
+	
+	<target name="test">
+	
+		<jsap srcdir="${build}" classname="myJSAP">
+			<flaggedoption id="testoption" longflag="testoption">
+				<default>default value 1</default>
+			</flaggedoption>
+			<flaggedoption id="testoption2" shortflag="t"/>
+			<flaggedoption id="testoption2" shortflag="f" required="true"/>
+		</jsap>
+	
+	</target>
+
+</project>
