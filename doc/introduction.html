@@ -1,0 +1,308 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<HTML>
+  <HEAD>
+    <TITLE></TITLE>
+  </HEAD>
+  <BODY>
+
+<h1>Introduction</h1> 
+  
+<h2>Why do we need another command line parser?</h2>
+
+While there are indeed several (good) command line parsers available for Java developers, they are generally ports
+of older, non-object-oriented parsers originally developed for use in other languages.  As a result, they fail to
+take full advantage of the features Java has to offer.
+<br><br>
+Perhaps the most powerful feature of JSAP is the ability to subclass its base Option class.  Developers can specify
+that Options must return Strings, Integers, URLs, Dates, or any other class that can be instantiated from a String
+on the command line.  If JSAP indicates that the command line was parsed successfully, the developer can rest
+assured that each Option was successfully instantiated - that is, a URL specified for a URLOption has already
+been instantiated by the time the JSAP.parse() method returns, so the developer needn't worry about catching a
+MalformedURLException, and can instead focus on developing the main application.  A number of basic Option classes 
+such as those listed above are included in the standard JSAP distribution.
+<br><br>
+This document should get you up and running with JSAP very quickly.  It starts out with the most basic functionality
+so you can start using it within five minutes.  We'll start with a simple example and gradually build upon 
+it in order to demonstrate the various features of JSAP.
+<br><br>
+<h2>Chapter 1:  Up and Running in Five Minutes.  Really.</h2>
+
+Everyone else begins with a "Hello, World!" program, so we will, too.  
+<br><br>
+<center><table width="80%" cellpadding=10 cellspacing=0 border=1><tr><td bgcolor="#eeeeee"><pre>
+public class HelloWorld_1 {
+
+    public static void main(String[] args){
+        System.out.println("Hello, World!");
+    }
+
+}</pre></td></tr></table></center>
+<br>
+
+This program's output is:<br><br>
+<center><table width="80%" cellpadding=10 cellspacing=0 border=1><tr><td bgcolor="#eeeeee"><pre>
+> java HelloWorld_1
+<b>Hello, World!</b></pre></td></tr></table></center>
+<br>
+Not only is this completely uninteresting, but it doesn't use JSAP.  Let's use JSAP to give the user a
+little more control.
+<br><br>
+<center><table width="80%" cellpadding=10 cellspacing=0 border=1><tr><td bgcolor="#eeeeee"><pre>
+    import com.ntpgroup.jsap.*;
+	
+    public static void main(String[] args) throws Exception {
+        JSAP jsap = new JSAP();
+        jsap.addSwitch( new Switch("verbose",'v',"verbose") );
+
+        if( jsap.parse(args) != JSAP.CONTINUE ) System.exit(1);
+
+        if( jsap.getBooleanValue("verbose") ) {
+            System.out.print("Hello");
+        } else {
+            System.out.print("Hi");
+        }
+        
+        System.out.println(", World!");
+    }
+</pre></td></tr></table></center>
+<br>
+
+Its simplest output is:
+<br><br>
+<center><table width="80%" cellpadding=10 cellspacing=0 border=1><tr><td bgcolor="#eeeeee"><pre>
+> java HelloWorld_2
+<b>Hi, World!</b>
+</pre></td></tr></table></center>
+<br>
+
+But more interestingly, we can now do this:
+<br><br>
+<center><table width="80%" cellpadding=10 cellspacing=0 border=1><tr><td bgcolor="#eeeeee"><pre>
+> java HelloWorld_2 -v
+<b>Hello, World!</b>
+</pre></td></tr></table></center>
+<br>
+
+...or this:
+<br><br>
+<center><table width="80%" cellpadding=10 cellspacing=0 border=1><tr><td bgcolor="#eeeeee"><pre>
+> java HelloWorld_2 --verbose
+<b>Hello, World!</b>
+</pre></td></tr></table></center>
+<br>
+
+Let's look at the main() method more closely to see what's happening:<br><br>
+
+First, we'll just create the JSAP object we'll use to do the parsing.
+<br><br>        
+<center><table width="80%" cellpadding=10 cellspacing=0 border=1><tr><td bgcolor="#eeeeee"><pre>
+JSAP jsap = new JSAP();
+</pre></td></tr></table></center>
+<br>
+Next, we tell the JSAP object to expect a switch.  The switch is just the "-v" or "--verbose" you saw
+above.  The first parameter in the Switch constructor is the case-sensitive ID we'll use internally to access its
+value.  The second parameter is its "short name", the single-character version of the switch which is
+used by prefacing it with one hyphen on the command line.  The third parameter is its "long name", which 
+is used by prefacing it with two hyphens on the command line.
+<br><br>
+
+<center><table width="80%" cellpadding=10 cellspacing=0 border=1><tr><td bgcolor="#eeeeee"><pre>
+jsap.addSwitch( new Switch("verbose",'v',"verbose") );
+</pre></td></tr></table></center>
+<br>
+
+Next, we have our JSAP object parse the arguments our main() method received.  If its return value is
+JSAP.CONTINUE, the command line was parsed successfully and we can continue with our program.
+<br><br>
+
+<center><table width="80%" cellpadding=10 cellspacing=0 border=1><tr><td bgcolor="#eeeeee"><pre>
+if( jsap.parse(args) != JSAP.CONTINUE ) System.exit(1);
+</pre></td></tr></table></center>
+<br>
+
+Now we can print our message.  We first determine whether the "verbose" switch is set.  We do this by
+calling getBooleanValue(ID) on our JSAP object.  If it's true, the switch was specified on the command
+line.
+<br><br>        
+<center><table width="80%" cellpadding=10 cellspacing=0 border=1><tr><td bgcolor="#eeeeee"><pre>
+if( jsap.getBooleanValue("verbose") ) {
+	System.out.print("Hello");
+} else {
+	System.out.print("Hi");
+}
+       
+System.out.println(", World!");
+</pre></td></tr></table></center>
+<br>
+
+That's it.  Switches are pretty easy to use.  Now let's make it even more interesting by allowing the
+user to specify how many times to print the message.
+<br><br>
+<center><table width="80%" cellpadding=10 cellspacing=0 border=1><tr><td bgcolor="#eeeeee"><pre>
+public static void main(String[] args) throws Exception {
+    JSAP jsap = new JSAP();
+    jsap.addSwitch( new Switch("verbose",'v',"verbose") );
+    jsap.addOption( new IntegerOption("hellocount",'n',JSAP.NO_LONGNAME,"1",true) );
+
+    if( jsap.parse(args) != JSAP.CONTINUE ) System.exit(1);
+
+    for(int i=0; i&lt;jsap.getIntValue("hellocount"); ++i){
+        if( jsap.getBooleanValue("verbose") ) {
+            System.out.print("Hello");
+        } else {
+            System.out.print("Hi");
+        }
+        System.out.println(", World!");
+    }        
+}
+</pre></td></tr></table></center>
+<br>
+
+Here's some of the output of this program:
+<br><br>
+<center><table width="80%" cellpadding=10 cellspacing=0 border=1><tr><td bgcolor="#eeeeee"><pre>
+>java HelloWorld_3
+<b>Hi, World!</b>
+
+>java HelloWorld_3 -v
+<b>Hello, World!</b>
+
+>java HelloWorld_3 -v -n 3
+<b>Hello, World!
+Hello, World!
+Hello, World!</b>
+
+>java HelloWorld_3 -n 4 --verbose
+<b>Hello, World!
+Hello, World!
+Hello, World!
+Hello, World!</b>
+</pre></td></tr></table></center>
+<br>
+You'll find that the source code for this program is nearly identical to that of the last version of our 
+program.  Let's focus on the new additions.
+<br><br>
+The following tells our JSAP object to recognize a command-line Option.  It's an IntegerOption, so the user must
+specify an integer as its value.  We've given it the ID of "hellocount", and a short name of 'n', but
+no long name at all.  Its default value is "1", which is passed as a String (for reasons that will be
+made clear later in this manual), and it is declared to be a required parameter, although this is irrelevant
+because we provided a default value (i.e., if the user does not supply a value, the default will be used,
+so this "required" option will always be defined).
+<br><br>
+<center><table width="80%" cellpadding=10 cellspacing=0 border=1><tr><td bgcolor="#eeeeee"><pre>
+        jsap.addOption( new IntegerOption("hellocount",'n',JSAP.NO_LONGNAME,"1",true) );
+</pre></td></tr></table></center>
+<br>
+
+The upper limit in the following loop is the integer that was specified on the command line, which is
+retrieved by calling JSAP.getIntValue(ID) with the ID we used to create the Option.  Note that we don't
+need to make sure the value is an int -- JSAP has already assured us of this by returning JSAP.CONTINUE
+from its parse() method.
+<br><br>
+<center><table width="80%" cellpadding=10 cellspacing=0 border=1><tr><td bgcolor="#eeeeee"><pre>
+        for(int i=0; i<jsap.getIntValue("hellocount"); ++i){
+            if( jsap.getBooleanValue("verbose") ) {
+                System.out.print("Hello");
+            } else {
+                System.out.print("Hi");
+            }
+            System.out.println(", World!");
+        }        
+</pre></td></tr></table></center>
+<br>
+
+We're almost ready to use JSAP in our own applications; there's just one more thing to see, called an
+UnflaggedOption.  This is an option, similar to the "hellocount" we used above, that is not preceded
+by a hyphenated name.  You can have as many UnflaggedOptions as you like, allowing you to have a
+command line syntax like "programname inputfile outputfile", and the UnflaggedOptions will be processed
+in the order in which they are added to the JSAP object.  We'll use one to specify the user's name.  If
+it's not provided by the user, we'll still use the word "World".
+<br><br>
+<center><table width="80%" cellpadding=10 cellspacing=0 border=1><tr><td bgcolor="#eeeeee"><pre>
+import com.ntpgroup.jsap.*;
+
+public class HelloWorld_4 {
+
+    public static void main(String[] args) throws Exception {
+        JSAP jsap = new JSAP();
+        jsap.addSwitch( new Switch("verbose",'v',"verbose") );
+        jsap.addOption( new IntegerOption("hellocount",'n',JSAP.NO_LONGNAME,"1",true) );
+        jsap.addUnflaggedOption( 
+            new StringOption("username", JSAP.NO_SHORTNAME, JSAP.NO_LONGNAME, "World", true), false );
+
+        if( jsap.parse(args) != JSAP.CONTINUE ) System.exit(1);
+
+        for(int i=0; i&lt;jsap.getIntValue("hellocount"); ++i){
+            if( jsap.getBooleanValue("verbose") ) {
+                System.out.print("Hello");
+            } else {
+                System.out.print("Hi");
+            }
+            System.out.println(", " + jsap.getString("username") + "!");
+        }        
+    }
+
+}
+</pre></td></tr></table></center>
+<br>
+
+Some of this program's output is:
+
+<br><br>
+<center><table width="80%" cellpadding=10 cellspacing=0 border=1><tr><td bgcolor="#eeeeee"><pre>
+>java HelloWorld_4 -v -n 3
+<b>Hello, World!
+Hello, World!
+Hello, World!</b>
+
+>java HelloWorld_4 -v -n 3 Marty
+<b>Hello, Marty!
+Hello, Marty!
+Hello, Marty!</b>
+
+>java HelloWorld_4 Marty
+<b>Hi, Marty!</b>
+
+>java HelloWorld_4 Marty -n 2
+<b>Hi, Marty!
+Hi, Marty!</b>
+</pre></td></tr></table></center>
+<br>
+
+It's that simple.  Of course, there's a lot more JSAP can do, but this is enough to start using it.  Try
+the sample programs above - and try giving them unexpected input, like "-n foo" or "-n 5 -z".  You'll see
+that using JSAP will allow you to focus on the real program at hand rather than the invocation of the
+program.
+<br><br>
+The following table lists the built-in Option types and the JSAP shortcut methods for retrieving their 
+values.  You can also create your own Option types.
+<br><br>
+<center><table cellpadding=10 border=1 cellspacing=0>
+<tr><td><b>Option Type</b></td><td><b>JSAP Accessors</b></td></tr>
+<tr><td>StringOption</td><td>String JSAP.getString(String id)</td></tr>
+<tr><td>IntegerOption</td><td>int JSAP.getIntValue(String id)<br>Integer JSAP.getInteger(String id)</td></tr>
+<tr><td>InetAddressOption</td><td>InetAddress JSAP.getInetAddress(String id)</td></tr>
+<tr><td>URLOption</td><td>URL JSAP.getURL(String id)</td></tr>
+<tr><td>Switch / BooleanOption</td><td>boolean JSAP.getBooleanValue(String id)<br>Boolean JSAP.getBoolean(String id)</td></tr>
+</table>
+
+<!--
+
+  Terms:
+
+  Argument:  a single token from the command line
+
+  Option:   a token or combination of tokens that provide the program with a single unit of information.
+
+  Value:    the information provided by the user in an Option
+
+  Flagged Option:    an value preceded by a flag (beginning with one or two hyphens) that identifies the option (e.g. "-f somefilename" or "--file somefilename")
+
+  Unflagged Option:  an value NOT preceded by a flag, identified only by the order in which it is provided by the user
+
+  Switch:   a Tagged Option with an implicit value of "true" when specified (e.g. "-r" to indicate recursive)
+
+-->
+  </BODY>
+</HTML>
