@@ -63,6 +63,22 @@ public class JSAPResult implements ExceptionMap {
     }
 
     /**
+     * Returns true if this JSAPResult contains any results for
+     * the specified id.  Note that these results may be default
+     * values, and thus contains(id) might return true even when
+     * the user has not herself supplied the parameter.
+     * 
+     * This is just a means to see if there are values to retrieve
+     * 
+     * @param id the ID to check
+     * @return true if there are any values in this JSAPResult associated
+     * with the specified ID.
+     */
+    public boolean contains(String id) {
+    	return (allResults.containsKey(id));
+    }
+    
+    /**
      * Adds the specified values to any existing values already associated with
      * the specified id, if any.
      * @param id the unique ID of the parameter with which the specified values
