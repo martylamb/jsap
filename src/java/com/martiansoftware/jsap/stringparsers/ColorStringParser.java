@@ -13,10 +13,10 @@ import java.awt.Color;
 import java.util.StringTokenizer;
 
 /**
- * A StringParser for parsing java.awt.Color objects.  Color information can be
+ * A {@link com.martiansoftware.jsap.StringParser} for parsing java.awt.Color objects.  Color information can be
  * specified in a variety
- * of formats:<br>
- * <br>
+ * of formats:
+ * 
  * <ul>
  * <li>RGB, as integers in the range 0-255, separated by commas
  * (e.g., "123,45,6")</li>
@@ -25,7 +25,7 @@ import java.util.StringTokenizer;
  * <li>RGB, as hexadecimal strings following the '#' character
  * (e.g., "#1234ef")</li>
  * <li>By name, as matching the names of the color fields of java.awt.Color
- * (case-insensitive).  (e.g., "black")<li>
+ * (case-insensitive).  (e.g., "black")</li>
  * <li>RGBAlpha, as integers in the range 0-255, separated by commas
  * (e.g., "123,45,6,128")</li>
  * <li>RGBAlpha, as floats in the range 0.0-1.0, separated by commas
@@ -42,8 +42,24 @@ import java.util.StringTokenizer;
  */
 public class ColorStringParser extends StringParser {
 
-    /**
+	private static final ColorStringParser INSTANCE = new ColorStringParser();	
+
+	/** Returns a {@link ColorStringParser}.
+	 * 
+	 * <p>Convenient access to the only instance returned by
+	 * this method is available through
+	 * {@link com.martiansoftware.jsap.JSAP#COLOR_PARSER}.
+	 *  
+	 * @return a {@link ColorStringParser}.
+	 */
+
+	public static ColorStringParser getParser() {
+		return INSTANCE;
+	}
+
+	/**
      * Creates a new ColorStringParser.
+     * @deprecated Use {@link #getParser()} or, even better, {@link com.martiansoftware.jsap.JSAP#COLOR_PARSER}.
      */
     public ColorStringParser() {
         super();
@@ -212,8 +228,8 @@ public class ColorStringParser extends StringParser {
     /**
      * Parses java.awt.Color objects from Strings.  Color information can be
      * specified in a variety
-     * of formats:<br>
-     * <br>
+     * of formats:
+     * 
      * <ul>
      * <li>RGB, as integers in the range 0-255, separated by commas
      * (e.g., "123,45,6")</li>
@@ -223,7 +239,7 @@ public class ColorStringParser extends StringParser {
      * (e.g., "#1234ef")</li>
      * <li>By name, as matching the names of the color fields of java.awt.Color
      * (case-insensitive).
-     * (e.g., "black")<li>
+     * (e.g., "black")</li>
      * <li>RGBAlpha, as integers in the range 0-255, separated by commas
      * (e.g., "123,45,6,128")</li>
      * <li>RGBAlpha, as floats in the range 0.0-1.0, separated by commas

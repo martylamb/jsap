@@ -12,6 +12,24 @@ import java.util.Map;
 import java.util.List;
 import java.util.Iterator;
 
+import com.martiansoftware.jsap.stringparsers.BigDecimalStringParser;
+import com.martiansoftware.jsap.stringparsers.BigIntegerStringParser;
+import com.martiansoftware.jsap.stringparsers.BooleanStringParser;
+import com.martiansoftware.jsap.stringparsers.ByteStringParser;
+import com.martiansoftware.jsap.stringparsers.CharacterStringParser;
+import com.martiansoftware.jsap.stringparsers.ClassStringParser;
+import com.martiansoftware.jsap.stringparsers.ColorStringParser;
+import com.martiansoftware.jsap.stringparsers.DoubleStringParser;
+import com.martiansoftware.jsap.stringparsers.FloatStringParser;
+import com.martiansoftware.jsap.stringparsers.InetAddressStringParser;
+import com.martiansoftware.jsap.stringparsers.IntSizeStringParser;
+import com.martiansoftware.jsap.stringparsers.IntegerStringParser;
+import com.martiansoftware.jsap.stringparsers.LongSizeStringParser;
+import com.martiansoftware.jsap.stringparsers.LongStringParser;
+import com.martiansoftware.jsap.stringparsers.PackageStringParser;
+import com.martiansoftware.jsap.stringparsers.ShortStringParser;
+import com.martiansoftware.jsap.stringparsers.StringStringParser;
+import com.martiansoftware.jsap.stringparsers.URLStringParser;
 import com.martiansoftware.jsap.xml.JSAPConfig;
 import com.martiansoftware.util.StringUtils;
 
@@ -198,6 +216,125 @@ public class JSAP {
     public static final String NO_DEFAULT = null;
 
     /**
+     * The parameter has no help text.
+     *
+     * @see com.martiansoftware.jsap.Parameter#setHelp(String)
+     */
+    public static final String NO_HELP = null;
+
+    /** 
+     * The only instance of a {@link com.martiansoftware.jsap.stringparsers.BigDecimalStringParser}.
+     */
+    
+    public static final BigDecimalStringParser BIGDECIMAL_PARSER = BigDecimalStringParser.getParser();
+    
+    /** 
+     * The only instance of a {@link com.martiansoftware.jsap.stringparsers.BigIntegerStringParser}.
+     */
+    
+    public static final BigIntegerStringParser BIGINTEGER_PARSER = BigIntegerStringParser.getParser();
+    
+    /** 
+     * The only instance of a {@link com.martiansoftware.jsap.stringparsers.BooleanStringParser}.
+     */
+    
+    public static final BooleanStringParser BOOLEAN_PARSER = BooleanStringParser.getParser();
+    
+    /** 
+     * The only instance of a {@link com.martiansoftware.jsap.stringparsers.ByteStringParser}.
+     */
+    
+    public static final ByteStringParser BYTE_PARSER = ByteStringParser.getParser();
+    
+    
+    /** 
+     * The only instance of a {@link com.martiansoftware.jsap.stringparsers.CharacterStringParser}.
+     */
+    
+    public static final CharacterStringParser CHARACTER_PARSER = CharacterStringParser.getParser();
+    
+    /** 
+     * The only instance of a {@link com.martiansoftware.jsap.stringparsers.ClassStringParser}.
+     */
+    
+    public static final ClassStringParser CLASS_PARSER = ClassStringParser.getParser();
+
+    
+    /** 
+     * The only instance of a {@link com.martiansoftware.jsap.stringparsers.ColorStringParser}.
+     */
+    
+    public static final ColorStringParser COLOR_PARSER = ColorStringParser.getParser();
+
+    
+    /** 
+     * The only instance of a {@link com.martiansoftware.jsap.stringparsers.DoubleStringParser}.
+     */
+    
+    public static final DoubleStringParser DOUBLE_PARSER = DoubleStringParser.getParser();
+
+    
+    /** 
+     * The only instance of a {@link com.martiansoftware.jsap.stringparsers.FloatStringParser}.
+     */
+    
+    public static final FloatStringParser FLOAT_PARSER = FloatStringParser.getParser();
+
+    /** 
+     * The only instance of a {@link com.martiansoftware.jsap.stringparsers.InetAddressStringParser}.
+     */
+    
+    public static final InetAddressStringParser INETADDRESS_PARSER = InetAddressStringParser.getParser();
+
+    /** 
+     * The only instance of a {@link com.martiansoftware.jsap.stringparsers.IntegerStringParser}.
+     */
+    
+    public static final IntegerStringParser INTEGER_PARSER = IntegerStringParser.getParser();
+
+    /** 
+     * The only instance of a {@link com.martiansoftware.jsap.stringparsers.IntSizeStringParser}.
+     */
+    
+    public static final IntSizeStringParser INTSIZE_PARSER = IntSizeStringParser.getParser();
+
+    /** 
+     * The only instance of a {@link com.martiansoftware.jsap.stringparsers.LongSizeStringParser}.
+     */
+    
+    public static final LongSizeStringParser LONGSIZE_PARSER = LongSizeStringParser.getParser();
+
+    /** 
+     * The only instance of a {@link com.martiansoftware.jsap.stringparsers.LongStringParser}.
+     */
+    
+    public static final LongStringParser LONG_PARSER = LongStringParser.getParser();
+
+    /** 
+     * The only instance of a {@link com.martiansoftware.jsap.stringparsers.PackageStringParser}.
+     */
+    
+    public static final PackageStringParser PACKAGE_PARSER = PackageStringParser.getParser();
+
+    /** 
+     * The only instance of a {@link com.martiansoftware.jsap.stringparsers.ShortStringParser}.
+     */
+    
+    public static final ShortStringParser SHORT_PARSER = ShortStringParser.getParser();
+
+    /** 
+     * The only instance of a {@link com.martiansoftware.jsap.stringparsers.StringStringParser}.
+     */
+    
+    public static final StringStringParser STRING_PARSER = StringStringParser.getParser();
+
+    /** 
+     * The only instance of a {@link com.martiansoftware.jsap.stringparsers.URLStringParser}.
+     */
+    
+    public static final URLStringParser URL_PARSER = URLStringParser.getParser();
+
+    /**
      * The default screen width used for formatting help.
      */
     private static final int DEFAULT_SCREENWIDTH = 80;
@@ -301,7 +438,7 @@ public class JSAP {
                 maxUsageLength =
                     Math.max(
                         maxUsageLength,
-                        ((AbstractParameter) i.next()).getSyntax().length());
+                        ((Parameter) i.next()).getSyntax().length());
             }
             // now determine with width we'll wrap the help text to.
             // assume 2 leading spaces, 4 spaces after the longest usage info,
@@ -311,10 +448,20 @@ public class JSAP {
             // now loop through all the params again and display their help info
             for (Iterator i = paramsByDeclarationOrder.iterator();
                 i.hasNext();) {
-                AbstractParameter param = (AbstractParameter) i.next();
+                Parameter param = (Parameter) i.next();
+                StringBuffer defaultText = new StringBuffer();
+                String[] defaultValue = param.getDefault();
+                if ( !(param instanceof Switch) && defaultValue != null ) {
+                	defaultText.append(" (default: ");
+                    for(int j = 0; j < defaultValue.length; j++ ) {
+                    	if (j > 0) defaultText.append( ", " );
+                    	defaultText.append(defaultValue[ j ]);
+                    }
+                    defaultText.append(")");
+                }
                 Iterator helpInfo =
                     StringUtils
-                        .wrapToList(param.getHelp(), wrapWidth)
+                        .wrapToList(param.getHelp() + defaultText, wrapWidth)
                         .iterator();
 
                 buf.append("  "); // the two leading spaces
@@ -327,15 +474,16 @@ public class JSAP {
                     StringUtils.padRightToWidth(
                         helpInfo.hasNext() ? (String) helpInfo.next() : "",  // Bug fix by Klaus Berg
                         wrapWidth));
+                buf.append("\n");
 
                 while (helpInfo.hasNext()) {
-                	buf.append("\n");
                     buf.append(
                         StringUtils.padRightToWidth("", maxUsageLength + 6));
                     buf.append(
                         StringUtils.padRightToWidth(
                             (String) helpInfo.next(),
                             wrapWidth));
+                    buf.append("\n");
                 }
                 if (i.hasNext()) {
                     buf.append(paramSeparator);
@@ -359,7 +507,7 @@ public class JSAP {
             StringBuffer buf = new StringBuffer();
             for (Iterator i = paramsByDeclarationOrder.iterator();
                 i.hasNext();) {
-                AbstractParameter param = (AbstractParameter) i.next();
+                Parameter param = (Parameter) i.next();
                 if (buf.length() > 0) {
                     buf.append(" ");
                 }
@@ -391,7 +539,7 @@ public class JSAP {
     public IDMap getIDMap() {
         List ids = new java.util.ArrayList(paramsByDeclarationOrder.size());
         for (Iterator i = paramsByDeclarationOrder.iterator(); i.hasNext();) {
-            AbstractParameter param = (AbstractParameter) i.next();
+            Parameter param = (Parameter) i.next();
             ids.add(param.getID());
         }
 
@@ -401,7 +549,7 @@ public class JSAP {
             Character c = (Character) i.next();
             byShortFlag.put(
                 c,
-                ((AbstractParameter) paramsByShortFlag.get(c)).getID());
+                ((Parameter) paramsByShortFlag.get(c)).getID());
         }
 
         Map byLongFlag = new java.util.HashMap();
@@ -409,7 +557,7 @@ public class JSAP {
             String s = (String) i.next();
             byLongFlag.put(
                 s,
-                ((AbstractParameter) paramsByLongFlag.get(s)).getID());
+                ((Parameter) paramsByLongFlag.get(s)).getID());
         }
 
         return (new IDMap(ids, byShortFlag, byLongFlag));
@@ -424,10 +572,10 @@ public class JSAP {
      * @param id the ID of the requested Switch, FlaggedOption, or
      * UnflaggedOption.
      * @return the requested Switch, FlaggedOption, or UnflaggedOption, or null
-     * if no AbstractParameter with the specified ID is defined in this JSAP.
+     * if no Parameter with the specified ID is defined in this JSAP.
      */
-    public AbstractParameter getByID(String id) {
-        return ((AbstractParameter) paramsByID.get(id));
+    public Parameter getByID(String id) {
+        return ((Parameter) paramsByID.get(id));
     }
 
     /**
@@ -476,7 +624,7 @@ public class JSAP {
      * Returns an Iterator over all UnflaggedOptions currently registered with
      * this JSAP.
      *
-     * @returns an Iterator over all UnflaggedOptions currently registered with
+     * @return an Iterator over all UnflaggedOptions currently registered with
      * this JSAP.
      * @see java.util.Iterator
      */
@@ -517,7 +665,7 @@ public class JSAP {
     private Defaults getSystemDefaults() {
         Defaults defaults = new Defaults();
         for (Iterator i = paramsByDeclarationOrder.iterator(); i.hasNext();) {
-            AbstractParameter param = (AbstractParameter) i.next();
+            Parameter param = (Parameter) i.next();
             defaults.setDefault(param.getID(), param.getDefault());
         }
         return (defaults);
@@ -549,7 +697,7 @@ public class JSAP {
      * @param exceptionMap the ExceptionMap object within which any encountered
      * exceptions will be returned.
      * @return a Defaults object representing the Defaults of the entire JSAP.
-     * @see com.martiansoftware.jsap.DefaultSource#getDefaults(IDMap)
+     * @see com.martiansoftware.jsap.DefaultSource#getDefaults(IDMap, ExceptionMap)
      */
     protected Defaults getDefaults(ExceptionMap exceptionMap) {
         Defaults defaults = new Defaults();
@@ -563,19 +711,19 @@ public class JSAP {
     }
 
     /**
-     * Registers the specified AbstractParameter (i.e., Switch, FlaggedOption,
+     * Registers the specified Parameter (i.e., Switch, FlaggedOption,
      * or UnflaggedOption) with this JSAP.
      *
-     * <p>Registering an AbstractParameter <b>locks</b> the parameter.
+     * <p>Registering an Parameter <b>locks</b> the parameter.
      * Attempting to change its properties (ID, flags, etc.) while it is locked
-     * will result in a JSAPException.  To unlock an AbstractParameter, it must
+     * will result in a JSAPException.  To unlock an Parameter, it must
      * be unregistered from the JSAP.
      *
-     * @param param the AbstractParameter to register.
-     * @throws JSAPException if this AbstractParameter cannot be added. Possible
+     * @param param the Parameter to register.
+     * @throws JSAPException if this Parameter cannot be added. Possible
      * reasons include:
      * <ul>
-     *     <li>Another AbstractParameter with the same ID has already been
+     *     <li>Another Parameter with the same ID has already been
      *      registered.</li>
      *  <li>You are attempting to register a Switch or FlaggedOption with
      *      neither a short nor long flag.</li>
@@ -585,7 +733,7 @@ public class JSAP {
      *  <li>You are attempting to register a second greedy UnflaggedOption</li>
      * </ul>
      */
-    public void registerParameter(AbstractParameter param)
+    public void registerParameter(Parameter param)
         throws JSAPException {
         String paramID = param.getID();
 
@@ -657,13 +805,13 @@ public class JSAP {
     }
 
     /**
-     * Unregisters the specified AbstractParameter (i.e., Switch, FlaggedOption,
-     * or UnflaggedOption) from this JSAP.  Unregistering an AbstractParameter
+     * Unregisters the specified Parameter (i.e., Switch, FlaggedOption,
+     * or UnflaggedOption) from this JSAP.  Unregistering an Parameter
      * also unlocks it, allowing changes to its properties (ID, flags, etc.).
      *
-     * @param param the AbstractParameter to unregister from this JSAP.
+     * @param param the Parameter to unregister from this JSAP.
      */
-    public void unregisterParameter(AbstractParameter param) {
+    public void unregisterParameter(Parameter param) {
         if (paramsByID.containsKey(param.getID())) {
 
             if (param instanceof Option) {
@@ -718,9 +866,9 @@ public class JSAP {
      * their cleanup.
      */
     public void finalize() {
-        AbstractParameter[] params =
-            (AbstractParameter[]) paramsByDeclarationOrder.toArray(
-                new AbstractParameter[0]);
+        Parameter[] params =
+            (Parameter[]) paramsByDeclarationOrder.toArray(
+                new Parameter[0]);
         int paramCount = params.length;
         for (int i = 0; i < paramCount; ++i) {
             unregisterParameter(params[i]);

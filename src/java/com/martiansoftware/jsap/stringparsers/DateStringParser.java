@@ -13,7 +13,7 @@ import java.util.Date;
 import java.text.SimpleDateFormat;
 
 /**
- * A StringParser for parsing java.util.Date objects.  By default, arguments
+ * A {@link com.martiansoftware.jsap.StringParser} for parsing java.util.Date objects.  By default, arguments
  * are parsed using the
  * java.text.SimpleDateFormat for the default locale.  The format can be
  * overridden using this StringParser's
@@ -21,13 +21,13 @@ import java.text.SimpleDateFormat;
  * property key named "format".
  * The value associated with the "format" property is used to create a new
  * java.text.SimpleDateFormat
- * to parse the argument.<br>
- * <br>
- * A ParseException is thrown if a SimpleDateFormat cannot be constructed with
+ * to parse the argument.
+ * 
+ * <p>A ParseException is thrown if a SimpleDateFormat cannot be constructed with
  * the specified format, or if the SimpleDateFormat throws a
- * java.text.ParseException during parsing.<br>
- * <br>
- * The SimpleDateFormat object is instantiated when an option referencing this
+ * java.text.ParseException during parsing.
+ * 
+ * <p>The SimpleDateFormat object is instantiated when an option referencing this
  * DateStringParser is
  * registered with a JSAP object.
  *
@@ -43,8 +43,18 @@ public class DateStringParser extends PropertyStringParser {
      */
     private SimpleDateFormat format = null;
 
+    /** Returns a {@link DateStringParser}.
+	 * 
+	 * @return a {@link DateStringParser}.
+	 */
+    
+	public static DateStringParser getParser() {
+		return new DateStringParser();
+	}
+
     /**
      * Creates a new DateStringParser.
+     * @deprecated Use {@link #getParser()}.
      */
     public DateStringParser() {
         super();
@@ -61,7 +71,12 @@ public class DateStringParser extends PropertyStringParser {
         if (formatString == null) {
             format = new SimpleDateFormat();
         } else {
-            format = new SimpleDateFormat(formatString);
+        	try {
+        		format = new SimpleDateFormat(formatString);
+        	}
+        	catch( RuntimeException e ) {
+        		throw new ParseException( e );
+        	}
         }
     }
 

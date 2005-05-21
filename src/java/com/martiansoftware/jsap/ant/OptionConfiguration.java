@@ -6,16 +6,15 @@
 
 package com.martiansoftware.jsap.ant;
 
-import com.martiansoftware.jsap.JSAP;
-import com.martiansoftware.jsap.FlaggedOption;
-import com.martiansoftware.jsap.UnflaggedOption;
-import com.martiansoftware.jsap.StringParser;
-import com.martiansoftware.jsap.PropertyStringParser;
-import com.martiansoftware.jsap.Option;
-
-import java.util.Vector;
 import java.io.PrintStream;
-import java.io.IOException;
+import java.util.Vector;
+
+import com.martiansoftware.jsap.FlaggedOption;
+import com.martiansoftware.jsap.JSAP;
+import com.martiansoftware.jsap.Option;
+import com.martiansoftware.jsap.PropertyStringParser;
+import com.martiansoftware.jsap.StringParser;
+import com.martiansoftware.jsap.UnflaggedOption;
 
 /**
  * Stores/provides configuration data common to both flaggedoptions and
@@ -194,7 +193,7 @@ public abstract class OptionConfiguration extends ParameterConfiguration {
     }
 
     /**
-     * Instantiates and configures a StringParser according to this
+     * Instantiates and configures A {@link com.martiansoftware.jsap.StringParser} according to this
      * configuration, and provides it to the
      * specified Option.
      * @param option the Option that should use the configured StringParser.
@@ -247,10 +246,8 @@ public abstract class OptionConfiguration extends ParameterConfiguration {
      * by both UnflaggedOptionConfiguration and FlaggedOptionConfiguration.
      * @param objName the name of the object in the generated source code
      * @param out a PrintStream to which the source code should be written
-     * @throws IOException if any are thrown by the PrintStream.
      */
-    protected void createParentStatements(String objName, PrintStream out)
-        throws IOException {
+    protected void createParentStatements(String objName, PrintStream out) {
         super.createParentStatements(objName, out);
         out.println(
             "        "

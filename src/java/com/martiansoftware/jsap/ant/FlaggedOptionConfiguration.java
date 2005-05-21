@@ -6,12 +6,11 @@
 
 package com.martiansoftware.jsap.ant;
 
-import com.martiansoftware.jsap.JSAP;
-import com.martiansoftware.jsap.AbstractParameter;
-import com.martiansoftware.jsap.FlaggedOption;
-
 import java.io.PrintStream;
-import java.io.IOException;
+
+import com.martiansoftware.jsap.Parameter;
+import com.martiansoftware.jsap.FlaggedOption;
+import com.martiansoftware.jsap.JSAP;
 
 /**
  * Stores/provides configuration data for flaggedoptions nested inside a jsap
@@ -104,7 +103,7 @@ public class FlaggedOptionConfiguration extends OptionConfiguration {
      * Returns a FlaggedOption preconfigured according to this configuration.
      * @return a FlaggedOption preconfigured according to this configuration.
      */
-    public AbstractParameter getParameter() {
+    public Parameter getParameter() {
         FlaggedOption result = new FlaggedOption(this.getId());
 
         result.setShortFlag(this.getShortflag());
@@ -129,10 +128,8 @@ public class FlaggedOptionConfiguration extends OptionConfiguration {
      * @param methodName the name of the method to create
      * @param out the PrintStream to which the java source for the method
      * should be written.
-     * @throws IOException if any are thrown by the PrintStream.
      */
-    public void createMethod(String methodName, PrintStream out)
-        throws IOException {
+    public void createMethod(String methodName, PrintStream out) {
 
         out.println("    private FlaggedOption " + methodName + "() {");
         out.println(

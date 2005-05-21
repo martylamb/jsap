@@ -10,18 +10,34 @@ import com.martiansoftware.jsap.StringParser;
 import com.martiansoftware.jsap.ParseException;
 
 /**
- * A StringParser for parsing Shorts.  The parse() method delegates the actual
+ * A {@link com.martiansoftware.jsap.StringParser} for parsing Shorts.  The parse() method delegates the actual
  * parsing to <code>Short.decode(String)</code>.  If <code>Short.decode()</code>
  * throws a
  * NumberFormatException, it is encapsulated in a ParseException and re-thrown.
  * @author <a href="http://www.martiansoftware.com/contact.html">Marty Lamb</a>
  * @see com.martiansoftware.jsap.StringParser
- * @see java.lang.BigDecimal
+ * @see java.math.BigDecimal
  */
 public class ShortStringParser extends StringParser {
 
-    /**
+	private static final ShortStringParser INSTANCE = new ShortStringParser();	
+
+	/** Returns a {@link ShortStringParser}.
+	 * 
+	 * <p>Convenient access to the only instance returned by
+	 * this method is available through
+	 * {@link com.martiansoftware.jsap.JSAP#SHORT_PARSER}.
+	 *  
+	 * @return a {@link ShortStringParser}.
+	 */
+
+    public static ShortStringParser getParser() {
+		return INSTANCE;
+	}
+
+	/**
      * Creates a new ShortStringParser.
+     * @deprecated Use {@link #getParser()} or, even better, {@link com.martiansoftware.jsap.JSAP#SHORT_PARSER}.
      */
     public ShortStringParser() {
         super();

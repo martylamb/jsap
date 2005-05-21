@@ -68,6 +68,32 @@ public final class QualifiedSwitch extends FlaggedOption {
 	
 	/**
 	 * A shortcut constructor that creates a new QualifiedSwitch and configures
+	 * its most commonly used settings, including help.
+	 * @param id the unique ID for this FlaggedOption.
+	 * @param stringParser the StringParser this FlaggedOption should use.
+	 * @param defaultValue the default value for this FlaggedOption (may be
+	 * null).
+	 * @param required if true, this FlaggedOption is required.
+	 * @param shortFlag the short flag for this option (may be set to
+	 * JSAP.NO_SHORTFLAG for none).
+	 * @param longFlag the long flag for this option (may be set to
+	 * JSAP.NO_LONGFLAG for none).
+	 * @param help the help text for this option (may be set to {@link JSAP#NO_HELP} for none).
+	 */
+	public QualifiedSwitch(
+			String id,
+			StringParser stringParser,
+			String defaultValue,
+			boolean required,
+			char shortFlag,
+			String longFlag,
+			String help) {
+	
+			super(id, stringParser, defaultValue, required, shortFlag, longFlag, help);
+	}
+
+	/**
+	 * A shortcut constructor that creates a new QualifiedSwitch and configures
 	 * its most commonly used settings.
 	 * @param id the unique ID for this FlaggedOption.
 	 * @param stringParser the StringParser this FlaggedOption should use.
@@ -143,10 +169,12 @@ public final class QualifiedSwitch extends FlaggedOption {
     /**
      * Creates a new QualifiedSwitchValuesParser to which it delegates the parsing of 
      * the specified argument.
-     * The result is as follows:<br>
-     *  ArrayList[0] contains a single Boolean that tells the
-     *  user whether this QualifiedSwitch is present or not.<br>
-     *  ArrayList[1] is a string that contains the qualifying value.
+     * The result is as follows:
+     * <ul>
+     * <li>ArrayList[0] contains a single Boolean that tells the
+     *  user whether this QualifiedSwitch is present or not.
+     * <li>ArrayList[1] is a string that contains the qualifying value.
+     * </ul>
      * 
      * @param arg the argument to parse.
      * @return an ArrayList containing the parse results.

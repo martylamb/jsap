@@ -6,11 +6,11 @@
 
 package com.martiansoftware.jsap.ant;
 
-import com.martiansoftware.jsap.JSAP;
-import com.martiansoftware.jsap.AbstractParameter;
-import com.martiansoftware.jsap.Switch;
 import java.io.PrintStream;
-import java.io.IOException;
+
+import com.martiansoftware.jsap.Parameter;
+import com.martiansoftware.jsap.JSAP;
+import com.martiansoftware.jsap.Switch;
 
 /**
  * Stores/provides configuration data for switches nested inside a jsap ant
@@ -78,7 +78,7 @@ public class SwitchConfiguration extends ParameterConfiguration {
      * Returns a Switch configured according to this configuration.
      * @return a Switch configured according to this configuration.
      */
-    public AbstractParameter getParameter() {
+    public Parameter getParameter() {
         Switch result = new Switch(this.getId());
         result.setShortFlag(this.getShortflag());
         result.setLongFlag(this.getLongflag());
@@ -92,10 +92,8 @@ public class SwitchConfiguration extends ParameterConfiguration {
      * according to this configuration.
      * @param methodName the name of the method to generate
      * @param out the PrintStream to which the generated java will be written
-     * @throws IOException if PrintStream throws any.
      */
-    public void createMethod(String methodName, PrintStream out)
-        throws IOException {
+    public void createMethod(String methodName, PrintStream out) {
 
         out.println("    private Switch " + methodName + "() {");
         out.println(

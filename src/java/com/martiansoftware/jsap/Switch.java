@@ -6,23 +6,25 @@
  
 package com.martiansoftware.jsap;
 
-import com.martiansoftware.jsap.stringparsers.BooleanStringParser;
 import java.util.List;
+
+import com.martiansoftware.jsap.stringparsers.BooleanStringParser;
 
 /**
  * A Switch is a parameter whose presence alone is significant; another 
- * commonly used term for a Switch is "Flag."
- * Switches use a BooleanStringParser internally, so their results can be 
+ * commonly used term for a Switch is "Flag".
+ * Switches use a {@link com.martiansoftware.jsap.stringparsers.BooleanStringParser}
+ * internally, so their results can be 
  * obtained from a JSAPResult using
- * the getBoolean() methods.<br>
- * <br>
- * An example of a command line using a Switch is "dosomething -v", where 
+ * the getBoolean() methods.
+ * 
+ * <p>An example of a command line using a Switch is "dosomething -v", where 
  * "-v" might mean "verbose."  
  * @author <a href="http://www.martiansoftware.com/contact.html">Marty Lamb</a>
  * @see com.martiansoftware.jsap.Flagged
  * @see com.martiansoftware.jsap.stringparsers.BooleanStringParser
  */
-public class Switch extends AbstractParameter implements Flagged {
+public class Switch extends Parameter implements Flagged {
 
 	/**
 	 * The current short flag for this UnflaggedOption.  Default is 
@@ -47,6 +49,23 @@ public class Switch extends AbstractParameter implements Flagged {
 
 	/**
 	 * A shortcut constructor that creates a new Switch and configures all of 
+	 * its settings, including help.
+	 * @param id the unique ID for this Switch.
+	 * @param shortFlag the short flag for this Switch (may be set to 
+	 * JSAP.NO_SHORTFLAG for none).
+	 * @param longFlag the long flag for this Switch (may be set to 
+	 * JSAP.NO_LONGFLAG for none).
+	 * @param help the help text for this Switch (may be set to {@link JSAP#NO_HELP}for none).
+	 * */
+	public Switch(String id, char shortFlag, String longFlag, String help) {
+		this(id);
+		setShortFlag(shortFlag);
+		setLongFlag(longFlag);
+		setHelp(help);
+	}
+
+	/**
+	 * A shortcut constructor that creates a new Switch and configures all of 
 	 * its settings.
 	 * @param id the unique ID for this Switch.
 	 * @param shortFlag the short flag for this Switch (may be set to 
@@ -55,12 +74,10 @@ public class Switch extends AbstractParameter implements Flagged {
 	 * JSAP.NO_LONGFLAG for none).
 	 * */
 	public Switch(String id, char shortFlag, String longFlag) {
-		this(id);
-		setShortFlag(shortFlag);
-		setLongFlag(longFlag);
+		this(id, shortFlag, longFlag, JSAP.NO_HELP);
 	}
 
-	/**
+		/**
 	 * Sets the short flag for this Switch.  To use no short flag at all, set 
 	 * the value to JSAP.NO_SHORTFLAG.
 	 * @param shortFlag the short flag for this Switch.
@@ -71,17 +88,6 @@ public class Switch extends AbstractParameter implements Flagged {
 		this.shortFlag = shortFlag;
 		return (this);
 	}
-
-//	irrelevant for switches
-//    /**
-//     * Sets the name that will be displayed when getSyntax() is called
-//     * @param usageName the name to use, or null if the id should be used (default)
-//     * @return the modified Switch
-//     */
-//    public Switch setUsageName(String usageName) {
-//    	_setUsageName(usageName);
-//    	return (this);
-//    }
 
 	/**
 	 * Returns the short flag for this Switch.  If this Switch has no short 
@@ -141,7 +147,7 @@ public class Switch extends AbstractParameter implements Flagged {
 	 */
 	protected List parse(String arg) throws ParseException {
 		List result = new java.util.ArrayList(1);
-		result.add((new BooleanStringParser()).parse(arg));
+		result.add((BooleanStringParser.getParser()).parse(arg));
 		return (result);
 	}
 

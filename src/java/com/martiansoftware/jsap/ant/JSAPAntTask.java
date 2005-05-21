@@ -6,19 +6,19 @@
 
 package com.martiansoftware.jsap.ant;
 
-import org.apache.tools.ant.Task;
-import org.apache.tools.ant.BuildException;
-import java.util.Vector;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
 import java.util.Enumeration;
+import java.util.Vector;
+
+import org.apache.tools.ant.BuildException;
+import org.apache.tools.ant.Task;
 
 import com.martiansoftware.jsap.JSAP;
 import com.martiansoftware.jsap.JSAPException;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.BufferedOutputStream;
-import java.io.FileOutputStream;
-import java.io.PrintStream;
 
 /**
  * <p>An ANT task that generates a custom subclass of JSAP to simplify its use
@@ -53,7 +53,7 @@ import java.io.PrintStream;
  * <li><b>public</b> (optional): "true" or "false" (default false).  If true,
  * the
  * generated class will be declared public.</li>
- * </ul><br>
+ * </ul>
  *
  * <p>The jsap task supports the following nested elements:</p>
  *
@@ -63,8 +63,6 @@ import java.io.PrintStream;
  * (com.martiansoftware.jsap.FlaggedOption).</li>
  * <li><b>unflaggedoption</b> - declares an UnflaggedOption
  * (com.martiansoftware.jsap.UnflaggedOption).</li>
- * <li><b>qualifiedswitch</b> - declares a QualifiedSwitch
- * (com.martiansoftware.jsap.QualifiedSwitch).</li>
  * </ul>
  *
  * <p>These nested elements support the following attributes:</p>
@@ -227,7 +225,7 @@ import java.io.PrintStream;
  *
  * @author <a href="http://www.martiansoftware.com/contact.html">Marty Lamb</a>
  * @see com.martiansoftware.jsap.JSAP
- * @see com.martiansoftware.jsap.AbstractParameter
+ * @see com.martiansoftware.jsap.Parameter
  * @see com.martiansoftware.jsap.Switch
  * @see com.martiansoftware.jsap.FlaggedOption
  * @see com.martiansoftware.jsap.UnflaggedOption

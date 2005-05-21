@@ -10,26 +10,26 @@ import java.util.List;
 
 /**
  * The base class from which FlaggedOption and UnflaggedOption are derived.
- * An Option is an AbstractParameter
+ * An Option is a Parameter
  * that requires some information (unlike a Switch whose mere presence is
  * significant).<br>
- * <br>
+ * <br> 
  * Options may be declared as lists, or multiple values separated by a
  * delimiting character.  An example of
  * a list option might be a classpath, which is a collection of paths separated
  * by a ":" on *nix systems and
  * a ";" on DOS/Windows systems.  JSAP automatically separates list options
  * into multiple tokens before calling
- * their StringParsers' parse() method.<br>
- * <br>
- * The default list separator is JSAP.DEFAULT_LISTSEPARATOR, which is defined
+ * their StringParsers' parse() method.
+ * 
+ * <p>The default list separator is JSAP.DEFAULT_LISTSEPARATOR, which is defined
  * as the platform's path separator
  * character (":" on *nix and ";" on DOS/Windows as described above).
  * @author <a href="http://www.martiansoftware.com/contact.html">Marty Lamb</a>
  * @see com.martiansoftware.jsap.Flagged
  * @see com.martiansoftware.jsap.Option
  */
-public abstract class Option extends AbstractParameter {
+public abstract class Option extends Parameter {
 
     /**
      * Boolean indicating whether this option is a list.  Default is

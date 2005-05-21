@@ -12,7 +12,7 @@ import java.net.URL;
 import java.net.MalformedURLException;
 
 /**
- * A StringParser for parsing java.net.URL objects.  The parse() method
+ * A {@link com.martiansoftware.jsap.StringParser} for parsing java.net.URL objects.  The parse() method
  * delegates the actual
  * parsing to <code>new URL(String)</code>.  If <code>new URL()</code>
  * throws a MalformedURLException, it is encapsulated in a ParseException and
@@ -24,8 +24,24 @@ import java.net.MalformedURLException;
  */
 public class URLStringParser extends StringParser {
 
-    /**
+	private static final URLStringParser INSTANCE = new URLStringParser();	
+
+	/** Returns a {@link URLStringParser}.
+	 * 
+	 * <p>Convenient access to the only instance returned by
+	 * this method is available through
+	 * {@link com.martiansoftware.jsap.JSAP#URL_PARSER}.
+	 *  
+	 * @return a {@link URLStringParser}.
+	 */
+
+    public static URLStringParser getParser() {
+		return INSTANCE;
+	}
+
+	/**
      * Creates a new URLStringParser.
+     * @deprecated Use {@link #getParser()} or, even better, {@link com.martiansoftware.jsap.JSAP#URL_PARSER}.
      */
     public URLStringParser() {
         super();

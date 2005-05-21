@@ -6,11 +6,11 @@
 
 package com.martiansoftware.jsap;
 
+import java.util.List;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import java.util.List;
 
 /**
  * Tests the Switch class.

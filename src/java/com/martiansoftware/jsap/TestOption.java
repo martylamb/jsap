@@ -6,11 +6,12 @@
 
 package com.martiansoftware.jsap;
 
+import java.util.List;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import java.util.List;
 import com.martiansoftware.jsap.stringparsers.StringStringParser;
 
 /**
@@ -43,7 +44,7 @@ public class TestOption extends TestCase {
         option.setRequired(true);
         assertEquals(true, option.required());
         assertNull(option.getStringParser());
-        StringStringParser sop = new StringStringParser();
+        StringStringParser sop = StringStringParser.getParser();
         option.setStringParser(sop);
         assertEquals(sop, option.getStringParser());
     }

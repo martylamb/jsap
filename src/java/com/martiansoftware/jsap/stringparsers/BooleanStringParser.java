@@ -10,11 +10,11 @@ import com.martiansoftware.jsap.StringParser;
 import com.martiansoftware.jsap.ParseException;
 
 /**
- * <p>A StringParser for parsing Booleans.  This StringParser is also used
+ * <p>A {@link com.martiansoftware.jsap.StringParser} for parsing Booleans.  This StringParser is also used
  * internally
  * by the Switch class.</p>
  *
- * When parsing, the following arguments are interpreted as TRUE:<br>
+ * <p>When parsing, the following arguments are interpreted as TRUE:
  * <ul>
  *         <li>null</i>
  *         <li>"t" (case-insensitive)</li>
@@ -22,34 +22,50 @@ import com.martiansoftware.jsap.ParseException;
  *         <li>"y" (case-insensitive)</li>
  *         <li>"yes" (case-insensitive)</li>
  *         <li>"1"</li>
- * <ul><br>
- * The following arguments are interpreted as FALSE:<br>
+ * </ul>
+ * <p>The following arguments are interpreted as FALSE:
  * <ul>
  *         <li>"f" (case-insensitive)</li>
  *         <li>"false" (case-insensitive)</li>
  *         <li>"n" (case-insensitive)</li>
  *         <li>"no" (case-insensitive)</li>
  *         <li>"0"</li>
- * </ul><br>
- * <br>
- * All other input throws a ParseException.
+ * </ul>
+ * 
+ * <p>All other input throws a ParseException.
  * @author <a href="http://www.martiansoftware.com/contact.html">Marty Lamb</a>
  * @see com.martiansoftware.jsap.StringParser
  * @see java.lang.Boolean
  */
 public class BooleanStringParser extends StringParser {
 
-    /**
+	private static final BooleanStringParser INSTANCE = new BooleanStringParser();	
+
+	/** Returns a {@link BooleanStringParser}.
+	 * 
+	 * <p>Convenient access to the only instance returned by
+	 * this method is available through
+	 * {@link com.martiansoftware.jsap.JSAP#BOOLEAN_PARSER}.
+	 *  
+	 * @return a {@link BooleanStringParser}.
+	 */
+
+    public static BooleanStringParser getParser() {
+		return INSTANCE;
+	}
+
+	/**
      *  Creates a new BooleanStringParser
+     * @deprecated Use {@link #getParser()} or, even better, {@link com.martiansoftware.jsap.JSAP#BOOLEAN_PARSER}.
      */
     public BooleanStringParser() {
         super();
     }
 
     /**
-     * Converts the specified argument into a Boolean.<br>
-         * <br>
-     * When parsing, the following arguments are interpreted as TRUE:<br>
+     * Converts the specified argument into a Boolean.
+     *
+     * <p>When parsing, the following arguments are interpreted as TRUE:
      * <ul>
      *         <li>null</i>
      *         <li>"t" (case-insensitive)</li>
@@ -57,17 +73,17 @@ public class BooleanStringParser extends StringParser {
      *         <li>"y" (case-insensitive)</li>
      *         <li>"yes" (case-insensitive)</li>
      *         <li>"1"</li>
-     * <ul><br>
-     * The following arguments are interpreted as FALSE:<br>
+     * <ul>
+     * <p>The following arguments are interpreted as FALSE:
      * <ul>
      *         <li>"f" (case-insensitive)</li>
      *         <li>"false" (case-insensitive)</li>
      *         <li>"n" (case-insensitive)</li>
      *         <li>"no" (case-insensitive)</li>
      *         <li>"0"</li>
-     * </ul><br>
-     * <br>
-     * All other input throws a ParseException.
+     * </ul>
+     * 
+     * <p>All other input throws a ParseException.
      * @param arg the argument to convert to a Boolean.
      * @return a Boolean as described above.
      * @throws ParseException if none of the above cases are matched.

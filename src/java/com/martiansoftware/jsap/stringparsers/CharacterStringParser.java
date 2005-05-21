@@ -10,7 +10,7 @@ import com.martiansoftware.jsap.StringParser;
 import com.martiansoftware.jsap.ParseException;
 
 /**
- * A StringParser for parsing Characters.  The parse() method requires an
+ * A {@link com.martiansoftware.jsap.StringParser} for parsing Characters.  The parse() method requires an
  * argument of length exactly
  * equal to 1 in order to perform the conversion; otherwise, a ParseException
  * is thrown.
@@ -20,8 +20,24 @@ import com.martiansoftware.jsap.ParseException;
  */
 public class CharacterStringParser extends StringParser {
 
-    /**
+	private static final CharacterStringParser INSTANCE = new CharacterStringParser();	
+
+	/** Returns a {@link CharacterStringParser}.
+	 * 
+	 * <p>Convenient access to the only instance returned by
+	 * this method is available through
+	 * {@link com.martiansoftware.jsap.JSAP#CHARACTER_PARSER}.
+	 *  
+	 * @return a {@link CharacterStringParser}.
+	 */
+
+    public static CharacterStringParser getParser() {
+		return INSTANCE;
+	}
+
+	/**
      * Creates a new CharacterStringParser.
+     * @deprecated Use {@link #getParser()} or, even better, {@link com.martiansoftware.jsap.JSAP#CHARACTER_PARSER}.
      */
     public CharacterStringParser() {
         super();

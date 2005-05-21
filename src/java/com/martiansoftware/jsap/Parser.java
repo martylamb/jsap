@@ -94,7 +94,7 @@ class Parser {
      * @param param the parameter to parse the value
      * @param valueToParse the value to parse
      */
-    private void processParameter(AbstractParameter param, 
+    private void processParameter(Parameter param, 
         String valueToParse) {
 
         // if this argument has already been parsed at least once...
@@ -215,7 +215,7 @@ class Parser {
     private void preregisterQualifiedSwitches() {
     	for (Iterator iter = config.getIDMap().idIterator(); iter.hasNext();) {
     		String thisID = (String) iter.next();
-    		AbstractParameter param = config.getByID(thisID);
+    		Parameter param = config.getByID(thisID);
     		if (param instanceof QualifiedSwitch) {
     			result.registerQualifiedSwitch(thisID, false);
     		}
@@ -256,9 +256,9 @@ class Parser {
 
         // we'll need to reference the appropriate parameter both as a Flagged 
         // and as 
-        // an AbstractParameter down below.
+        // an Parameter down below.
         Flagged option = config.getByLongFlag(paramFlag);
-        AbstractParameter param = (AbstractParameter) option;
+        Parameter param = (Parameter) option;
 
         // unknown long flag
         if (option == null) {
@@ -341,9 +341,9 @@ class Parser {
 
             // we'll need to reference the appropriate parameter both as a 
             // Flagged and as 
-            // an AbstractParameter down below.
+            // an Parameter down below.
             Flagged option = config.getByShortFlag(paramFlag);
-            AbstractParameter param = (AbstractParameter) option;
+            Parameter param = (Parameter) option;
 
             // unknown flag
             if (option == null) {
@@ -390,39 +390,48 @@ class Parser {
                 	// it's an option
                     String paramEquals = null;
 
-                    if (charPos != (parseTo - 1)) {
+                    /* We now allow stuff like -b12.
+                     * 
+                     * if (charPos != (parseTo - 1)) {
                         result.addException(param.getID(), 
                             new SyntaxException("No value specified for option \"" 
                             + paramFlag + "\"."));
                     }
+                    else {*/
+                    
+                    // if there's an equals sign, the value is whatever is 
+                    // on the right
+                    if (equalsIndex != -1) {
+                    	paramEquals = 
+                    		args[index].substring(equalsIndex + 1);
+                    }
                     else {
-
-                        // if there's an equals sign, the value is whatever is 
-                        // on the right
-                        if (equalsIndex != -1) {
-                            paramEquals = 
-                                args[index].substring(equalsIndex + 1);
-                        }
-                        else {
-                            // otherwise, it's the next argument.
-                            ++index;
-
-//					ML: Changed this and the corresponding line in
-//					parseLongForm.  Longer version (commented below) would
-//                  not allow values that begin with a minus sign.
-//							if ((index >= args.length) 
-//								|| args[index].startsWith("-")) {
-                            if (index >= args.length) {
-                                result.addException(param.getID(), 
-                                    new SyntaxException(
-                                    "No value specified for option \"" 
-                                    + paramFlag + "\"."));
-                            }
-                            else {
-                                paramEquals = args[index];
-                                processParameter(param, paramEquals);
-                            }
-                        }
+                    	if (charPos < parseTo - 1) {
+                    		// the value is just after the short option (no space)
+                    		paramEquals = args[index].substring(charPos + 1, parseTo);
+                    		processParameter(param, paramEquals);
+                    		break;
+                    	}
+                    	else {
+                    		// otherwise, it's the next argument.
+                    		++index;
+                    		
+                    		//					ML: Changed this and the corresponding line in
+                    		//					parseLongForm.  Longer version (commented below) would
+                    		//                  not allow values that begin with a minus sign.
+                    		//							if ((index >= args.length) 
+                    		//								|| args[index].startsWith("-")) {
+                    		if (index >= args.length) {
+                    			result.addException(param.getID(), 
+                    					new SyntaxException(
+                    							"No value specified for option \"" 
+                    							+ paramFlag + "\"."));
+                    		}
+                    		else {
+                    			paramEquals = args[index];
+                    			processParameter(param, paramEquals);
+                    		}
+                    	}
                     }
                 }
             }

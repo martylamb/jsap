@@ -10,8 +10,8 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import com.martiansoftware.jsap.stringparsers.StringStringParser;
 import com.martiansoftware.jsap.stringparsers.IntegerStringParser;
+import com.martiansoftware.jsap.stringparsers.StringStringParser;
 
 /**
  * Tests the Parser class.
@@ -85,12 +85,12 @@ public class TestParser extends TestCase {
         FlaggedOption opt = new FlaggedOption("flagged");
         opt.setShortFlag('f');
         opt.setLongFlag("longflag");
-        opt.setStringParser(new StringStringParser());
+        opt.setStringParser(StringStringParser.getParser());
         JSAP jsap = new JSAP();
 
         FlaggedOption opt2 = new FlaggedOption("flaggedInteger");
         opt2.setLongFlag("integer");
-        opt2.setStringParser(new IntegerStringParser());
+        opt2.setStringParser(IntegerStringParser.getParser());
 
         try {
             jsap.registerParameter(opt);

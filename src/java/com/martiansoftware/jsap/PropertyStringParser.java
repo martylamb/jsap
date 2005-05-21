@@ -9,7 +9,7 @@ package com.martiansoftware.jsap;
 import java.util.Properties;
 
 /**
- * A StringParser subclass that provides a means for setting/getting properties.
+ * A {@link com.martiansoftware.jsap.StringParser} subclass that provides a means for setting/getting properties.
  * This
  * is intended to support StringParsers that might requires some configuration,
  * such

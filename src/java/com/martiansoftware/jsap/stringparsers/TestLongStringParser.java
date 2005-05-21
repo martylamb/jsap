@@ -29,7 +29,7 @@ public class TestLongStringParser extends TestCase {
      */
     public void testBasicParse() {
 
-        LongStringParser lsp = new LongStringParser();
+        LongStringParser lsp = LongStringParser.getParser();
 
         assertEquals(456, Long.decode("456").longValue());
         try {

@@ -31,7 +31,7 @@ public class TestColorStringParser extends TestCase {
     public void testIntegerRGB() {
 
         Color c = new Color(12, 34, 56);
-        ColorStringParser parser = new ColorStringParser();
+        ColorStringParser parser = ColorStringParser.getParser();
 
         Color result = null;
         try {
@@ -62,7 +62,7 @@ public class TestColorStringParser extends TestCase {
      */
     public void testFloatRGB() {
         Color c = new Color(0.12f, 0.34f, 0.56f);
-        ColorStringParser parser = new ColorStringParser();
+        ColorStringParser parser = ColorStringParser.getParser();
 
         Color result = null;
         try {
@@ -85,7 +85,7 @@ public class TestColorStringParser extends TestCase {
      */
     public void testHexRGB() {
         Color c = new Color(255, 255, 255);
-        ColorStringParser parser = new ColorStringParser();
+        ColorStringParser parser = ColorStringParser.getParser();
 
         Color result = null;
         try {
@@ -101,7 +101,7 @@ public class TestColorStringParser extends TestCase {
      */
     public void testByName() {
         Color c = new Color(255, 255, 255);
-        ColorStringParser parser = new ColorStringParser();
+        ColorStringParser parser = ColorStringParser.getParser();
 
         Color result = null;
         try {

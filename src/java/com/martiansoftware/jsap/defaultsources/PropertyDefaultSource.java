@@ -42,21 +42,21 @@ public class PropertyDefaultSource implements DefaultSource {
 
     /**
      * If true, this PropertyDefaultSource is being loaded from a file.
-     * @see PropertyDefaultSource(String,boolean)
+     * @see PropertyDefaultSource#PropertyDefaultSource(String,boolean)
      */
     private boolean loadFromFile = false;
 
     /**
      * If true, this PropertyDefaultSource is being loaded from a Properties
      * object.
-     * @see PropertyDefaultSource(Properties)
+     * @see PropertyDefaultSource#PropertyDefaultSource(Properties)
      * @see java.util.Properties
      */
     private boolean loadFromProperties = false;
 
     /**
      * If true, this PropertyDefaultSource is being loaded from an InputStream.
-     * @see PropertyDefaultSource(InputStream,boolean)
+     * @see PropertyDefaultSource#PropertyDefaultSource(InputStream,boolean)
      * @see java.io.InputStream
      */
     private boolean loadFromInputStream = false;
@@ -188,11 +188,11 @@ public class PropertyDefaultSource implements DefaultSource {
         Defaults defaults = new Defaults();
         try {
             Properties properties = getProperties();
-            for (Enumeration enum = properties.propertyNames();
-                enum.hasMoreElements();
+            for (Enumeration enumeration = properties.propertyNames();
+                enumeration.hasMoreElements();
                 ) {
 
-                String thisName = (String) enum.nextElement();
+                String thisName = (String) enumeration.nextElement();
                 if (idMap.idExists(thisName)) {
                     defaults.addDefault(
                         thisName,

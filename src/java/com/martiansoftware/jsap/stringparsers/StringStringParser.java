@@ -7,10 +7,9 @@
 package com.martiansoftware.jsap.stringparsers;
 
 import com.martiansoftware.jsap.StringParser;
-import com.martiansoftware.jsap.ParseException;
 
 /**
- * A StringParser for parsing Strings.  This is the simplest possible
+ * A {@link com.martiansoftware.jsap.StringParser} for parsing Strings.  This is the simplest possible
  * StringParser, simply returning
  * the specified argument in all cases.  This class never throws a
  * ParseException under any circumstances.
@@ -20,8 +19,24 @@ import com.martiansoftware.jsap.ParseException;
  */
 public class StringStringParser extends StringParser {
 
-    /**
+	private static final StringStringParser INSTANCE = new StringStringParser();	
+
+	/** Returns a {@link StringStringParser}.
+	 * 
+	 * <p>Convenient access to the only instance returned by
+	 * this method is available through
+	 * {@link com.martiansoftware.jsap.JSAP#STRING_PARSER}.
+	 *  
+	 * @return a {@link StringStringParser}.
+	 */
+
+    public static StringStringParser getParser() {
+		return INSTANCE;
+	}
+
+	/**
      * Creates a new StringStringParser.
+     * @deprecated Use {@link #getParser()} or, even better, {@link com.martiansoftware.jsap.JSAP#STRING_PARSER}.
      */
     public StringStringParser() {
         super();
@@ -32,11 +47,10 @@ public class StringStringParser extends StringParser {
      *
      * @param arg the argument to parse
      * @return the specified argument as a String.
-     * @throws ParseException <b>NEVER</b>
      * @see java.lang.String
      * @see com.martiansoftware.jsap.StringParser#parse(String)
      */
-    public Object parse(String arg) throws ParseException {
+    public Object parse(String arg) {
         return (arg);
     }
 }

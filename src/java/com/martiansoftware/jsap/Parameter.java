@@ -3,9 +3,11 @@
  * This file is made available under the LGPL as described in the accompanying
  * LICENSE.TXT file.
  */
+
 package com.martiansoftware.jsap;
 
 import java.util.List;
+
 
 /**
  * <p>Top-level abstraction of a <b>parameter</b>.  A <b>parameter</b> consists
@@ -16,12 +18,12 @@ import java.util.List;
  * consisting of two arguments.  Some parameters can be quite large, such as an
  * option for a file compression utility that allows you to specify any number
  * of files to comporess.</p>
- *
- * <p>This is an abstract class.  See its subclasses Switch, FlaggedOption, and
- * UnflaggedOption for details on the various types of parameters.
- * Functionality common to all three
+ * 
+ * <p>This is an abstract class.  See its subclasses {@link com.martiansoftware.jsap.Switch}, 
+ * {@link com.martiansoftware.jsap.FlaggedOption}, and {@link com.martiansoftware.jsap.UnflaggedOption}
+ * for details on the various types of parameters. Functionality common to all three
  * types of Parameters is described below.</p>
- *
+ * 
  * <p>Each parameter has a unique ID assigned in its constructor.  This ID is
  * used to retrieve values from the parser after the command line is parsed.
  * You  can set the ID to any String value you wish, although in general you'll
@@ -38,7 +40,8 @@ import java.util.List;
  * @see com.martiansoftware.jsap.JSAPResult#getBoolean(String)
  * @see com.martiansoftware.jsap.JSAP#parse(String[])
  */
-public abstract class AbstractParameter {
+
+public abstract class Parameter {
 
     /**
      * This parameter's unique ID.
@@ -70,13 +73,13 @@ public abstract class AbstractParameter {
     private String help = null;
 
     /**
-     * Creates a new AbstractParameter.  Subclasses should call this
+     * Creates a new Parameter.  Subclasses should call this
      * constructor.
      *
      * @param id   The ID for this argument.  All arguments MUST have
      * a unique ID.
      */
-    public AbstractParameter(String id) {
+    public Parameter(String id) {
         this.id = id;
     }
 
@@ -94,12 +97,12 @@ public abstract class AbstractParameter {
      * modified.  This is necessary because the JSAP object with
      * which parameters are registered performs certain validation
      * routines at the time of registration.  See
-     * JSAP.registerParameter(AbstractParameter) for more information.
+     * JSAP.registerParameter(Parameter) for more information.
      *
      * @param locked if <code>TRUE</code>, locks this parameter.  if
      * <code>FALSE</code>, unlocks it.
      * @see
-     *    com.martiansoftware.jsap.JSAP#registerParameter(AbstractParameter)
+     *    com.martiansoftware.jsap.JSAP#registerParameter(Parameter)
      */
     protected final void setLocked(boolean locked) {
         this.locked = locked;
@@ -138,7 +141,6 @@ public abstract class AbstractParameter {
      * would otherwise treat the entire list of values as a single value.
      *
      * @param defaultValue the default value for this parameter.
-     * @see #setDefault(String)
      */
     protected final void _setDefault(String defaultValue) {
         if (defaultValue == JSAP.NO_DEFAULT) {
@@ -154,7 +156,6 @@ public abstract class AbstractParameter {
      * should be used whenever a parameter has more than one default
      * value.
      * @param defaultValues the default values for this parameter.
-     * @see #setDefault(String)
      */
     protected final void _setDefault(String[] defaultValues) {
         this.defaultValue = defaultValues;
@@ -172,7 +173,7 @@ public abstract class AbstractParameter {
             }
             int defaultValueCount = this.defaultValue.length + 1;
             String[] newDefaultValue = new String[defaultValueCount];
-            for (int i = 0; i < defaultValueCount - 1; ++i) {
+            for (int i = 0; i < defaultValueCount + 1; ++i) {
                 newDefaultValue[i] = this.defaultValue[i];
             }
             newDefaultValue[defaultValueCount - 1] = defaultValue;
@@ -256,7 +257,8 @@ public abstract class AbstractParameter {
      * Sets the help text for this parameter.
      * @param help the help text for this parameter.
      */
-    public final void setHelp(String help) {
+    public final Parameter setHelp(String help) {
         this.help = help;
+        return this;
     }
 }

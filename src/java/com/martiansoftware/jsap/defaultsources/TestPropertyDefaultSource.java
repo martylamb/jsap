@@ -26,7 +26,7 @@ public class TestPropertyDefaultSource extends TestCase {
             jsap.registerParameter(
                 new FlaggedOption(
                     "testflagged",
-                    new StringStringParser(),
+                    StringStringParser.getParser(),
                     JSAP.NO_DEFAULT,
                     JSAP.NOT_REQUIRED,
                     'f',
@@ -34,7 +34,7 @@ public class TestPropertyDefaultSource extends TestCase {
             jsap.registerParameter(
                 new UnflaggedOption(
                     "testunflagged",
-                    new StringStringParser(),
+                    StringStringParser.getParser(),
                     JSAP.NO_DEFAULT,
                     JSAP.NOT_REQUIRED,
                     JSAP.NOT_GREEDY));

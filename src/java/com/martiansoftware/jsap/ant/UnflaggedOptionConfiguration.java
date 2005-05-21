@@ -6,12 +6,11 @@
 
 package com.martiansoftware.jsap.ant;
 
-import com.martiansoftware.jsap.JSAP;
-import com.martiansoftware.jsap.AbstractParameter;
-import com.martiansoftware.jsap.UnflaggedOption;
-
 import java.io.PrintStream;
-import java.io.IOException;
+
+import com.martiansoftware.jsap.Parameter;
+import com.martiansoftware.jsap.JSAP;
+import com.martiansoftware.jsap.UnflaggedOption;
 
 /**
  * Stores/provides configuration data for unflaggedoptions nested inside a jsap
@@ -62,7 +61,7 @@ public class UnflaggedOptionConfiguration extends OptionConfiguration {
      * Returns an UnflaggedOption configured according to this configuration.
      * @return an UnflaggedOption configured according to this configuration.
      */
-    public AbstractParameter getParameter() {
+    public Parameter getParameter() {
         UnflaggedOption result = new UnflaggedOption(this.getId());
 
         result.setRequired(this.getRequired());
@@ -82,10 +81,9 @@ public class UnflaggedOptionConfiguration extends OptionConfiguration {
      * configures it according to this configuration.
      * @param methodName the name of the method to generate
      * @param out the PrintStream to which the java source code will be written.
-     * @throws IOException if PrintStream throws any.
      */
     public void createMethod(String methodName, PrintStream out)
-        throws IOException {
+        {
 
         out.println("    private UnflaggedOption " + methodName + "() {");
         out.println(

@@ -6,10 +6,11 @@
 
 package com.martiansoftware.jsap.ant;
 
-import com.martiansoftware.jsap.AbstractParameter;
-import java.util.Vector;
-import java.io.PrintStream;
 import java.io.IOException;
+import java.io.PrintStream;
+import java.util.Vector;
+
+import com.martiansoftware.jsap.Parameter;
 
 /**
  * Stores/provides configuration data common to switches, flaggedoptions, and
@@ -41,14 +42,14 @@ public abstract class ParameterConfiguration {
     }
 
     /**
-     * Returns an AbstractParameter (String, FlaggedOption, or UnflaggedOption)
+     * Returns an Parameter (String, FlaggedOption, or UnflaggedOption)
      * configured according
      * to the settings contained within this object.
-     * @return an AbstractParameter (String, FlaggedOption, or UnflaggedOption)
+     * @return an Parameter (String, FlaggedOption, or UnflaggedOption)
      * configured according
      * to the settings contained within this object.
      */
-    public abstract AbstractParameter getParameter();
+    public abstract Parameter getParameter();
 
     /**
      * Sets the unique ID for this parameter.
@@ -101,14 +102,12 @@ public abstract class ParameterConfiguration {
     }
 
     /**
-     * Creates java source code statements to configure an AbstractParameter as
+     * Creates java source code statements to configure an Parameter as
      * specified in this object.
      * @param objName the name of the object in the java source code
      * @param out the PrintStream to which the source code should be written
-     * @throws IOException if any are thrown by the PrintStream.
      */
-    protected void createParentStatements(String objName, PrintStream out)
-        throws IOException {
+    protected void createParentStatements(String objName, PrintStream out) {
 
         String[] defaults = getDefaults();
         if (defaults != null) {

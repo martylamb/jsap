@@ -47,6 +47,32 @@ public final class UnflaggedOption extends Option {
      * null).
      * @param required if true, this UnflaggedOption is required.
      * @param greedy if true, this UnflaggedOption is greedy.
+     * @param help the help text for this option (may be set to {@link JSAP#NO_HELP} for none).
+     * */
+    public UnflaggedOption(
+        String id,
+        StringParser stringParser,
+        String defaultValue,
+        boolean required,
+        boolean greedy,
+		String help) {
+        this(id);
+        setStringParser(stringParser);
+        setDefault(defaultValue);
+        setRequired(required);
+        setGreedy(greedy);
+        setHelp(help);
+    }
+
+    /**
+     * A shortcut constructor that creates a new UnflaggedOption and configures
+     * its most commonly used settings.
+     * @param id the unique ID for this UnflaggedOption
+     * @param stringParser the StringParser this UnflaggedOption should use.
+     * @param defaultValue the default value for this UnflaggedOption (may be
+     * null).
+     * @param required if true, this UnflaggedOption is required.
+     * @param greedy if true, this UnflaggedOption is greedy.
      * */
     public UnflaggedOption(
         String id,
@@ -62,6 +88,27 @@ public final class UnflaggedOption extends Option {
     }
 
     /**
+     * A shortcut constructor that creates a new non-greedy UnflaggedOption with no default value 
+     * and configures its most commonly used settings.
+     * 
+     * @param id the unique ID for this UnflaggedOption
+     * @param stringParser the StringParser this UnflaggedOption should use.
+     * @param required if true, this UnflaggedOption is required.
+     * @param help the help text for this option (may be set to {@link JSAP#NO_HELP} for none).
+     */
+    public UnflaggedOption(
+        String id,
+        StringParser stringParser,
+        boolean required,
+		String help) {
+        this(id);
+        setStringParser(stringParser);
+        setRequired(required);
+        setGreedy(JSAP.NOT_GREEDY);
+        setHelp(help);
+    }
+
+    /**
      * Sets whether this UnflaggedOption is greedy.  A greedy UnflaggedOption
      * consumes all the remaining
      * UnflaggedOptions from the argument list.  As a result, only one greedy
@@ -74,16 +121,6 @@ public final class UnflaggedOption extends Option {
         enforceParameterLock();
         this.greedy = greedy;
         return (this);
-    }
-
-    /**
-     * Sets the name that will be displayed when getUsage() is called
-     * @param usageName the name to use, or null if the id should be used (default)
-     * @return the modified UnflaggedOption
-     */
-    public UnflaggedOption setUsageName(String usageName) {
-    	_setUsageName(usageName);
-    	return (this);
     }
 
     /**
@@ -107,12 +144,12 @@ public final class UnflaggedOption extends Option {
 
         String un = getUsageName();
         if (this.isGreedy()) {
-            result.append(un + "1 " + un + "2 ... " + un + "N");
+            result.append(un + "1\u00a0" + un + "2\u00a0...\u00a0" + un + "N");
         } else {
             result.append("<" + un + ">");
         }
         if (!required()) {
-            result.append(" ]");
+            result.append("]");
         }
         return (result.toString());
     }

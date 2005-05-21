@@ -10,16 +10,31 @@ import com.martiansoftware.jsap.StringParser;
 import com.martiansoftware.jsap.ParseException;
 
 /**
- * A StringParser for parsing Longs.  The parse() method delegates the actual
+ * A {@link com.martiansoftware.jsap.StringParser} for parsing Longs.  The parse() method delegates the actual
  * parsing to <code>Long.decode(String)</code>.
  * @author <a href="http://www.martiansoftware.com/contact.html">Marty Lamb</a>
  * @see com.martiansoftware.jsap.StringParser
  * @see java.lang.Long
  */
 public class LongStringParser extends StringParser {
+	
+	private static final LongStringParser INSTANCE = new LongStringParser();	
 
-    /**
+	/** Returns a {@link LongStringParser}.
+	 * 
+	 * <p>Convenient access to the only instance returned by
+	 * this method is available through
+	 * {@link com.martiansoftware.jsap.JSAP#LONG_PARSER}.
+	 *  
+	 * @return a {@link LongStringParser}.
+	 */
+    public static LongStringParser getParser() {
+		return INSTANCE;
+	}
+
+	/**
      * Creates a new LongStringParser.
+     * @deprecated Use {@link #getParser()} or, even better, {@link com.martiansoftware.jsap.JSAP#LONG_PARSER}.
      */
     public LongStringParser() {
         super();

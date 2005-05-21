@@ -12,7 +12,7 @@ package com.martiansoftware.jsap;
  *
  * @see FlaggedOption#setAllowMultipleDeclarations(boolean)
  * @author <a href="http://www.martiansoftware.com/contact.html">Marty Lamb</a>
- * @see com.martiansoftware.jsap.Option#setRequired(boolean)
+ * @see com.martiansoftware.jsap.Option#required()
  */
 public class RequiredParameterMissingException extends JSAPException {
 

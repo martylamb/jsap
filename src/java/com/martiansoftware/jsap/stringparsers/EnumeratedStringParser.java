@@ -12,12 +12,12 @@ import com.martiansoftware.jsap.StringParser;
 import com.martiansoftware.jsap.ParseException;
 
 /**
- * A StringParser that enforces a limited set of String options for its
- * values.<br>
- * These values are provided in the constructor together with one or two parameters<br>
+ * A {@link com.martiansoftware.jsap.StringParser} that enforces a limited set of String options for its
+ * values.
+ * These values are provided in the constructor together with one or two parameters
  * that control the processing of these values.
- * <p>
- * EnumeratedStringParser was generously 
+ * 
+ * <p>EnumeratedStringParser was generously 
  * contributed to JSAP by Klaus-Peter Berg of Siemens AG, Munich, Germany.
  * @since 1.03
  * @author  Klaus-Peter Berg, Siemens AG, Munich, Germany
@@ -37,17 +37,35 @@ public class EnumeratedStringParser extends StringParser {
 	private boolean checkOptionChars;
 
 	/**
-	 * Constructs a new instance of EnumeratedParameterParser.
+	 * Returns an EnumeratedParameterParser.
 	 * 
-	 * @param validOptions a string that contains valid values for an option <br>
-	 *        in the format "value_1;value_2;..;value_n"; spaces between values are allowed <br>
-	 *        to make things more readable, e.g., "value_1; value_2";<br>
-	 *        option values have to be constructed using Java identifier characters<br>
+	 * @param validOptionValues a string that contains valid values for an option 
+	 *        in the format "value_1;value_2;..;value_n"; spaces between values are allowed 
+	 *        to make things more readable, e.g., "value_1; value_2";
+	 *        option values have to be constructed using Java identifier characters
 	 *        if the checkOptionChars parameter tells the parser to do this.
 	 * @param caseSensitive tells the parser whether the option value is case sensitive
 	 * @param checkOptionChars tells the parser whether to check for Java identifier conformant characters.
-	 * @throws IllegalArgumentException if the option value string has wrong format<br>
+	 * @throws IllegalArgumentException if the option value string has wrong format
 	 *         or is empty
+	 */
+	public static EnumeratedStringParser getParser( String validOptionValues, boolean caseSensitive, boolean checkOptionChars ) throws IllegalArgumentException {
+		return new EnumeratedStringParser( validOptionValues, caseSensitive, checkOptionChars );
+	}
+
+	/**
+	 * Constructs a new instance of EnumeratedParameterParser.
+	 * 
+	 * @param validOptionValues a string that contains valid values for an option 
+	 *        in the format "value_1;value_2;..;value_n"; spaces between values are allowed 
+	 *        to make things more readable, e.g., "value_1; value_2";
+	 *        option values have to be constructed using Java identifier characters
+	 *        if the checkOptionChars parameter tells the parser to do this.
+	 * @param caseSensitive tells the parser whether the option value is case sensitive
+	 * @param checkOptionChars tells the parser whether to check for Java identifier conformant characters.
+	 * @throws IllegalArgumentException if the option value string has wrong format
+	 *         or is empty
+	 * @deprecated use {@link #getParser(String, boolean, boolean)}.
 	 */
 	public EnumeratedStringParser(String validOptionValues, boolean caseSensitive, boolean checkOptionChars) throws IllegalArgumentException {
 		if (validOptionValues == null) {
@@ -91,32 +109,51 @@ public class EnumeratedStringParser extends StringParser {
 	}
 
 	/**
-	 * Constructs a new instance of EnumeratedStringParser with parameter "checkOptionChars" set to true.
+	 * Returns an EnumeratedParameterParser with parameter "checkOptionChars" set to true.
 	 * 
-	 * @param validOptions a string that contains valid values for an option <br>
-	 *        in the format "value_1;value_2;..;value_n"; spaces between values are allowed <br>
-	 *        to make things more readable, e.g., "value_1; value_2";<br>
+	 * @param validOptionValues a string that contains valid values for an option 
+	 *        in the format "value_1;value_2;..;value_n"; spaces between values are allowed 
+	 *        to make things more readable, e.g., "value_1; value_2";
 	 *        option values have to be constructed using Java identifier characters.
 	 * @param caseSensitive tells the parser wether the option value is case sensitive
-	 * @throws IllegalArgumentException if the option value string has wrong format<br>
+	 * @throws IllegalArgumentException if the option value string has wrong format
 	 *         or is empty
+	 */
+	public static EnumeratedStringParser getParser(String validOptionValues, boolean caseSensitive) throws IllegalArgumentException {
+		return new EnumeratedStringParser( validOptionValues, caseSensitive, true );
+	}
+
+	/**
+	 * Constructs a new instance of EnumeratedStringParser.
+	 * @deprecated use {@link #getParser(String, boolean)}.
+	 * 
 	 */
 	public EnumeratedStringParser(String validOptionValues, boolean caseSensitive) throws IllegalArgumentException {
 		this(validOptionValues, caseSensitive, true);
 	}
 
+
 	/**
-	 * Constructs a new instance of EnumeratedStringParser with parameter<br>
-	 * "caseSensitive" set to false<br> and "checkOptionChars" set to true.<br>
-	 * All command line arguments for this parser and the values provided<br>
-	 * by the user in this constructor are converted to lower case.
+	 * Returns an EnumeratedParameterParser with parameter
+	 * "caseSensitive" set to false and "checkOptionChars" set to true.
+	 * All command line arguments for this parser and the values provided
+	 * by the user in the returned parser are converted to lower case.
 	 * 
-	 * @param validOptions a string that contains valid values for an option <br>
-	 *        in the format "value_1;value_2;..;value_n"; spaces between values are allowed <br>
-	 *        to make things more readable, e.g., "value_1; value_2";<br>
+	 * @param validOptionValues a string that contains valid values for an option 
+	 *        in the format "value_1;value_2;..;value_n"; spaces between values are allowed 
+	 *        to make things more readable, e.g., "value_1; value_2";
 	 *        option values have to be constructed using Java identifier characters.
-	 * @throws IllegalArgumentException if the option value string has wrong format<br>
+	 * @throws IllegalArgumentException if the option value string has wrong format
 	 *         or is empty
+	 */
+	public static EnumeratedStringParser getParser(String validOptionValues) throws IllegalArgumentException {
+		return new EnumeratedStringParser( validOptionValues, false, true );
+	}
+
+
+	/**
+	 * Constructs a new instance of EnumeratedStringParser.
+	 * @deprecated use {@link #getParser(String)}.
 	 */
 	public EnumeratedStringParser(String validOptionValues) throws IllegalArgumentException {
 		this(validOptionValues, false, true);
@@ -124,7 +161,7 @@ public class EnumeratedStringParser extends StringParser {
 
 	/**
 	 * Parses the specified argument, making sure it matches one of the valid
-	 * options supplied to its constructor.<br>  
+	 * options supplied to its constructor.  
 	 * If the specified argument is not a valid option, 
 	 * a ParseException is thrown.
 	 * 
@@ -156,9 +193,9 @@ public class EnumeratedStringParser extends StringParser {
 	}
 
 	/**
-	 * Check for valid enumerated option values ("names").<br>
-	 * Allowed are Java identifier chars, i.e., alphanumeric chars + '$' + _' signs.<br>
-	 * If you need a different validation scheme you can override this method<br>
+	 * Check for valid enumerated option values ("names").
+	 * Allowed are Java identifier chars, i.e., alphanumeric chars + '$' + _' signs.
+	 * If you need a different validation scheme you can override this method
 	 * when subclassig EnumeratedStringParser.
 	 * 
 	 * @param name   the option value to check

@@ -12,7 +12,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 /**
- * A StringParser for parsing java.net.InetAddress objects.  The parse() method
+ * A {@link com.martiansoftware.jsap.StringParser} for parsing java.net.InetAddress objects.  The parse() method
  * delegates the actual
  * parsing to <code>InetAddress.getByName(String)</code>.  If
  * <code>InetAddress.getByName()</code>
@@ -25,8 +25,24 @@ import java.net.UnknownHostException;
  */
 public class InetAddressStringParser extends StringParser {
 
-    /**
+	private static final InetAddressStringParser INSTANCE = new InetAddressStringParser();	
+
+	/** Returns a {@link InetAddressStringParser}.
+	 * 
+	 * <p>Convenient access to the only instance returned by
+	 * this method is available through
+	 * {@link com.martiansoftware.jsap.JSAP#INETADDRESS_PARSER}.
+	 *  
+	 * @return a {@link InetAddressStringParser}.
+	 */
+
+    public static InetAddressStringParser getParser() {
+		return INSTANCE;
+	}
+
+	/**
      * Creates a new InetAddressStringParser.
+     * @deprecated Use {@link #getParser()} or, even better, {@link com.martiansoftware.jsap.JSAP#INETADDRESS_PARSER}.
      */
     public InetAddressStringParser() {
         super();

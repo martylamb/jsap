@@ -10,7 +10,7 @@ import com.martiansoftware.jsap.StringParser;
 import com.martiansoftware.jsap.ParseException;
 
 /**
- * A StringParser for parsing Bytes.  The parse() method delegates the actual
+ * A {@link com.martiansoftware.jsap.StringParser} for parsing Bytes.  The parse() method delegates the actual
  * parsing to Byte.decode(String).
  * @author <a href="http://www.martiansoftware.com/contact.html">Marty Lamb</a>
  * @see com.martiansoftware.jsap.StringParser
@@ -18,8 +18,24 @@ import com.martiansoftware.jsap.ParseException;
  */
 public class ByteStringParser extends StringParser {
 
-    /**
+	private static final ByteStringParser INSTANCE = new ByteStringParser();	
+
+	/** Returns a {@link ByteStringParser}.
+	 * 
+	 * <p>Convenient access to the only instance returned by
+	 * this method is available through
+	 * {@link com.martiansoftware.jsap.JSAP#BYTE_PARSER}.
+	 *  
+	 * @return a {@link ByteStringParser}.
+	 */
+
+    public static ByteStringParser getParser() {
+		return INSTANCE;
+	}
+
+	/**
      * Creates a new ByteStringParser.
+     * @deprecated Use {@link #getParser()} or, even better, {@link com.martiansoftware.jsap.JSAP#BYTE_PARSER}.
      */
     public ByteStringParser() {
         super();

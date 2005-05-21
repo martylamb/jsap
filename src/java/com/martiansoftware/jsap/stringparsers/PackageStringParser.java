@@ -10,7 +10,7 @@ import com.martiansoftware.jsap.StringParser;
 import com.martiansoftware.jsap.ParseException;
 
 /**
- * A StringParser for parsing Packages.  The parse() method delegates the actual
+ * A {@link com.martiansoftware.jsap.StringParser} for parsing Packages.  The parse() method delegates the actual
  * parsing to <code>Package.getPackage(String)</code>, and returns the resulting
  * Package object.
  * If <code>Package.getPackage()</code> returns null, a ParseException is
@@ -20,9 +20,24 @@ import com.martiansoftware.jsap.ParseException;
  * @see java.lang.Package
  */
 public class PackageStringParser extends StringParser {
+	
+	private static final PackageStringParser INSTANCE = new PackageStringParser();	
 
-    /**
+	/** Returns a {@link PackageStringParser}.
+	 * 
+	 * <p>Convenient access to the only instance returned by
+	 * this method is available through
+	 * {@link com.martiansoftware.jsap.JSAP#PACKAGE_PARSER}.
+	 *  
+	 * @return a {@link PackageStringParser}.
+	 */
+    public static PackageStringParser getParser() {
+		return INSTANCE;
+	}
+
+	/**
      * Creates a new PackageStringParser
+     * @deprecated Use {@link #getParser()} or, even better, {@link com.martiansoftware.jsap.JSAP#PACKAGE_PARSER}.
      */
     public PackageStringParser() {
         super();

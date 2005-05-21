@@ -11,17 +11,33 @@ import com.martiansoftware.jsap.ParseException;
 import java.math.BigDecimal;
 
 /**
- * A StringParser for parsing BigDecimals.  The parse() method delegates the
+ * A {@link com.martiansoftware.jsap.StringParser} for parsing BigDecimals.  The parse() method delegates the
  * actual
  * parsing to BigDecimal's constructor.
  * @author <a href="http://www.martiansoftware.com/contact.html">Marty Lamb</a>
  * @see com.martiansoftware.jsap.StringParser
- * @see java.lang.BigDecimal
+ * @see java.math.BigDecimal
  */
 public class BigDecimalStringParser extends StringParser {
 
-    /**
+	private static final BigDecimalStringParser INSTANCE = new BigDecimalStringParser();
+
+	/** Returns a {@link BigDecimalStringParser}.
+	 *
+	 * <p>Convenient access to the only instance returned by
+	 * this method is available through
+	 * {@link com.martiansoftware.jsap.JSAP#BIGDECIMAL_PARSER}.
+	 *  
+	 * @return a {@link BigDecimalStringParser}.
+	 */
+	
+    public static BigDecimalStringParser getParser() {
+		return INSTANCE; 
+	}
+
+	/**
      * Creates a new BigDecimalStringParser.
+     * @deprecated Use {@link #getParser()} or, even better, {@link com.martiansoftware.jsap.JSAP#BIGDECIMAL_PARSER}.
      */
     public BigDecimalStringParser() {
         super();
@@ -40,7 +56,7 @@ public class BigDecimalStringParser extends StringParser {
      * argument.
      * @throws ParseException if <code>new BigDecimal(arg)</code> throws a
      * NumberFormatException.
-     * @see java.lang.BigDecimal
+     * @see BigDecimal
      * @see com.martiansoftware.jsap.StringParser#parse(String)
      */
     public Object parse(String arg) throws ParseException {

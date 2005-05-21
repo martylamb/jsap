@@ -10,7 +10,7 @@ import com.martiansoftware.jsap.StringParser;
 import com.martiansoftware.jsap.ParseException;
 
 /**
- * A StringParser for parsing Doubles.  The parse() method delegates the actual
+ * A {@link com.martiansoftware.jsap.StringParser} for parsing Doubles.  The parse() method delegates the actual
  * parsing to new Double(String).  If a NumberFormatException is thrown by new
  * Double(String), it
  * is encapsulated in a ParseException and re-thrown.
@@ -20,8 +20,24 @@ import com.martiansoftware.jsap.ParseException;
  */
 public class DoubleStringParser extends StringParser {
 
-    /**
+	private static final DoubleStringParser INSTANCE = new DoubleStringParser();	
+
+	/** Returns a {@link DoubleStringParser}.
+	 * 
+	 * <p>Convenient access to the only instance returned by
+	 * this method is available through
+	 * {@link com.martiansoftware.jsap.JSAP#DOUBLE_PARSER}.
+	 *  
+	 * @return a {@link DoubleStringParser}.
+	 */
+
+	public static DoubleStringParser getParser() {
+		return INSTANCE;
+	}
+
+	/**
      * Creates a new DoubleStringParser.
+     * @deprecated Use {@link #getParser()} or, even better, {@link com.martiansoftware.jsap.JSAP#DOUBLE_PARSER}.
      */
     public DoubleStringParser() {
         super();

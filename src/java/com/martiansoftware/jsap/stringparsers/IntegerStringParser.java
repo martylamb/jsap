@@ -10,16 +10,31 @@ import com.martiansoftware.jsap.StringParser;
 import com.martiansoftware.jsap.ParseException;
 
 /**
- * A StringParser for parsing Integers.  The parse() method delegates the actual
+ * A {@link com.martiansoftware.jsap.StringParser} for parsing Integers.  The parse() method delegates the actual
  * parsing to Integer.decode(String).
  * @author <a href="http://www.martiansoftware.com/contact.html">Marty Lamb</a>
  * @see com.martiansoftware.jsap.StringParser
  * @see java.lang.Integer
  */
 public class IntegerStringParser extends StringParser {
+	
+	private static final IntegerStringParser INSTANCE = new IntegerStringParser();	
 
-    /**
+	/** Returns a {@link IntegerStringParser}.
+	 * 
+	 * <p>Convenient access to the only instance returned by
+	 * this method is available through
+	 * {@link com.martiansoftware.jsap.JSAP#INTEGER_PARSER}.
+	 *  
+	 * @return a {@link IntegerStringParser}.
+	 */
+    public static IntegerStringParser getParser() {
+		return new IntegerStringParser();
+	}
+
+	/**
      * Creates a new IntegerStringParser.
+     * @deprecated Use {@link #getParser()} or, even better, {@link com.martiansoftware.jsap.JSAP#INTEGER_PARSER}.
      */
     public IntegerStringParser() {
         super();

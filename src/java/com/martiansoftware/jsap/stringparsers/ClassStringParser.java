@@ -10,13 +10,13 @@ import com.martiansoftware.jsap.StringParser;
 import com.martiansoftware.jsap.ParseException;
 
 /**
- * A StringParser for parsing Class objects.  The parse(arg) method calls
+ * A {@link com.martiansoftware.jsap.StringParser} for parsing Class objects.  The parse(arg) method calls
  * Class.forName(arg) and returns
  * the result.  If any exceptions are thrown by Class.forName(), they are
  * encapsulated in a ParseException
- * and re-thrown.<br>
- * <br>
- * <b>Note:</b> The Class.forName() call attempts to load the class from the
+ * and re-thrown.
+ * 
+ * <p><b>Note:</b> The Class.forName() call attempts to load the class from the
  * same ClassLoader that loaded
  * this StringParser.
  * @author <a href="http://www.martiansoftware.com/contact.html">Marty Lamb</a>
@@ -25,8 +25,24 @@ import com.martiansoftware.jsap.ParseException;
  */
 public class ClassStringParser extends StringParser {
 
-    /**
+	private static final ClassStringParser INSTANCE = new ClassStringParser();	
+
+	/** Returns a {@link ClassStringParser}.
+	 * 
+	 * <p>Convenient access to the only instance returned by
+	 * this method is available through
+	 * {@link com.martiansoftware.jsap.JSAP#CLASS_PARSER}.
+	 *  
+	 * @return a {@link ClassStringParser}.
+	 */
+
+    public static ClassStringParser getParser() {
+		return INSTANCE;
+	}
+
+	/**
      * Creates a new ClassStringParser.
+     * @deprecated Use {@link #getParser()} or, even better, {@link com.martiansoftware.jsap.JSAP#CLASS_PARSER}.
      */
     public ClassStringParser() {
         super();

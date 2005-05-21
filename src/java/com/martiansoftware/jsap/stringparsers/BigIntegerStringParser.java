@@ -11,17 +11,32 @@ import com.martiansoftware.jsap.ParseException;
 import java.math.BigInteger;
 
 /**
- * A StringParser for parsing BigIntegers.  The parse() method delegates the
+ * A {@link com.martiansoftware.jsap.StringParser} for parsing BigIntegers.  The parse() method delegates the
  * actual
  * parsing to BigInteger's constructor.
  * @author <a href="http://www.martiansoftware.com/contact.html">Marty Lamb</a>
  * @see com.martiansoftware.jsap.StringParser
- * @see java.lang.BigInteger
+ * @see java.math.BigInteger
  */
 public class BigIntegerStringParser extends StringParser {
 
-    /**
+	private static final BigIntegerStringParser INSTANCE = new BigIntegerStringParser();	
+
+	/** Returns a {@link BigIntegerStringParser}.
+	 * 
+	 * <p>Convenient access to the only instance returned by
+	 * this method is available through
+	 * {@link com.martiansoftware.jsap.JSAP#BIGINTEGER_PARSER}.
+	 *  
+	 * @return a {@link BigIntegerStringParser}.
+	 */
+    public static BigIntegerStringParser getParser() {
+		return INSTANCE;
+	}
+
+	/**
      * Creates a new BigIntegerStringParser.
+     * @deprecated Use {@link #getParser()} or, even better, {@link com.martiansoftware.jsap.JSAP#BIGINTEGER_PARSER}.
      */
     public BigIntegerStringParser() {
         super();
@@ -40,7 +55,7 @@ public class BigIntegerStringParser extends StringParser {
     * argument.
     * @throws ParseException if <code>new BigInteger(arg)</code> throws a
     * NumberFormatException.
-    * @see java.lang.BigInteger
+    * @see BigInteger
     * @see com.martiansoftware.jsap.StringParser#parse(String)
     */
     public Object parse(String arg) throws ParseException {
