@@ -5,7 +5,7 @@
  */
 package com.martiansoftware.jsap.xml;
 
-import com.martiansoftware.jsap.AbstractParameter;
+import com.martiansoftware.jsap.Parameter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -17,14 +17,14 @@ import java.util.List;
  * 
  * @author <a href="http://www.martiansoftware.com/contact.html">Marty Lamb</a>
  */
-abstract class AbstractParameterConfig {
+abstract class ParameterConfig {
 
 	private String id = null;
 	private String help = null;
 	private String usageName = null;
 	private java.util.List defaults = null;
 	
-	public AbstractParameterConfig() {
+	public ParameterConfig() {
 		defaults = new ArrayList();
 	}
 	
@@ -63,12 +63,12 @@ abstract class AbstractParameterConfig {
 		this.usageName = usageName;
 	}
 	
-	protected void configure(AbstractParameter param) {
+	protected void configure(Parameter param) {
 		param.setHelp(getHelp());
 		for (Iterator i = getDefaults().iterator(); i.hasNext();) {
 			String def = (String) i.next();
 			param.addDefault(def);
 		}
 	}
-	public abstract AbstractParameter getConfiguredParameter();
+	public abstract Parameter getConfiguredParameter();
 }

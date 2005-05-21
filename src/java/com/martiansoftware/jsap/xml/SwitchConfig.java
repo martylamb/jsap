@@ -5,7 +5,7 @@
  */
 package com.martiansoftware.jsap.xml;
 
-import com.martiansoftware.jsap.AbstractParameter;
+import com.martiansoftware.jsap.Parameter;
 import com.martiansoftware.jsap.Flagged;
 import com.martiansoftware.jsap.Switch;
 
@@ -18,7 +18,7 @@ import com.martiansoftware.jsap.Switch;
  */
 class SwitchConfig extends FlaggedConfig {
 
-	public AbstractParameter getConfiguredParameter() {
+	public Parameter getConfiguredParameter() {
 		Switch result = new Switch(getId());
 		super.configure(result);
 		result.setShortFlag(getShortFlag());

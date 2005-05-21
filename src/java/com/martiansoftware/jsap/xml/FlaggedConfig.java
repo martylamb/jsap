@@ -5,8 +5,6 @@
  */
 package com.martiansoftware.jsap.xml;
 
-import com.martiansoftware.jsap.AbstractParameter;
-import com.martiansoftware.jsap.Flagged;
 import com.martiansoftware.jsap.JSAP;
 
 /**
@@ -16,7 +14,7 @@ import com.martiansoftware.jsap.JSAP;
  * 
  * @author <a href="http://www.martiansoftware.com/contact.html">Marty Lamb</a>
  */
-abstract class FlaggedConfig extends AbstractParameterConfig {
+abstract class FlaggedConfig extends ParameterConfig {
 	
 	private char shortFlag = JSAP.NO_SHORTFLAG;
 	private String longFlag = JSAP.NO_LONGFLAG;
@@ -37,4 +35,7 @@ abstract class FlaggedConfig extends AbstractParameterConfig {
 		this.shortFlag = shortFlag;
 	}
 
+	protected void configure(com.martiansoftware.jsap.FlaggedOption option) {
+		
+	}
 }

@@ -39,12 +39,7 @@ public final class StringUtils {
     public static List wrapToList(String s, int width) {
         List result = new java.util.LinkedList();
         if ((s != null) && (s.length() > 0)) {
-        	if (width <= 0) {
-        		result.add(s);
-        		return (result);
-        	}
-        	
-        	StringBuffer buf = new StringBuffer();
+            StringBuffer buf = new StringBuffer();
             int lastSpaceBufIndex = -1;
             for (int i = 0; i < s.length(); ++i) {
                 char c = s.charAt(i);
@@ -57,19 +52,18 @@ public final class StringUtils {
                         if (buf.length() >= width - 1) {
                             result.add(buf.toString());
                             buf.setLength(0);
+                            lastSpaceBufIndex = -1;
                         }
                         if (buf.length() > 0) {
                             lastSpaceBufIndex = buf.length();
                             buf.append(c);
                         }
                     } else {
-                        if (buf.length() >= width) {
-                            if (lastSpaceBufIndex == -1) {
-                                result.add(buf.toString());
-                                buf.setLength(0);
-                            } else {
+                    	if (buf.length() >= width) {
+                            if (lastSpaceBufIndex != -1) {
                                 result.add(buf.substring(0, lastSpaceBufIndex));
                                 buf.delete(0, lastSpaceBufIndex + 1);
+                                lastSpaceBufIndex = -1;
                             }
                         }
                         buf.append(c);

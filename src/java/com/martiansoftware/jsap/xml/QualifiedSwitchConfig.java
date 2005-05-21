@@ -5,7 +5,7 @@
  */
 package com.martiansoftware.jsap.xml;
 
-import com.martiansoftware.jsap.AbstractParameter;
+import com.martiansoftware.jsap.Parameter;
 import com.martiansoftware.jsap.QualifiedSwitch;
 
 /**
@@ -21,7 +21,7 @@ class QualifiedSwitchConfig extends FlaggedOptionConfig {
 		super.configure(qs);
 	}
 
-	public AbstractParameter getConfiguredParameter() {
+	public Parameter getConfiguredParameter() {
 		QualifiedSwitch result = new QualifiedSwitch(getId());
 		configure(result);
 		return (result);

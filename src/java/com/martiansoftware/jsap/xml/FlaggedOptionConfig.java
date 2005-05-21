@@ -5,9 +5,9 @@
  */
 package com.martiansoftware.jsap.xml;
 
-import com.martiansoftware.jsap.AbstractParameter;
 import com.martiansoftware.jsap.FlaggedOption;
 import com.martiansoftware.jsap.JSAP;
+import com.martiansoftware.jsap.Parameter;
 
 /**
  * Provides support for loading JSAP configurations at runtime
@@ -83,7 +83,7 @@ class FlaggedOptionConfig extends FlaggedConfig {
 		}
 	}
 	
-	public AbstractParameter getConfiguredParameter() {
+	public Parameter getConfiguredParameter() {
 		FlaggedOption result = new FlaggedOption(getId());
 		configure(result);
 		return (result);

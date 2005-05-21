@@ -5,7 +5,7 @@
  */
 package com.martiansoftware.jsap.xml;
 
-import com.martiansoftware.jsap.AbstractParameter;
+import com.martiansoftware.jsap.Parameter;
 import com.martiansoftware.jsap.UnflaggedOption;
 import com.martiansoftware.jsap.JSAP;
 
@@ -16,7 +16,7 @@ import com.martiansoftware.jsap.JSAP;
  * 
  * @author <a href="http://www.martiansoftware.com/contact.html">Marty Lamb</a>
  */
-class UnflaggedOptionConfig extends AbstractParameterConfig {
+class UnflaggedOptionConfig extends ParameterConfig {
 	
 	private boolean greedy = JSAP.NOT_GREEDY;
 	private boolean list = JSAP.NOT_LIST;
@@ -77,7 +77,7 @@ class UnflaggedOptionConfig extends AbstractParameterConfig {
 		this.usageName = usageName;
 	}
 	
-	public AbstractParameter getConfiguredParameter() {
+	public Parameter getConfiguredParameter() {
 		UnflaggedOption result = new UnflaggedOption(getId());
 		super.configure(result);
 		result.setGreedy(isGreedy());

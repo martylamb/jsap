@@ -24,8 +24,8 @@ Legal:
 
 	<!-- Basics -->
    	<property name="name" value="JSAP" />
-    <property name="version" value="1.04"/>
-    <property name="year" value="2002-2004"/>
+    <property name="version" value="2.0-alpha"/>
+    <property name="year" value="2002-2005"/>
 
 	<!-- Directories -->
 	<property name="buildfile" value="build.xml"/>
@@ -233,6 +233,9 @@ Targets:
 			token="&#x09;"
 			value="    " />
 			
+  		<replace encoding="ISO8859_1" dir="${build}/manual" includes="*.html"
+			token="&#xa0;"
+			value="&amp;nbsp;" />
 
 		<copy overwrite="true" verbose="true" todir="${doc}">
 			<fileset dir="${build}/manual" includes="*.html"/>

@@ -43,7 +43,7 @@ public class JSAPConfig {
 		in.close();
 		
 		for (Iterator i = config.parameters(); i.hasNext();) {
-			AbstractParameterConfig cfg = (AbstractParameterConfig) i.next();
+			ParameterConfig cfg = (ParameterConfig) i.next();
 			jsapToConfigure.registerParameter(cfg.getConfiguredParameter());
 		}
 		jsapToConfigure.setHelp(config.getHelp());
@@ -66,7 +66,7 @@ public class JSAPConfig {
 		this.usage = usage;
 	}
 	
-	public void addParameter(AbstractParameterConfig config) {
+	public void addParameter(ParameterConfig config) {
 		parameters.add(config);
 	}
 	
