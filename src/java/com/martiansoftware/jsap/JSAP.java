@@ -337,7 +337,7 @@ public class JSAP {
     /**
      * The default screen width used for formatting help.
      */
-    private static final int DEFAULT_SCREENWIDTH = 80;
+    public static final int DEFAULT_SCREENWIDTH = 80;
 
     /**
      * Creates a new JSAP with an empty configuration.  It must be configured
