@@ -6,9 +6,9 @@
 
 package com.martiansoftware.jsap;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Iterator;
 
 /**
  * A utility class to allow lookups of parameter IDs by short flag or long flag.

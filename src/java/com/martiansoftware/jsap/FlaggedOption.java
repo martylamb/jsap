@@ -48,6 +48,37 @@ public class FlaggedOption extends Option implements Flagged {
 
     /**
      * A shortcut constructor that creates a new FlaggedOption and configures
+     * its most commonly used settings, including help.
+     * @param id the unique ID for this FlaggedOption.
+     * @param stringParser the StringParser this FlaggedOption should use.
+     * @param defaultValue the default value for this FlaggedOption (may be
+     * null).
+     * @param required if true, this FlaggedOption is required.
+     * @param shortFlag the short flag for this option (may be set to
+     * JSAP.NO_SHORTFLAG for none).
+     * @param longFlag the long flag for this option (may be set to
+     * JSAP.NO_LONGFLAG for none).
+     * @param help the help text for this option (may be set to {@link JSAP#NO_HELP} for none).
+     */
+    public FlaggedOption(
+        String id,
+        StringParser stringParser,
+        String defaultValue,
+        boolean required,
+        char shortFlag,
+        String longFlag,
+		String help) {
+        this(id);
+        setStringParser(stringParser);
+        setDefault(defaultValue);
+        setShortFlag(shortFlag);
+        setLongFlag(longFlag);
+        setRequired(required);
+        setHelp(help);
+    }
+
+    /**
+     * A shortcut constructor that creates a new FlaggedOption and configures
      * its most commonly used settings.
      * @param id the unique ID for this FlaggedOption.
      * @param stringParser the StringParser this FlaggedOption should use.
@@ -66,13 +97,9 @@ public class FlaggedOption extends Option implements Flagged {
         boolean required,
         char shortFlag,
         String longFlag) {
-        this(id);
-        setStringParser(stringParser);
-        setDefault(defaultValue);
-        setShortFlag(shortFlag);
-        setLongFlag(longFlag);
-        setRequired(required);
+        this(id, stringParser, defaultValue, required, shortFlag, longFlag, JSAP.NO_HELP);
     }
+
 
     /**
      * Sets the short flag for this FlaggedOption.  To use no short flag at all,
@@ -189,21 +216,21 @@ public class FlaggedOption extends Option implements Flagged {
         if ((getLongFlag() != JSAP.NO_LONGFLAG)
             || (getShortFlag() != JSAP.NO_SHORTFLAG)) {
             if (getLongFlag() == JSAP.NO_LONGFLAG) {
-                result.append("-" + getShortFlag() + " ");
+                result.append("-" + getShortFlag() + '\u00a0');
             } else if (getShortFlag() == JSAP.NO_SHORTFLAG) {
-                result.append("--" + getLongFlag() + " ");
+                result.append("--" + getLongFlag() + '\u00a0');
             } else {
                 result.append(
                     "(-" + getShortFlag() + "|--" + getLongFlag() + ") ");
             }
         }
-        String un = getUsageName();
+        String id = getID();
         char sep = this.getListSeparator();
         if (this.isList()) {
             result.append(
-            	un + "1" + sep + un + "2" + sep + "..." + sep + un + "N ");
+                id + "1" + sep + id + "2" + sep + "..." + sep + id + "N ");
         } else {
-            result.append("<" + un + ">");
+            result.append("<" + id + ">");
         }
         if (!required()) {
             result.append("]");
