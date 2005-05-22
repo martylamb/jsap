@@ -173,12 +173,7 @@ public abstract class Option extends Parameter {
         if (getStringParser() == null) {
             boolean wasLocked = this.locked();
             setLocked(false);
-            internalSetStringParser(
-                new com
-                    .martiansoftware
-                    .jsap
-                    .stringparsers
-                    .StringStringParser());
+            internalSetStringParser( JSAP.STRING_PARSER );
             setLocked(wasLocked);
         }
 
