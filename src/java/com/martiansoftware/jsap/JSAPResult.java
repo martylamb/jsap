@@ -17,9 +17,8 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-/**
- * Encapsulates the results of JSAP's parse() methods.  The most basic means of
- * obtaining a parse result from a JSAPResult is the getObject(String id)
+/** Encapsulates the results of JSAP's parse() methods.  The most basic means of
+ * obtaining a parse result from a JSAPResult is the {@link #getObject(String)}
  * method, but a number of getXXX() methods are provided
  * to make your code more readable and to avoid re-casting.
  * @author <a href="http://www.martiansoftware.com/contact.html">Marty Lamb</a>
@@ -68,7 +67,7 @@ public class JSAPResult implements ExceptionMap {
      * values, and thus contains(id) might return true even when
      * the user has not herself supplied the parameter.
      * 
-     * This is just a means to see if there are values to retrieve
+     * <P>This is just a means to see if there are values to retrieve.
      * 
      * @param id the ID to check
      * @return true if there are any values in this JSAPResult associated
@@ -196,6 +195,7 @@ public class JSAPResult implements ExceptionMap {
     public boolean getBoolean(String id) {
     	Boolean b = (Boolean) qualifiedSwitches.get(id);
     	if (b == null) {
+        	if (! contains(id)) throw new UnspecifiedParameterException(id);
     		b = (Boolean) getObject(id);
     	}
         return (b.booleanValue());
@@ -259,6 +259,7 @@ public class JSAPResult implements ExceptionMap {
      * @see #getIntArray(String)
      */
     public int getInt(String id) {
+    	if (! contains(id)) throw new UnspecifiedParameterException(id);
         return (((Integer) getObject(id)).intValue());
     }
 
@@ -335,6 +336,7 @@ public class JSAPResult implements ExceptionMap {
      * @see #getLongArray(String)
      */
     public long getLong(String id) {
+    	if (! contains(id)) throw new UnspecifiedParameterException(id);
         return (((Long) getObject(id)).longValue());
     }
 
@@ -397,6 +399,7 @@ public class JSAPResult implements ExceptionMap {
      * @see #getByteArray(String)
      */
     public byte getByte(String id) {
+    	if (! contains(id)) throw new UnspecifiedParameterException(id);
         return (((Byte) getObject(id)).byteValue());
     }
 
@@ -455,6 +458,7 @@ public class JSAPResult implements ExceptionMap {
      * @see #getCharArray(String)
      */
     public char getChar(String id) {
+    	if (! contains(id)) throw new UnspecifiedParameterException(id);
         return (((Character) getObject(id)).charValue());
     }
 
@@ -513,6 +517,7 @@ public class JSAPResult implements ExceptionMap {
      * @see #getShortArray(String)
      */
     public short getShort(String id) {
+    	if (! contains(id)) throw new UnspecifiedParameterException(id);
         return (((Short) getObject(id)).shortValue());
     }
 
@@ -571,6 +576,7 @@ public class JSAPResult implements ExceptionMap {
      * @see #getDoubleArray(String)
      */
     public double getDouble(String id) {
+    	if (! contains(id)) throw new UnspecifiedParameterException(id);
         return (((Double) getObject(id)).doubleValue());
     }
 
@@ -629,6 +635,7 @@ public class JSAPResult implements ExceptionMap {
      * @see #getFloatArray(String)
      */
     public float getFloat(String id) {
+    	if (! contains(id)) throw new UnspecifiedParameterException(id);
         return (((Float) getObject(id)).floatValue());
     }
 
