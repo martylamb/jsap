@@ -14,8 +14,6 @@ import java.util.Iterator;
  * parameters by the parameters' unique IDs.
  *
  * @author <a href="http://www.martiansoftware.com/contact.html">Marty Lamb</a>
- * @see com.martiansoftware.jsap.AbstractParameter#setDefault(String)
- * @see com.martiansoftware.jsap.AbstractParameter#setDefault(String[])
  */
 public class Defaults {
 

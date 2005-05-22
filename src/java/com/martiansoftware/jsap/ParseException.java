@@ -33,7 +33,7 @@ public class ParseException extends JSAPException {
 
     /**
      * Creates a new ParseException encapsulating the specified Throwable.
-     * @param rootCause the Throwable to encapsulate.
+     * @param cause the Throwable to encapsulate.
      */
     public ParseException(Throwable cause) {
         super(cause);

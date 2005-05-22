@@ -18,7 +18,7 @@ import com.martiansoftware.jsap.JSAPException;
  * via an xml file.  You don't need to access this class directly;
  * instead, use JSAP's constructors that support xml.
  * 
- * @see com.martiansoftware.jsap.JSAP(java.net.URL)
+ * @see com.martiansoftware.jsap.JSAP#JSAP(URL)
  * @author <a href="http://www.martiansoftware.com/contact.html">Marty Lamb</a>
  */
 public class JSAPConfig {

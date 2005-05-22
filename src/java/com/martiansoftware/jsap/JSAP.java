@@ -141,7 +141,7 @@ public class JSAP {
      * The default separator for list parameters (equivalent to
      * java.io.File.pathSeparatorChar)
      *
-     * @see com.martiansoftware.jsap.Option#setListSeparator(char)
+     * @see FlaggedOption#setListSeparator(char)
      */
     public static final char DEFAULT_LISTSEPARATOR =
         java.io.File.pathSeparatorChar;
@@ -155,28 +155,28 @@ public class JSAP {
     /**
      * The parameter is required.
      *
-     * @see com.martiansoftware.jsap.Option#setRequired(boolean)
+     * @see FlaggedOption#setRequired(boolean)
      */
     public static final boolean REQUIRED = true;
 
     /**
      * The parameter is not required.
      *
-     * @see com.martiansoftware.jsap.Option#setRequired(boolean)
+     * @see FlaggedOption#setRequired(boolean)
      */
     public static final boolean NOT_REQUIRED = false;
 
     /**
      * The parameter is a list.
      *
-     * @see com.martiansoftware.jsap.Option#setIsList(boolean)
+     * @see FlaggedOption#setList(boolean)
      */
     public static final boolean LIST = true;
 
     /**
      * The parameter is not a list.
      *
-     * @see com.martiansoftware.jsap.Option#setIsList(boolean)
+     * @see FlaggedOption#setList(boolean)
      */
     public static final boolean NOT_LIST = false;
 
@@ -208,10 +208,7 @@ public class JSAP {
      */
     public static final boolean NOT_GREEDY = false;
 
-    /**
-     * The parameter has no default value.
-     *
-     * @see com.martiansoftware.jsap.AbstractParameter#setDefault(String)
+    /** The parameter has no default value.
      */
     public static final String NO_DEFAULT = null;
 

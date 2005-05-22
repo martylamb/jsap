@@ -12,7 +12,7 @@ import com.martiansoftware.jsap.ParseException;
 import java.io.File;
 
 /**
- * A StringParser for parsing java.io.File objects.  The parse() method 
+ * A StringParser for parsing {@link File} objects.  The parse() method 
  * delegates the actual
  * parsing to <code>new File(String)</code>.  If <code>new File(String)</code>
  * throws a NullPointerException, it is encapsulated in a ParseException and 
