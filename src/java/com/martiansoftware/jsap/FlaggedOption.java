@@ -221,7 +221,7 @@ public class FlaggedOption extends Option implements Flagged {
                 result.append("--" + getLongFlag() + '\u00a0');
             } else {
                 result.append(
-                    "(-" + getShortFlag() + "|--" + getLongFlag() + ") ");
+                    "(-" + getShortFlag() + "|--" + getLongFlag() + ")\u00a0");
             }
         }
         String id = getID();
