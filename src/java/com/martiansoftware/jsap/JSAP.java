@@ -428,19 +428,8 @@ public class JSAP {
         if (result == null) {
             StringBuffer buf = new StringBuffer();
 
-            // first, determine the maximum width of the usage info
-            int maxUsageLength = 0;
-            for (Iterator i = paramsByDeclarationOrder.iterator();
-                i.hasNext();) {
-                maxUsageLength =
-                    Math.max(
-                        maxUsageLength,
-                        ((Parameter) i.next()).getSyntax().length());
-            }
-            // now determine with width we'll wrap the help text to.
-            // assume 2 leading spaces, 4 spaces after the longest usage info,
-            // and 2 trailing spaces.  so we'll wrap at screenWidth - 8
-            int wrapWidth = screenWidth - 8 - maxUsageLength;
+            // We'll wrap at screenWidth - 8
+            int wrapWidth = screenWidth - 8;
 
             // now loop through all the params again and display their help info
             for (Iterator i = paramsByDeclarationOrder.iterator();
@@ -449,10 +438,10 @@ public class JSAP {
                 StringBuffer defaultText = new StringBuffer();
                 String[] defaultValue = param.getDefault();
                 if ( !(param instanceof Switch) && defaultValue != null ) {
-                	defaultText.append(" (default: ");
+                    defaultText.append(" (default: ");
                     for(int j = 0; j < defaultValue.length; j++ ) {
-                    	if (j > 0) defaultText.append( ", " );
-                    	defaultText.append(defaultValue[ j ]);
+                        if (j > 0) defaultText.append( ", " );
+                        defaultText.append(defaultValue[ j ]);
                     }
                     defaultText.append(")");
                 }
@@ -462,24 +451,12 @@ public class JSAP {
                         .iterator();
 
                 buf.append("  "); // the two leading spaces
-                buf.append(
-                    StringUtils.padRightToWidth(
-                        param.getSyntax(),
-                        maxUsageLength));
-                buf.append("    ");
-                buf.append(
-                    StringUtils.padRightToWidth(
-                        helpInfo.hasNext() ? (String) helpInfo.next() : "",  // Bug fix by Klaus Berg
-                        wrapWidth));
+                buf.append(param.getSyntax());
                 buf.append("\n");
 
                 while (helpInfo.hasNext()) {
-                    buf.append(
-                        StringUtils.padRightToWidth("", maxUsageLength + 6));
-                    buf.append(
-                        StringUtils.padRightToWidth(
-                            (String) helpInfo.next(),
-                            wrapWidth));
+                    buf.append("        ");
+                    buf.append( helpInfo.next() );
                     buf.append("\n");
                 }
                 if (i.hasNext()) {
