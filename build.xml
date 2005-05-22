@@ -27,6 +27,10 @@ Legal:
     <property name="version" value="2.0-alpha"/>
     <property name="year" value="2002-2005"/>
 
+	<!-- Documentation -->
+	<property name="j2se.apiurl" value="http://java.sun.com/j2se/1.4/docs/api/"/>
+	<property name="xstream.apiurl" value="http://xstream.codehaus.org/javadoc/"/>
+  
 	<!-- Directories -->
 	<property name="buildfile" value="build.xml"/>
     <property name="src" value="src"/>
@@ -185,7 +189,8 @@ Targets:
         	packagenames="com.martiansoftware.*"
         	windowtitle="JSAP: the Java Simple Argument Parser" >
         	
-        	<link href="http://java.sun.com/j2se/1.4.2/docs/api/" />
+			<link href="${j2se.apiurl}"/>
+			<link href="${xstream.apiurl}"/>
 			<bottom>${copyright.html}&lt;br&gt;${updates.html}</bottom>
 			
         </javadoc>
