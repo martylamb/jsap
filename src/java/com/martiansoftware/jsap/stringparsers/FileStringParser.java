@@ -6,6 +6,7 @@
  
 package com.martiansoftware.jsap.stringparsers;
 
+import com.martiansoftware.jsap.JSAP;
 import com.martiansoftware.jsap.PropertyStringParser;
 import com.martiansoftware.jsap.ParseException;
 import java.io.File;
@@ -33,15 +34,22 @@ public class FileStringParser extends PropertyStringParser {
 	private boolean mustBeDirectory = false;
 	private boolean mustBeFile = false;
 	
-	/**
-	 * Creates a new FileStringParser.
+	/** Creates a new FileStringParser.
+	 * @deprecated use {@link #getParser()}.
 	 */
 	public FileStringParser() {
 		super();
 	}
+	
+	/** Returns a new {@link FileStringParser}.
+	 * @return a new {@link FileStringParser}.
+	 */
+	public static FileStringParser getParser() {
+		return new FileStringParser();
+	}
 
 	public void setUp() throws ParseException {
-		BooleanStringParser bool = new BooleanStringParser();
+		BooleanStringParser bool = JSAP.BOOLEAN_PARSER;
 		setMustExist(((Boolean) bool.parse(getProperty(MUSTEXIST,"false"))).booleanValue());
 		setMustBeDirectory(((Boolean) bool.parse(getProperty(MUSTBEDIRECTORY,"false"))).booleanValue());
 		setMustBeFile(((Boolean) bool.parse(getProperty(MUSTBEFILE,"false"))).booleanValue());
