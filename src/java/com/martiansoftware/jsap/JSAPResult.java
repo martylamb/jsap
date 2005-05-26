@@ -16,6 +16,7 @@ import java.awt.Color;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 /** Encapsulates the results of JSAP's parse() methods.  The most basic means of
  * obtaining a parse result from a JSAPResult is the {@link #getObject(String)}
@@ -52,6 +53,18 @@ public class JSAPResult implements ExceptionMap {
     private List chronologicalErrorMessages = null;
 
     /**
+     * A set containing the IDs of parameters supplied by the user
+     * (as opposed to default values)
+     */
+    private Set userSpecifiedIDs = null;
+    
+    /**
+     * If true, any values "add"ed to this JSAPResult came from the
+     * user, and not from any default values.
+     */
+    private boolean valuesFromUser = false;
+    
+    /**
      *  Creates new JSAPResult
      */
     protected JSAPResult() {
@@ -59,8 +72,19 @@ public class JSAPResult implements ExceptionMap {
         allExceptions = new java.util.HashMap();
         chronologicalErrorMessages = new java.util.LinkedList();
         qualifiedSwitches = new java.util.HashMap();
+        userSpecifiedIDs = new java.util.HashSet();
     }
 
+    /**
+     * Sets internal flag indicating sources of subsequent values
+     * added to this JSAPResult
+     * @param valuesFromUser if true, values subsequently added to
+     * this JSAPResult originated from the user.
+     */
+    void setValuesFromUser(boolean valuesFromUser) {
+    	this.valuesFromUser = valuesFromUser;
+    }
+    
     /**
      * Returns true if this JSAPResult contains any results for
      * the specified id.  Note that these results may be default
@@ -75,6 +99,18 @@ public class JSAPResult implements ExceptionMap {
      */
     public boolean contains(String id) {
     	return (allResults.containsKey(id));
+    }
+    
+    /**
+     * Returns true if this JSAPResult contains any <i>user-specified</i>
+     * values for the specified id.  If this JSAPResult contains default values
+     * (or no values) for the specified id, this method returns false.
+     * considered
+     * @param id the ID to check
+     * @return indication of whether the user specified a value for the specified id.
+     */
+    public boolean userSpecified(String id) {
+    	return (userSpecifiedIDs.contains(id));
     }
     
     /**
@@ -94,6 +130,9 @@ public class JSAPResult implements ExceptionMap {
             allResults.put(id, al);
         }
         al.addAll(values);
+        if (valuesFromUser) {
+        	userSpecifiedIDs.add(id);
+        }
     }
 
     /**

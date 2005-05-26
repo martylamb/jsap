@@ -195,12 +195,14 @@ class Parser {
                 new JSAPException("This Parser has already run."));
         }
         else {
+        	result.setValuesFromUser(true);
         	preregisterQualifiedSwitches();
             int z = args.length;
             int i = 0;
             while (i < z) {
                 i = parseArg(args, i);
             }
+            result.setValuesFromUser(false);
             processDefaults();
             enforceRequirements();
             this.parsed = true;
