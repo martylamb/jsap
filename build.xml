@@ -230,15 +230,15 @@ Targets:
  			<arg value="manual.xml"/>
  		</exec>
 		
-  		<replace encoding="ISO8859_1" dir="${build}/manual" includes="*.html"
+  		<replace encoding="utf-8" dir="${build}/manual" includes="*.html"
 			token="&lt;head&gt;"
 			value="&lt;head&gt;&lt;link rel='stylesheet' type='text/css' href='manual.css'/&gt;" />
 			
-  		<replace encoding="ISO8859_1" dir="${build}/manual" includes="*.html"
+  		<replace encoding="utf-8" dir="${build}/manual" includes="*.html"
 			token="&#x09;"
 			value="    " />
 			
-  		<replace encoding="ISO8859_1" dir="${build}/manual" includes="*.html"
+  		<replace encoding="utf-8" dir="${build}/manual" includes="*.html"
 			token="&#xa0;"
 			value="&amp;nbsp;" />
 
