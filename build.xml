@@ -214,6 +214,7 @@ Targets:
     			<filter token="Manual_HelloWorld_7" value="${snip.Manual_HelloWorld_7}"/>
     			<filter token="Manual_HelloWorld_8" value="${snip.Manual_HelloWorld_8}"/>
         		<filter token="Manual_HelloWorld_9" value="${snip.Manual_HelloWorld_9}"/>
+        		<filter token="Manual_HelloWorld_Simple" value="${snip.Manual_HelloWorld_Simple}"/>
         		<filter token="Manual_HelloWorld_9_jsap" value="${snip.Manual_HelloWorld_9_jsap}"/>
   			</filterset>
   		</copy>
@@ -230,15 +231,15 @@ Targets:
  			<arg value="manual.xml"/>
  		</exec>
 		
-  		<replace encoding="utf-8" dir="${build}/manual" includes="*.html"
+  		<replace encoding="ISO-8859-1" dir="${build}/manual" includes="*.html"
 			token="&lt;head&gt;"
 			value="&lt;head&gt;&lt;link rel='stylesheet' type='text/css' href='manual.css'/&gt;" />
 			
-  		<replace encoding="utf-8" dir="${build}/manual" includes="*.html"
+  		<replace encoding="ISO-8859-1" dir="${build}/manual" includes="*.html"
 			token="&#x09;"
 			value="    " />
 			
-  		<replace encoding="utf-8" dir="${build}/manual" includes="*.html"
+  		<replace encoding="ISO-8859-1" dir="${build}/manual" includes="*.html"
 			token="&#xa0;"
 			value="&amp;nbsp;" />
 
