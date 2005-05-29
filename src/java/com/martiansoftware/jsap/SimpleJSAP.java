@@ -116,12 +116,12 @@ public class SimpleJSAP extends JSAP {
 			System.err.println( "Usage:" );
 
 			List l = StringUtils.wrapToList( name + " " + getUsage(), screenWidth );
-			for( Iterator i = l.iterator(); i.hasNext(); )System.err.println( "  " + i.next().toString() );
+			for( Iterator i = l.iterator(); i.hasNext(); ) System.err.println( "  " + i.next().toString() );
 
 			if ( explanation != null ) {
 				System.err.println();
 				l = StringUtils.wrapToList( explanation, screenWidth );
-				for( Iterator i = l.iterator(); i.hasNext(); )System.err.println( i.next() );
+				for( Iterator i = l.iterator(); i.hasNext(); ) System.err.println( i.next() );
 			}
 			
 			System.err.println();

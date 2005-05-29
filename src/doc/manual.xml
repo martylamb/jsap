@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="ISO-8859-1"?>
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
 "http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
 <book>
@@ -449,7 +449,35 @@
 
       <para></para>
     </sect1>
-  </chapter>
+  
+      <sect1>
+      <title><anchor id="HelloWorld_Simple" />HelloWorld_Simple</title>
+
+      <para>If you want to minimize the amount of code handling the command line, JSAP offers
+      a <classname>SimpleJSAP</classname> that does most of the job for you. An instance of
+      <classname>SimpleJSAP</classname> works much like an instance of <classname>JSAP</classname>,
+      but it accepts a command name, a command explanation, and an array of <classname>Parameter</classname>
+      objects (there are several constructors that should cover most of the common cases, but you can
+      also chain-invoke setters). If parsing fails for any reason, or if <literal>--help</literal> is specified,
+      the user is fully informed, and the method <methodname>messagePrinted()</methodname> will
+      return true.</para>
+
+      <programlisting>@Manual_HelloWorld_Simple@</programlisting>
+
+      <screen>@@rundoc:java com.martiansoftware.jsap.examples.Manual_HelloWorld_Simple -n 2 --verbose Zoidberg@@
+
+@@rundoc:java com.martiansoftware.jsap.examples.Manual_HelloWorld_Simple --verbose:de Farnsworth@@
+
+@@rundoc:java com.martiansoftware.jsap.examples.Manual_HelloWorld_Simple -v:de,en Branigan@@
+
+@@rundoc:java com.martiansoftware.jsap.examples.Manual_HelloWorld_Simple Horrible_Gelatanous_Blob@@
+
+@@rundoc:java com.martiansoftware.jsap.examples.Manual_HelloWorld_Simple --help@@
+</screen>
+
+      <para></para>
+    </sect1>
+</chapter>
 
   <chapter>
     <title>How It Works</title>
@@ -467,7 +495,8 @@
       however, you may want to instantiate a custom <classname>JSAP</classname>
       subclass that also takes care of steps 2 and 3 (described below) during
       the construction process. This approach results in a much
-      &#34;cleaner&#34; main class.</para>
+      &#34;cleaner&#34; main class. Another helpful class is <classname>SimpleJSAP</classname>,
+      which provides on-the-fly declaration of program name, description, and parameters.</para>
 
       <tip>
         <para>If you have a complicated command line configuration, create
@@ -487,7 +516,8 @@
       parameter, you tell <classname>JSAP</classname> what flags (if any) it
       uses, what its default values are, whether it is required, what its ID
       is, and other relevant information. See the individual sections below
-      for each type of parameter for details.</para>
+      for each type of parameter for details. If you're using <classname>SimpleJSAP</classname>,
+      parameters are usually declared as an array in the constructor.</para>
     </sect1>
 
     <sect1>
@@ -500,7 +530,8 @@
       <classname>JSAP</classname>, and register them again once modified.
       Registration can throw an exception if the parameter to be registered
       conflicts with any other registered parameters (for example, if they use
-      the same flags, or have the same ID).</para>
+      the same flags, or have the same ID). If you're using <classname>SimpleJSAP</classname>,
+      parameters passed as an argument to the constructor are registered for you.</para>
     </sect1>
 
     <sect1>
@@ -523,6 +554,14 @@
 
       <para>Both of these methods return a <classname>JSAPResult</classname>
       object encapsulating the parsed command line.</para>
+      
+      <para><classname>SimpleJSAP</classname> is a subclass of <classname>JSAP</classname>,
+      and works analogously: however, if an error is detected, or if the user specified
+      <literal>--help</literal>, a full usage and help message is printed automatically.
+      You can learn whether the message has been printed or not by invoking the method
+      <methodname>messagePrinted()</methodname> on the <classname>SimpleJSAP</classname>
+      instance just after parsing: if it returns true, you shoud usually terminate the program
+      execution.</para>
     </sect1>
 
     <sect1>
@@ -665,9 +704,17 @@
     <classname>JSAP</classname> comes with quite a few - see the
     <classname>com.martiansoftware.jsap.stringparsers</classname> package.</para>
 
+    <para>String parsers should be accessed using the factory method <methodname>getParser()</methodname>
+    of the corresponding class: for most classes, the instance returned is a singleton. In that
+    case, the parser is also available as a constant in <classname>JSAP</classname>: for instance,
+    the simplest way to get a parser for integers is <varname>JSAP.INTEGER_PARSER</varname>,
+    but you can also use <methodname>IntegerStringParser.getParser()</methodname>. Calling
+    the factory method is necessary if your parser has parameters (see, e.g.,
+    <classname>ForNameStringParser</classname>).</para>
+    
     <para>Of course, you may want to read your own object types from the
     command line, or at least read a type that <classname>JSAP</classname>
-    doesn&#39;t support out of the box. No problem - just extend
+    doesn&#39;t support out of the box. No problem&mdash;just extend
     com.martiansoftware.jsap.StringParser. The only method you have to
     implement is:</para>
 
@@ -719,6 +766,11 @@
         <para>Any combination of the above.</para>
       </listitem>
     </itemizedlist>
+    
+    <para>If you have used <classname>SimpleJSAP</classname> error
+    handling is largely simplified, as it will be handled automatically. Remember
+    just to call <methodname>messagePrinted()</methodname> after parsing 
+    and take appropriate action.</para>
   </chapter>
 
   <chapter>
