@@ -1,0 +1,39 @@
+v2.0 (June 20, 2005)
+
+ * Fixed setHelp() methods to return a reference to "this", consistent
+   with other setters.
+   
+ * Added constructors with built-in help text setters.
+ 
+ * Added SimpleJSAP class to speed up common configurations.
+ 
+ * Added unbreakable spaces between flags and arguments in auto-generated
+   usage text.
+
+ * Added IntSizeStringParser and LongSizeStringParser to allow numeric
+   parameters with SI suffixes (e.g., "10K" returns an Integer or Long
+   with value 10,000.  Currently supported suffixes include K, M, G, T, 
+   P, Ki, Mi, Gi, Ti, Pi.
+   
+ * Added ForNameStringParser that takes a class name and returns an object
+   constructed via class.forName().
+   
+ * Added singleton instances of most StringParsers to avoid unnecessary
+   object creation.  Singletons are available as public static fields of
+   JSAP, e.g., JSAP.BIG_DECIMAL_PARSER.
+   
+ * Default values for parameters are now indicated in auto-generated help.
+
+ * Added no-space short options, a la GNU getopt.  "-b5" is equivalent to
+   "-b 5"
+   
+ * Several minor bugfixes and documentation corrections.
+
+ * Added JSAPResult.contains(String id) to determine if the result contains
+   any values at all (including default values) for the specified parameter.
+   
+ * Added JSAPResult.userSpecified(String id) to determine if the result
+   contains a USER-SPECIFIED value (i.e., not including default values)
+   for the specified parameter.
+   
+ * Brought JIRA bug tracker online at http://jira.martiansoftware.com.

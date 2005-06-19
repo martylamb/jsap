@@ -407,7 +407,6 @@ public class JSAP {
      * @param screenWidth the screen width for which to format the help.
      * @see #getHelp(int,String)
      * @return the same as gethelp(screenWidth, "\n")
-     * @author Wolfram Esser
      */
     public String getHelp(int screenWidth) {
     	return (getHelp(screenWidth, DEFAULT_PARAM_HELP_SEPARATOR));

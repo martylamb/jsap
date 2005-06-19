@@ -36,6 +36,6 @@ abstract class FlaggedConfig extends ParameterConfig {
 	}
 
 	protected void configure(com.martiansoftware.jsap.FlaggedOption option) {
-		
+		super.configure(option);
 	}
 }

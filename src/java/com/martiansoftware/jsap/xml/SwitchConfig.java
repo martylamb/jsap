@@ -6,7 +6,6 @@
 package com.martiansoftware.jsap.xml;
 
 import com.martiansoftware.jsap.Parameter;
-import com.martiansoftware.jsap.Flagged;
 import com.martiansoftware.jsap.Switch;
 
 /**

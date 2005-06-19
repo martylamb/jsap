@@ -24,7 +24,7 @@ Legal:
 
 	<!-- Basics -->
    	<property name="name" value="JSAP" />
-    <property name="version" value="2.0-alpha"/>
+    <property name="version" value="2.0"/>
     <property name="year" value="2002-2005"/>
 
 	<!-- Documentation -->
@@ -86,7 +86,7 @@ Legal:
 	<path id="lib.class.path">
 		<pathelement location="${lib}/ant.jar"/>
 		<pathelement location="${lib}/junit.jar"/>
-		<pathelement location="${lib}/xstream-1.0.1.jar"/>
+		<pathelement location="${lib}/xstream-1.1.2.jar"/>
 	</path>
 
 	<!-- print target list -->
@@ -187,7 +187,8 @@ Targets:
         	destdir="${javadoc}" 
         	sourcepath="${javasrc}" 
         	packagenames="com.martiansoftware.*"
-        	windowtitle="JSAP: the Java Simple Argument Parser" >
+        	windowtitle="JSAP: the Java Simple Argument Parser"
+        	classpathref="lib.class.path">
         	
 			<link href="${j2se.apiurl}"/>
 			<link href="${xstream.apiurl}"/>
@@ -203,7 +204,7 @@ Targets:
      		<fileset dir="${javasrc}" includes="**/*.jsap" />
  		</snip>
  		<mkdir dir="${build}/manual"/>
-		<copy overwrite="true" verbose="true" file="${src}/doc/manual.xml" todir="${build}/manual">
+		<copy encoding="ISO-8859-1" outputencoding="ISO-8859-1" overwrite="true" verbose="true" file="${src}/doc/manual.xml" todir="${build}/manual">
 			<filterset>
     			<filter token="Manual_HelloWorld_1" value="${snip.Manual_HelloWorld_1}"/>
     			<filter token="Manual_HelloWorld_2" value="${snip.Manual_HelloWorld_2}"/>
@@ -223,8 +224,9 @@ Targets:
  		<rundoc prompt="[mlamb@morbo]$ " format="docbook">
        		<fileset file="${build}/manual/manual.xml"/>
        		<env key="CLASSPATH" value="${build}:${lib}/xstream-1.0.1.jar"/>
+ 			<env key="LANG" value="en_US.iso88591"/>
 		</rundoc>
-		
+
 		<!-- anyone want to write a non-platform-specific task to do this? -->
  		<exec dir="${build}/manual" executable="xmlto">
  			<arg value="html"/>
@@ -240,7 +242,7 @@ Targets:
 			value="    " />
 			
   		<replace encoding="ISO-8859-1" dir="${build}/manual" includes="*.html"
-			token="&#xa0;"
+			token="&#160;"
 			value="&amp;nbsp;" />
 
 		<copy overwrite="true" verbose="true" todir="${doc}">

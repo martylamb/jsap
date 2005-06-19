@@ -7,17 +7,12 @@ package com.martiansoftware.jsap.xml;
 
 import java.util.ArrayList;
 
-import com.martiansoftware.jsap.JSAP;
-import com.martiansoftware.jsap.JSAPResult;
-
 /**
- * Provides support for loading JSAP configurations at runtime
- * via an xml file.  You don't need to access this class directly;
- * instead, use JSAP's constructors that support xml.
+ * Sends a JSAPConfig to System.out as xml (for test purposes)
  * 
  * @author <a href="http://www.martiansoftware.com/contact.html">Marty Lamb</a>
  */
-public class TryXML {
+public class TryDumpXML {
 
 	public static void main(String[] args) throws Exception {
 		JSAPXStream jsx = new JSAPXStream();
