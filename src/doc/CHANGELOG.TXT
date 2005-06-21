@@ -1,4 +1,4 @@
-v2.0 (June 20, 2005)
+v2.0 (June 21, 2005)
 
  * Fixed setHelp() methods to return a reference to "this", consistent
    with other setters.
