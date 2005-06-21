@@ -1,17 +1,17 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
 "http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
 <book>
-  <title>JSAP - Java Simple Argument Parser (v1.04)</title>
+  <title>JSAP - Java Simple Argument Parser (v2.0)</title>
 
   <preface>
     <title>Formalities</title>
 
-    <para>This document is current as of September 4, 2004. The most
-    up-to-date copy of this document is available at <ulink
+    <para>This document is current as of June 20, 2005. The most up-to-date
+    copy of this document is available at <ulink
     url="http://www.martiansoftware.com/jsap/doc/manual.html">http://www.martiansoftware.com/jsap/doc/index.html</ulink>.</para>
 
-    <para>Copyright (c) 2004, <ulink
+    <para>Copyright (c) 2004-2005, <ulink
     url="http://www.martiansoftware.com/contact.html">Marty Lamb</ulink>. This
     document is licensed under a <ulink
     url="http://creativecommons.org/licenses/by-sa/1.0/">Creative Commons
@@ -192,14 +192,14 @@
         <term>QualifiedSwitch</term>
 
         <listitem>
-          <para><emphasis>(New/Experimental)</emphasis> A combination of
-          <classname>Switch</classname> and <classname>FlaggedOption</classname>.
-          It serves the same function as a <classname>Switch</classname> on a
-          command line, but it may be &#34;qualified&#34; with additional data
-          following a colon. In the commands &#34;<command>java -verbose
-          MyClass</command>&#34; and &#34;<command>java -verbose:class MyClass</command>&#34;,
-          &#34;<command>verbose</command>&#34; is a <classname>QualifiedSwitch</classname>
-          qualified by the &#34;class&#34; qualifier in the second example.</para>
+          <para>A combination of <classname>Switch</classname> and
+          <classname>FlaggedOption</classname>. It serves the same function as
+          a <classname>Switch</classname> on a command line, but it may be
+          &#34;qualified&#34; with additional data following a colon. In the
+          commands &#34;<command>java -verbose MyClass</command>&#34; and
+          &#34;<command>java -verbose:class MyClass</command>&#34;, &#34;<command>verbose</command>&#34;
+          is a <classname>QualifiedSwitch</classname> qualified by the
+          &#34;class&#34; qualifier in the second example.</para>
         </listitem>
       </varlistentry>
 
@@ -449,18 +449,20 @@
 
       <para></para>
     </sect1>
-  
-      <sect1>
+
+    <sect1>
       <title><anchor id="HelloWorld_Simple" />HelloWorld_Simple</title>
 
-      <para>If you want to minimize the amount of code handling the command line, JSAP offers
-      a <classname>SimpleJSAP</classname> that does most of the job for you. An instance of
-      <classname>SimpleJSAP</classname> works much like an instance of <classname>JSAP</classname>,
-      but it accepts a command name, a command explanation, and an array of <classname>Parameter</classname>
-      objects (there are several constructors that should cover most of the common cases, but you can
-      also chain-invoke setters). If parsing fails for any reason, or if <literal>--help</literal> is specified,
-      the user is fully informed, and the method <methodname>messagePrinted()</methodname> will
-      return true.</para>
+      <para>If you want to minimize the amount of code handling the command
+      line, JSAP offers a <classname>SimpleJSAP</classname> that does most of
+      the work for you. An instance of <classname>SimpleJSAP</classname> works
+      much like an instance of <classname>JSAP</classname>, but it accepts a
+      command name, a command explanation, and an array of
+      <classname>Parameter</classname> objects (there are several constructors
+      that should cover most of the common cases, but you can also
+      chain-invoke setters). If parsing fails for any reason, or if
+      <literal>--help</literal> is specified, the user is fully informed, and
+      the method <methodname>messagePrinted()</methodname> will return true.</para>
 
       <programlisting>@Manual_HelloWorld_Simple@</programlisting>
 
@@ -477,7 +479,7 @@
 
       <para></para>
     </sect1>
-</chapter>
+  </chapter>
 
   <chapter>
     <title>How It Works</title>
@@ -495,8 +497,9 @@
       however, you may want to instantiate a custom <classname>JSAP</classname>
       subclass that also takes care of steps 2 and 3 (described below) during
       the construction process. This approach results in a much
-      &#34;cleaner&#34; main class. Another helpful class is <classname>SimpleJSAP</classname>,
-      which provides on-the-fly declaration of program name, description, and parameters.</para>
+      &#34;cleaner&#34; main class. Another helpful class is
+      <classname>SimpleJSAP</classname>, which provides on-the-fly declaration
+      of program name, description, and parameters.</para>
 
       <tip>
         <para>If you have a complicated command line configuration, create
@@ -504,6 +507,10 @@
         constructor so it can initialize itself. This keeps your main class
         uncluttered.</para>
       </tip>
+
+      <para>As of version 2.0, there is an experimental mechanism to load a
+      fully configured JSAP from a simple XML file. See <link linkend="XML">this
+      section</link> for details.</para>
     </sect1>
 
     <sect1>
@@ -516,8 +523,9 @@
       parameter, you tell <classname>JSAP</classname> what flags (if any) it
       uses, what its default values are, whether it is required, what its ID
       is, and other relevant information. See the individual sections below
-      for each type of parameter for details. If you're using <classname>SimpleJSAP</classname>,
-      parameters are usually declared as an array in the constructor.</para>
+      for each type of parameter for details. If you&#39;re using
+      <classname>SimpleJSAP</classname>, parameters are usually declared as an
+      array in the constructor.</para>
     </sect1>
 
     <sect1>
@@ -530,8 +538,9 @@
       <classname>JSAP</classname>, and register them again once modified.
       Registration can throw an exception if the parameter to be registered
       conflicts with any other registered parameters (for example, if they use
-      the same flags, or have the same ID). If you're using <classname>SimpleJSAP</classname>,
-      parameters passed as an argument to the constructor are registered for you.</para>
+      the same flags, or have the same ID). If you&#39;re using
+      <classname>SimpleJSAP</classname>, parameters passed as an argument to
+      the constructor are registered for you.</para>
     </sect1>
 
     <sect1>
@@ -554,14 +563,15 @@
 
       <para>Both of these methods return a <classname>JSAPResult</classname>
       object encapsulating the parsed command line.</para>
-      
-      <para><classname>SimpleJSAP</classname> is a subclass of <classname>JSAP</classname>,
-      and works analogously: however, if an error is detected, or if the user specified
-      <literal>--help</literal>, a full usage and help message is printed automatically.
-      You can learn whether the message has been printed or not by invoking the method
+
+      <para><classname>SimpleJSAP</classname> is a subclass of
+      <classname>JSAP</classname>, and works analogously: however, if an error
+      is detected, or if the user specified <literal>--help</literal>, a full
+      usage and help message is printed automatically. You can learn whether
+      the message has been printed or not by invoking the method
       <methodname>messagePrinted()</methodname> on the <classname>SimpleJSAP</classname>
-      instance just after parsing: if it returns true, you shoud usually terminate the program
-      execution.</para>
+      instance just after parsing: if it returns true, you shoud usually
+      terminate the program execution.</para>
     </sect1>
 
     <sect1>
@@ -704,17 +714,18 @@
     <classname>JSAP</classname> comes with quite a few - see the
     <classname>com.martiansoftware.jsap.stringparsers</classname> package.</para>
 
-    <para>String parsers should be accessed using the factory method <methodname>getParser()</methodname>
-    of the corresponding class: for most classes, the instance returned is a singleton. In that
-    case, the parser is also available as a constant in <classname>JSAP</classname>: for instance,
+    <para>String parsers should be accessed using the factory method
+    <methodname>getParser()</methodname> of the corresponding class: for most
+    classes, the instance returned is a singleton. In that case, the parser is
+    also available as a constant in <classname>JSAP</classname>: for instance,
     the simplest way to get a parser for integers is <varname>JSAP.INTEGER_PARSER</varname>,
-    but you can also use <methodname>IntegerStringParser.getParser()</methodname>. Calling
-    the factory method is necessary if your parser has parameters (see, e.g.,
-    <classname>ForNameStringParser</classname>).</para>
-    
+    but you can also use <methodname>IntegerStringParser.getParser()</methodname>.
+    Calling the factory method is necessary if your parser has parameters
+    (see, e.g., <classname>ForNameStringParser</classname>).</para>
+
     <para>Of course, you may want to read your own object types from the
     command line, or at least read a type that <classname>JSAP</classname>
-    doesn&#39;t support out of the box. No problem&mdash;just extend
+    doesn&#39;t support out of the box. No problem—just extend
     com.martiansoftware.jsap.StringParser. The only method you have to
     implement is:</para>
 
@@ -766,11 +777,11 @@
         <para>Any combination of the above.</para>
       </listitem>
     </itemizedlist>
-    
-    <para>If you have used <classname>SimpleJSAP</classname> error
-    handling is largely simplified, as it will be handled automatically. Remember
-    just to call <methodname>messagePrinted()</methodname> after parsing 
-    and take appropriate action.</para>
+
+    <para>If you have used <classname>SimpleJSAP</classname> error handling is
+    largely simplified, as it will be handled automatically. Remember just to
+    call <methodname>messagePrinted()</methodname> after parsing and take
+    appropriate action.</para>
   </chapter>
 
   <chapter>
@@ -827,10 +838,10 @@
   </chapter>
 
   <chapter>
-    <title>Loading JSAP Configurations at Runtime with XML</title>
+    <title><anchor id="XML" />Loading JSAP Configurations at Runtime with XML</title>
 
     <caution>
-      <para>As of JSAP v1.04, this feature is experimental.</para>
+      <para>As of v2.0 this feature should be considered experimental.</para>
     </caution>
 
     <para>In order to keep your program source free of clutter and to support
@@ -853,7 +864,8 @@
       affiliated with Martian Software or the <classname>JSAP</classname>
       project. Furthermore, you&#39;re virtually guaranteed a more up-to-date
       version of the <filename>.jar</filename> if you go straight to their
-      website.</para>
+      website. As a bonus, codehaus hosts a variety of other great projects
+      worth checking out.</para>
     </note>
 
     <para>The XML syntax for <classname>JSAP</classname> configurations is
@@ -897,20 +909,21 @@
     and <classname>EnumeratedStringParser</classname> classes, plus a few bug
     fixes.</para></listitem></varlistentry><varlistentry><term>Andreas
     Hochsteger</term><listitem><para>Suggested the ability to override the use
-    of the ID in automatically-generated usage information.</para></listitem></varlistentry><varlistentry><term>Paul
-    Kim</term><listitem><para>Suggested the ability to mark command line
-    parameters as mutually-exclusive.</para></listitem></varlistentry><varlistentry><term>Brian
-    Roconne</term><listitem><para>Implemented mutual exclusion and its
-    complement, mutual requirement of parameters.</para></listitem></varlistentry><varlistentry><term>Mark
+    of the ID in automatically-generated usage information.</para></listitem></varlistentry><varlistentry><term>Mark
     Hopkins</term><listitem><para>Pointed out a few bugs in the Ant task and
     provided solutions (the best kind of bug report there is!)</para></listitem></varlistentry><varlistentry><term>Edward
     Glen</term><listitem><para>Provided the <classname>FileStringParser</classname>
-    class.</para></listitem></varlistentry></variablelist></para>
+    class.</para></listitem></varlistentry><varlistentry><term>Sebastiano
+    Vigna</term><listitem><para>Provided the vast majority of bug fixes, new
+    features, and associated documentation bringing JSAP to version 2.0! See
+    the <ulink url="http://www.martiansoftware.com/jsap/changelog.html">v2.0
+    changelog</ulink>.</para></listitem></varlistentry></variablelist></para>
   </chapter>
 
   <chapter>
     <title>Reporting Problems</title>
 
-    <para>Please send any problem reports to jsap at martiansoftware dot com.</para>
+    <para>Please report any bugs and request new features via <ulink
+    url="http://jira.martiansoftware.com/browse/JSAP">http://jira.martiansoftware.com/browse/JSAP</ulink>.</para>
   </chapter>
 </book>

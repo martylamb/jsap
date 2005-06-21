@@ -3,12 +3,15 @@ v2.0 (June 20, 2005)
  * Fixed setHelp() methods to return a reference to "this", consistent
    with other setters.
    
+ * New layout for option help to avoid problems with excessively long
+   option descriptions
+
  * Added constructors with built-in help text setters.
  
  * Added SimpleJSAP class to speed up common configurations.
  
  * Added unbreakable spaces between flags and arguments in auto-generated
-   usage text.
+   usage text.  
 
  * Added IntSizeStringParser and LongSizeStringParser to allow numeric
    parameters with SI suffixes (e.g., "10K" returns an Integer or Long
@@ -36,4 +39,6 @@ v2.0 (June 20, 2005)
    contains a USER-SPECIFIED value (i.e., not including default values)
    for the specified parameter.
    
+ * Added XML support for JSAP configuration (experimental).
+ 
  * Brought JIRA bug tracker online at http://jira.martiansoftware.com.

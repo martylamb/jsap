@@ -220,10 +220,9 @@ Targets:
   			</filterset>
   		</copy>
 
-		<echo>${build}</echo>
  		<rundoc prompt="[mlamb@morbo]$ " format="docbook">
        		<fileset file="${build}/manual/manual.xml"/>
-       		<env key="CLASSPATH" value="${build}:${lib}/xstream-1.0.1.jar"/>
+       		<env key="CLASSPATH" value="${build}:${lib}/xstream-1.1.2.jar"/>
  			<env key="LANG" value="en_US.iso88591"/>
 		</rundoc>
 
@@ -242,6 +241,10 @@ Targets:
 			value="    " />
 			
   		<replace encoding="ISO-8859-1" dir="${build}/manual" includes="*.html"
+			token="&#xc2;"
+			value="" />
+
+  			<replace encoding="ISO-8859-1" dir="${build}/manual" includes="*.html"
 			token="&#160;"
 			value="&amp;nbsp;" />
 
@@ -262,6 +265,7 @@ Targets:
 		<mkdir dir="${distimage}" />
 		<copy todir="${distimage}" file="${buildfile}" />
 		<copy todir="${distimage}" file="LICENSE.TXT" />
+		<copy todir="${distimage}" file="src/doc/CHANGELOG.TXT" />
 
 		<!-- copy source files into temp directory -->
 		<mkdir dir="${distimage}/${src}"/>

@@ -173,7 +173,7 @@ public abstract class Parameter {
             }
             int defaultValueCount = this.defaultValue.length + 1;
             String[] newDefaultValue = new String[defaultValueCount];
-            for (int i = 0; i < defaultValueCount + 1; ++i) {
+            for (int i = 0; i < defaultValueCount - 1; ++i) {
                 newDefaultValue[i] = this.defaultValue[i];
             }
             newDefaultValue[defaultValueCount - 1] = defaultValue;
