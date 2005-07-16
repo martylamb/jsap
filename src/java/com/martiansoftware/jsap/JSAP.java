@@ -337,6 +337,12 @@ public class JSAP {
     public static final int DEFAULT_SCREENWIDTH = 80;
 
     /**
+     * Temporary fix for bad console encodings screwing up non-breaking spaces.
+     */
+//    static final char SYNTAX_SPACECHAR = '\u00a0';
+    static final char SYNTAX_SPACECHAR = ' ';
+    
+    /**
      * Creates a new JSAP with an empty configuration.  It must be configured
      * with registerParameter() before its parse() methods may be called.
      */

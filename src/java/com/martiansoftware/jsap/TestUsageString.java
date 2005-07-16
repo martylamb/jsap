@@ -47,7 +47,7 @@ public class TestUsageString extends TestCase {
         } catch (JSAPException e) {
             fail("Unable to register opt1");
         }
-        assertEquals("(-f|--flagged)\u00a0<flaggedOption>", config.getUsage());
+        assertEquals("(-f|--flagged)" + JSAP.SYNTAX_SPACECHAR + "<flaggedOption>", config.getUsage());
 
         config.unregisterParameter(opt1);
         opt1.setRequired(JSAP.NOT_REQUIRED);
@@ -56,7 +56,7 @@ public class TestUsageString extends TestCase {
         } catch (JSAPException e) {
             fail("Unable to register opt1");
         }
-        assertEquals("[(-f|--flagged)\u00a0<flaggedOption>]", config.getUsage());
+        assertEquals("[(-f|--flagged)" + JSAP.SYNTAX_SPACECHAR + "<flaggedOption>]", config.getUsage());
     }
 
     /**

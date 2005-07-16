@@ -154,7 +154,7 @@ public final class UnflaggedOption extends Option {
 
         String un = getUsageName();
         if (this.isGreedy()) {
-            result.append(un + "1\u00a0" + un + "2\u00a0...\u00a0" + un + "N");
+            result.append(un + "1" + JSAP.SYNTAX_SPACECHAR + un + "2" + JSAP.SYNTAX_SPACECHAR + "..." + JSAP.SYNTAX_SPACECHAR + un + "N");
         } else {
             result.append("<" + un + ">");
         }

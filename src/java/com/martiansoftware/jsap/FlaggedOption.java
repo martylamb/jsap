@@ -216,12 +216,12 @@ public class FlaggedOption extends Option implements Flagged {
         if ((getLongFlag() != JSAP.NO_LONGFLAG)
             || (getShortFlag() != JSAP.NO_SHORTFLAG)) {
             if (getLongFlag() == JSAP.NO_LONGFLAG) {
-                result.append("-" + getShortFlag() + '\u00a0');
+                result.append("-" + getShortFlag() + JSAP.SYNTAX_SPACECHAR);
             } else if (getShortFlag() == JSAP.NO_SHORTFLAG) {
-                result.append("--" + getLongFlag() + '\u00a0');
+                result.append("--" + getLongFlag() + JSAP.SYNTAX_SPACECHAR);
             } else {
                 result.append(
-                    "(-" + getShortFlag() + "|--" + getLongFlag() + ")\u00a0");
+                    "(-" + getShortFlag() + "|--" + getLongFlag() + ")" + JSAP.SYNTAX_SPACECHAR);
             }
         }
         String id = getID();

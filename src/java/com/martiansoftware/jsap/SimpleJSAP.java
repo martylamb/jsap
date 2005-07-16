@@ -26,7 +26,9 @@ import com.martiansoftware.util.StringUtils;
  * to stop its actions.
  * 
  * <P>The screen width used to format the help text may be set using {@link #setScreenWidth(int)}.
- * The formatter will preserve newlines and will not break non-breakable spaces (<samp>'&#92;u00a0'</samp>).
+ * The formatter will preserve newlines.
+ * <i>Note: as of 2.0a non-breaking spaces are temporarily disabled until some console encoding
+ * issues have been worked out. - ML</i>
  * 
  * @author Sebastiano Vigna
  */
