@@ -342,7 +342,7 @@ public class JSAP {
     static char SYNTAX_SPACECHAR = ' ';
     
     static {
-    	if (Boolean.parseBoolean(System.getProperty("JSAP_USE_NBSP", "false"))) {
+    	if (Boolean.parseBoolean(System.getProperty("com.martiansoftware.jsap.usenbsp", "false"))) {
     		SYNTAX_SPACECHAR = '\u00a0';
     	}
     }

@@ -123,7 +123,7 @@ Targets:
     
     <!-- compile the JSAP API -->
     <target name="compile-api" depends="init" >
-        <javac destdir="${build}" srcdir="${javasrc}">
+        <javac target="1.4" source="1.4" destdir="${build}" srcdir="${javasrc}">
 <!--        	<exclude name="${testFiles}" />
         	<exclude name="${exampleFiles}" /> -->
         	<classpath refid="lib.class.path" />
@@ -137,7 +137,7 @@ Targets:
 
 	<!-- compile the JSAP API and JUnit tests -->
     <target name="compile-tests" depends="init" >
-        <javac destdir="${build}" srcdir="${javasrc}">
+        <javac target="1.4" source="1.4" destdir="${build}" srcdir="${javasrc}">
 <!--        	<exclude name="${exampleFiles}" /> -->
         	<classpath refid="lib.class.path" />
         </javac>
@@ -150,7 +150,7 @@ Targets:
 
 	<!-- compile the JSAP API, JUnit tests, and examples -->
     <target name="compile-all" depends="init" >
-        <javac destdir="${build}" srcdir="${javasrc}">
+        <javac target="1.4" source="1.4" destdir="${build}" srcdir="${javasrc}">
         	<classpath refid="lib.class.path" />
         </javac>
     </target>
