@@ -50,9 +50,9 @@ public class FileStringParser extends PropertyStringParser {
 
 	public void setUp() throws ParseException {
 		BooleanStringParser bool = JSAP.BOOLEAN_PARSER;
-		setMustExist(((Boolean) bool.parse(getProperty(MUSTEXIST,"false"))).booleanValue());
-		setMustBeDirectory(((Boolean) bool.parse(getProperty(MUSTBEDIRECTORY,"false"))).booleanValue());
-		setMustBeFile(((Boolean) bool.parse(getProperty(MUSTBEFILE,"false"))).booleanValue());
+		setMustExist(((Boolean) bool.parse(getProperty(MUSTEXIST, (new Boolean(mustExist)).toString()))).booleanValue());
+		setMustBeDirectory(((Boolean) bool.parse(getProperty(MUSTBEDIRECTORY, (new Boolean(mustBeDirectory)).toString()))).booleanValue());
+		setMustBeFile(((Boolean) bool.parse(getProperty(MUSTBEFILE, (new Boolean(mustBeFile)).toString()))).booleanValue());
 	}
 	
 	public void setMustBeDirectory(boolean mustBeDirectory) {

@@ -178,8 +178,11 @@ class Parser {
             if (o instanceof Option) {
                 Option option = (Option) o;
                 if (option.required() && (result.getObject(id) == null)) {
-                    result.addException(option.getID(), 
-                        new RequiredParameterMissingException(id));
+                	
+                	if (result.getException(id) == null) {
+	                    result.addException(option.getID(), 
+	                        new RequiredParameterMissingException(id));
+                	}
                 }
             }
         }

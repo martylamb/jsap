@@ -24,7 +24,7 @@ Legal:
 
 	<!-- Basics -->
    	<property name="name" value="JSAP" />
-    <property name="version" value="2.0"/>
+    <property name="version" value="2.0a"/>
     <property name="year" value="2002-2005"/>
 
 	<!-- Documentation -->
