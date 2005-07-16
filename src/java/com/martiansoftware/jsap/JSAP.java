@@ -339,8 +339,13 @@ public class JSAP {
     /**
      * Temporary fix for bad console encodings screwing up non-breaking spaces.
      */
-//    static final char SYNTAX_SPACECHAR = '\u00a0';
-    static final char SYNTAX_SPACECHAR = ' ';
+    static char SYNTAX_SPACECHAR = ' ';
+    
+    static {
+    	if (Boolean.parseBoolean(System.getProperty("JSAP_USE_NBSP", "false"))) {
+    		SYNTAX_SPACECHAR = '\u00a0';
+    	}
+    }
     
     /**
      * Creates a new JSAP with an empty configuration.  It must be configured
