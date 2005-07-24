@@ -1,3 +1,11 @@
+v2.0a (July 23, 2005)
+
+ * Fixed an embarrassing bug that resulted in unexpected characters
+   in auto-generated help output.
+   
+ * Fixed bugs in FileStringParser that prevented enforcement of
+   mustExist(), mustBeFile(), and mustBeDirectory()
+   
 v2.0 (June 21, 2005)
 
  * Fixed setHelp() methods to return a reference to "this", consistent
