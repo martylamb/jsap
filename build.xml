@@ -24,8 +24,8 @@ Legal:
 
 	<!-- Basics -->
    	<property name="name" value="JSAP" />
-    <property name="version" value="2.0b"/>
-    <property name="year" value="2002-2005"/>
+    <property name="version" value="2.1"/>
+    <property name="year" value="2002-2006"/>
 
 	<!-- Documentation -->
 	<property name="j2se.apiurl" value="http://java.sun.com/j2se/1.4/docs/api/"/>
