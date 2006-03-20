@@ -105,7 +105,7 @@ public class JSAPResult implements ExceptionMap {
      * Returns true if this JSAPResult contains any <i>user-specified</i>
      * values for the specified id.  If this JSAPResult contains default values
      * (or no values) for the specified id, this method returns false.
-     * considered
+     * 
      * @param id the ID to check
      * @return indication of whether the user specified a value for the specified id.
      */
