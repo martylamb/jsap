@@ -230,7 +230,7 @@ public class FlaggedOption extends Option implements Flagged {
             result.append(
                 id + "1" + sep + id + "2" + sep + "..." + sep + id + "N ");
         } else {
-            result.append("<" + id + ">");
+            result.append("<" + getUsageName() + ">");
         }
         if (!required()) {
             result.append("]");
