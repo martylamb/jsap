@@ -804,10 +804,10 @@ public class JSAP {
 
             paramsByID.remove(param.getID());
             paramsByDeclarationOrder.remove(param);
-            if (param instanceof FlaggedOption) {
-                FlaggedOption fo = (FlaggedOption) param;
-                paramsByShortFlag.remove(fo.getShortFlagCharacter());
-                paramsByLongFlag.remove(fo.getLongFlag());
+            if (param instanceof Flagged) {
+                Flagged f = (Flagged) param;
+                paramsByShortFlag.remove(f.getShortFlagCharacter());
+                paramsByLongFlag.remove(f.getLongFlag());
             } else if (param instanceof UnflaggedOption) {
                 unflaggedOptions.remove(param);
             }

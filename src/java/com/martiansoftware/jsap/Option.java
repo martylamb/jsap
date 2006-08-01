@@ -152,6 +152,7 @@ public abstract class Option extends Parameter {
      */
     private void storeParseResult(List result, String argToParse)
         throws ParseException {
+    	if (argToParse == null) return;
         Object parseResult = getStringParser().parse(argToParse);
         if (parseResult != null) {
             result.add(parseResult);

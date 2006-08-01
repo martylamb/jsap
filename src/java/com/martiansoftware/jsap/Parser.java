@@ -130,10 +130,10 @@ class Parser {
      * @return the index of the next argument to parse
      */
     private int parseArg(String[] args, int index) {
-        if (args[index].startsWith("--")) {
+        if (args[index].startsWith("--") && !args[index].equals("--")) {
             return(parseLongForm(args, index));
         }
-        else if (args[index].startsWith("-")) {
+        else if (args[index].startsWith("-") && !args[index].equals("-") && !args[index].equals("--")) {
             return(parseShortForm(args, index));
         }
         else {
@@ -409,6 +409,7 @@ class Parser {
                     if (equalsIndex != -1) {
                     	paramEquals = 
                     		args[index].substring(equalsIndex + 1);
+                    	processParameter(param, paramEquals);
                     }
                     else {
                     	if (charPos < parseTo - 1) {

@@ -224,11 +224,11 @@ public class FlaggedOption extends Option implements Flagged {
                     "(-" + getShortFlag() + "|--" + getLongFlag() + ")" + JSAP.SYNTAX_SPACECHAR);
             }
         }
-        String id = getID();
+        String un = getUsageName();
         char sep = this.getListSeparator();
         if (this.isList()) {
             result.append(
-                id + "1" + sep + id + "2" + sep + "..." + sep + id + "N ");
+                un + "1" + sep + un + "2" + sep + "..." + sep + un + "N ");
         } else {
             result.append("<" + getUsageName() + ">");
         }
