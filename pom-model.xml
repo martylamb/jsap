@@ -3,7 +3,7 @@
   <groupId>com.martiansoftware</groupId>
   <artifactId>jsap</artifactId>
   <packaging>jar</packaging>
-  <name>jsap</name>
+  <name>JSAP</name>
   <version>VERSION</version>
   <description>The Java-based Simple Argument Parser.</description>
   <url>http://www.martiansoftware.com/jsap/</url>
