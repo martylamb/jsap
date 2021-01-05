@@ -318,12 +318,6 @@ Targets:
 	<target name="cleandist" depends="clean, dist">
 	</target>
 
-	<target name="ivy-pom" description="Creates POM">
-		<ivy:resolve/>
-		<ivy:deliver deliverpattern="${dist}/ivy.xml" pubrevision="${version}" status="release"/>
-		<ivy:makepom ivyfile="${dist}/ivy.xml" templatefile="pom-model.xml" pomfile="pom.xml"/>
-	</target>
-
 	<!-- ************************************** WARNING: MAVEN ************************************** -->
 
 	<!-- define Maven coordinates -->
@@ -364,11 +358,11 @@ Targets:
 
 		<!-- build the sources artifact -->
 		<jar jarfile="${maven-sources-jar}">
-			<fileset dir="." includes="LICENSE-2.0.txt,jsap.bnd,build.xml,ivy.xml,pom-model.xml,${src}/**/*.java"/>
+			<fileset dir="." includes="LICENSE-2.0.txt,jsap.bnd,build.xml,ivy.xml,pom.xml,${src}/**/*.java"/>
 		</jar>
 	</target>
 
-	<target name="deploy" depends="dist-osgi,ivy-pom" description="deploy snapshot version to Maven snapshot repository">
+	<target name="deploy" depends="dist-osgi" description="deploy snapshot version to Maven snapshot repository">
 		<artifact:mvn>
 			<arg value="org.apache.maven.plugins:maven-deploy-plugin:2.6:deploy-file" />
 			<arg value="-Durl=${maven-snapshots-repository-url}" />
@@ -378,7 +372,7 @@ Targets:
 		</artifact:mvn>
 	</target>
 
-	<target name="stage" depends="dist-osgi,ivy-pom" description="deploy release version to Maven staging repository">
+	<target name="stage" depends="dist-osgi" description="deploy release version to Maven staging repository">
 		<!-- sign and deploy the main artifact -->
 		<artifact:mvn>
 			<arg value="org.apache.maven.plugins:maven-gpg-plugin:1.3:sign-and-deploy-file" />
