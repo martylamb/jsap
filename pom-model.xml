@@ -1,0 +1,32 @@
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.martiansoftware</groupId>
+  <artifactId>jsap</artifactId>
+  <packaging>jar</packaging>
+  <name>jsap</name>
+  <version>VERSION</version>
+  <description>The Java-based Simple Argument Parser.</description>
+  <url>http://www.martiansoftware.com/jsap/</url>
+  <licenses>
+    <license>
+      <name>Apache License v2.0</name>
+      <url>https://www.apache.org/licenses/LICENSE-2.0</url>
+      <distribution>source</distribution>
+    </license>
+  </licenses>
+  <scm>
+    <connection>scm:git://github.com/martylamb/jsap.git</connection>
+    <url>https://github.com/martylamb/jsap</url>
+  </scm>
+  <developers>
+    <developer>
+      <name>John Mutchek</name>
+    </developer>
+    <developer>
+      <name>Marty Lamb</name>
+    </developer>
+    <developer>
+      <name>Sebastiano Vigna</name>
+    </developer>
+  </developers>
+</project>
