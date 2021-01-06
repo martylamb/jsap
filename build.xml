@@ -16,7 +16,7 @@ Legal:
 ==============================================================================
  
 --> 
-<project basedir="." default="help" name="jsap" xmlns:artifact="antlib:org.apache.maven.artifact.ant" xmlns:ivy="antlib:org.apache.ivy.ant">
+<project basedir="." default="help" name="jsap" xmlns:artifact="antlib:org.apache.maven.artifact.ant">
 
 
 	<!-- PROPERTIES ***************************************************************************************** -->
@@ -358,7 +358,7 @@ Targets:
 
 		<!-- build the sources artifact -->
 		<jar jarfile="${maven-sources-jar}">
-			<fileset dir="." includes="LICENSE-2.0.txt,jsap.bnd,build.xml,ivy.xml,pom.xml,${src}/**/*.java"/>
+			<fileset dir="." includes="LICENSE-2.0.txt,jsap.bnd,build.xml,pom.xml,${src}/**/*.java"/>
 		</jar>
 	</target>
 
