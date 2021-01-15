@@ -16,71 +16,72 @@ Legal:
 ==============================================================================
  
 --> 
-<project basedir="." default="help" name="jsap">
-
+<project basedir="." default="help" name="jsap" xmlns:artifact="antlib:org.apache.maven.artifact.ant">
 
 
 	<!-- PROPERTIES ***************************************************************************************** -->
 
 	<!-- Basics -->
-   	<property name="name" value="JSAP" />
-    <property name="version" value="2.1"/>
-    <property name="year" value="2002-2006"/>
+	<property name="name" value="jsap" />
+	<property name="version" value="2.2"/>
+	<property name="year" value="2002-2020"/>
 
 	<!-- Documentation -->
-	<property name="j2se.apiurl" value="http://java.sun.com/j2se/1.4/docs/api/"/>
+	<property name="j2se.apiurl" value="http://java.sun.com/j2se/1.8/docs/api/"/>
 	<property name="xstream.apiurl" value="http://xstream.codehaus.org/javadoc/"/>
   
 	<!-- Directories -->
 	<property name="buildfile" value="build.xml"/>
-    <property name="src" value="src"/>
-    <property name="javasrc" value="${src}/java"/>
-    <property name="build" value="build"/>
-    <property name="doc" value="doc"/>
-    <property name="javadoc" value="${doc}/javadoc"/>
+	<property name="src" value="src"/>
+	<property name="javasrc" value="${src}/java"/>
+	<property name="build" value="build"/>
+	<property name="doc" value="doc"/>
+	<property name="javadoc" value="${doc}/javadoc"/>
 	<property name="javadoc.tmp.src" value="${javadoc}/tmpsrc"/>
-    <property name="dist" value="dist"/>
-    <property name="lib" value="lib"/>
+	<property name="dist" value="dist"/>
+	<property name="lib" value="lib"/>
 	
 	<!-- Special Tasks -->
 	<taskdef
-    	name="snip"
-     	classname="com.martiansoftware.snip.Snip" 
-     	classpath="${lib}/snip-0.11.jar"/>
+		name="snip"
+	 	classname="com.martiansoftware.snip.Snip" 
+	 	classpath="${lib}/snip-0.11.jar"/>
 
 	<taskdef
-    	name="rundoc"
-     	classname="com.martiansoftware.rundoc.RunDoc" 
-     	classpath="${lib}/rundoc-0.11.jar"/>
+		name="rundoc"
+	 	classname="com.martiansoftware.rundoc.RunDoc" 
+	 	classpath="${lib}/rundoc-0.11.jar"/>
 
 	<!-- Special Files -->
-    <property name="testFiles" value="**/Test*" />
-    <property name="exampleFiles" value="com/martiansoftware/jsap/examples/" />
-    <property name="manualFiles" value="manual" />
-    <property name="jsapXmlFiles" value="**/*.jsap" />
+	<property name="testFiles" value="**/Test*" />
+	<property name="exampleFiles" value="com/martiansoftware/jsap/examples/" />
+	<property name="manualFiles" value="manual" />
+	<property name="jsapXmlFiles" value="**/*.jsap" />
 	
-    <property name="jarname" value="${name}-${version}.jar" />
+	<property name="jarname" value="${name}-${version}.jar" />
 
 	<!-- Administrivia -->
 	<property name="url" value="http://www.martiansoftware.com/jsap" />
-    <property name="copyrightowners" value="Martian Software, Inc." />
-    <property name="copyright.html" value="Copyright &amp;copy; ${year}, ${copyrightowners}.  All Rights Reserved." />
+	<property name="copyrightowners" value="Martian Software, Inc." />
+	<property name="copyright.html" value="Copyright &amp;copy; ${year}, ${copyrightowners}.  All Rights Reserved." />
 	<property name="updates.html" value="For the latest version and documentation, please visit &lt;a href='${url}'&gt;${url}&lt;/a&gt;" />
 	<!-- END OF PROPERTIES ********************************************************************************** -->
 
 	<!-- required for build to work in eclipse -->
 	<target name="eclipse-setcompiler" if="eclipse.running">
-	    <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter" />
+		<property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter" />
 	</target>
 
 	<!-- ensure required directories exist -->
-    <target name="init" depends="eclipse-setcompiler">
-        <mkdir dir="${build}"/>
-        <mkdir dir="${javadoc}"/>
-        <mkdir dir="${dist}"/>
-        <!-- Who knows... we might need this for something. -->
-        <tstamp/>
-    </target>
+	<target name="init" depends="eclipse-setcompiler">
+		<mkdir dir="${build}"/>
+		<mkdir dir="${javadoc}"/>
+		<mkdir dir="${dist}"/>
+		<!-- Who knows... we might need this for something. -->
+		<mkdir dir="${dist}/lib"/>
+		<symlink link="${dist}/javadoc" resource="../${doc}/javadoc" overwrite="true"/>
+		<tstamp/>
+	</target>
 
 	<!-- jars required for build -->
 	<path id="lib.class.path">
@@ -112,117 +113,117 @@ Targets:
 	</target>
 
 	<!-- delete all intermediate files -->
-    <target name="clean" depends="init">
-        <delete dir="${build}" verbose="true"/>
-        <delete dir="${javadoc}" verbose="true"/>
-        <delete dir="${dist}" verbose="true"/>
-        <mkdir dir="${build}"/>
-        <mkdir dir="${javadoc}"/>
-        <mkdir dir="${dist}"/>
-    </target>
-    
-    <!-- compile the JSAP API -->
-    <target name="compile-api" depends="init" >
-        <javac target="1.4" source="1.4" destdir="${build}" srcdir="${javasrc}">
-<!--        	<exclude name="${testFiles}" />
-        	<exclude name="${exampleFiles}" /> -->
-        	<classpath refid="lib.class.path" />
-        </javac>
-        <copy todir="${build}">
-    		<fileset dir="${javasrc}">
-    			<include name="${jsapXmlFiles}" />
+	<target name="clean" depends="init">
+		<delete dir="${build}" verbose="true"/>
+		<delete dir="${javadoc}" verbose="true"/>
+		<delete dir="${dist}" verbose="true"/>
+		<mkdir dir="${build}"/>
+		<mkdir dir="${javadoc}"/>
+		<mkdir dir="${dist}"/>
+	</target>
+	
+	<!-- compile the JSAP API -->
+	<target name="compile-api" depends="init" >
+		<javac target="1.8" source="1.8" destdir="${build}" srcdir="${javasrc}">
+<!--			<exclude name="${testFiles}" />
+			<exclude name="${exampleFiles}" /> -->
+			<classpath refid="lib.class.path" />
+		</javac>
+		<copy todir="${build}">
+			<fileset dir="${javasrc}">
+				<include name="${jsapXmlFiles}" />
 			</fileset>
   		</copy>
-    </target>
+	</target>
 
 	<!-- compile the JSAP API and JUnit tests -->
-    <target name="compile-tests" depends="init" >
-        <javac target="1.4" source="1.4" destdir="${build}" srcdir="${javasrc}">
-<!--        	<exclude name="${exampleFiles}" /> -->
-        	<classpath refid="lib.class.path" />
-        </javac>
-        <copy todir="${build}">
-    		<fileset dir="${javasrc}">
-    			<include name="${testConfFiles}" />
+	<target name="compile-tests" depends="init" >
+		<javac target="1.8" source="1.8" destdir="${build}" srcdir="${javasrc}">
+<!--			<exclude name="${exampleFiles}" /> -->
+			<classpath refid="lib.class.path" />
+		</javac>
+		<copy todir="${build}">
+			<fileset dir="${javasrc}">
+				<include name="${testConfFiles}" />
 			</fileset>
   		</copy>
-    </target>
+	</target>
 
 	<!-- compile the JSAP API, JUnit tests, and examples -->
-    <target name="compile-all" depends="init" >
-        <javac target="1.4" source="1.4" destdir="${build}" srcdir="${javasrc}">
-        	<classpath refid="lib.class.path" />
-        </javac>
-    </target>
+	<target name="compile-all" depends="init" >
+		<javac target="1.8" source="1.8" destdir="${build}" srcdir="${javasrc}">
+			<classpath refid="lib.class.path" />
+		</javac>
+	</target>
 
 	<!-- run the JUnit tests -->
 	<target name="test" depends="compile-tests" >
-        <junit printsummary="on">
-            <test name="com.martiansoftware.jsap.TestAll"/>
-            <formatter type="plain" usefile="false"/>
-            <classpath refid="lib.class.path" />
-            <classpath>
-                <pathelement location="${build}"/>
-            </classpath>
-        </junit>
-    </target>
+		<junit printsummary="on">
+			<test name="com.martiansoftware.jsap.TestAll"/>
+			<formatter type="plain" usefile="false"/>
+			<classpath refid="lib.class.path" />
+			<classpath>
+				<pathelement location="${build}"/>
+			</classpath>
+		</junit>
+	</target>
 
 	<!-- make the jar -->
-    <target name="jar" depends="clean,test">
-        <mkdir dir="${dist}"/>
-        <jar basedir="${build}" jarfile="${dist}/${jarname}">
-        	<exclude name="${testFiles}" />
-        	<exclude name="${exampleFiles}" />
-        	<exclude name="${manualFiles}" />
-        </jar>
-    </target> 
+	<target name="jar" depends="clean,test">
+		<mkdir dir="${dist}"/>
+		<jar basedir="${build}" jarfile="${dist}/${jarname}">
+			<exclude name="${testFiles}" />
+			<exclude name="${exampleFiles}" />
+			<exclude name="${manualFiles}" />
+		</jar>
+	</target> 
 
 	<!-- generate javadocs -->
-    <target name="javadoc" depends="compile-api">
-    	<delete dir="${javadoc}"/>
-        <mkdir dir="${javadoc}"/>
+	<target name="javadoc" depends="compile-api">
+		<delete dir="${javadoc}"/>
+		<mkdir dir="${javadoc}"/>
 
-        <javadoc 
-        	public="true" 
-        	destdir="${javadoc}" 
-        	sourcepath="${javasrc}" 
-        	packagenames="com.martiansoftware.*"
-        	windowtitle="JSAP: the Java Simple Argument Parser"
-        	classpathref="lib.class.path">
-        	
+		<javadoc 
+			public="true" 
+			destdir="${javadoc}" 
+			sourcepath="${javasrc}" 
+			packagenames="com.martiansoftware.*"
+			windowtitle="JSAP: the Java Simple Argument Parser"
+			classpathref="lib.class.path">
+			
 			<link href="${j2se.apiurl}"/>
 			<link href="${xstream.apiurl}"/>
 			<bottom>${copyright.html}&lt;br&gt;${updates.html}</bottom>
 			
-        </javadoc>
-    </target>
+		</javadoc>
+	</target>
 
 	<!-- generate manual -->
 	<target name="manual" depends="compile-all">
 		<snip xmlsafe="true">
-     		<fileset dir="${javasrc}" includes="**/*.java" />
-     		<fileset dir="${javasrc}" includes="**/*.jsap" />
+	 		<fileset dir="${javasrc}" includes="**/*.java" />
+	 		<fileset dir="${javasrc}" includes="**/*.jsap" />
  		</snip>
  		<mkdir dir="${build}/manual"/>
 		<copy encoding="ISO-8859-1" outputencoding="ISO-8859-1" overwrite="true" verbose="true" file="${src}/doc/manual.xml" todir="${build}/manual">
 			<filterset>
-    			<filter token="Manual_HelloWorld_1" value="${snip.Manual_HelloWorld_1}"/>
-    			<filter token="Manual_HelloWorld_2" value="${snip.Manual_HelloWorld_2}"/>
-    			<filter token="Manual_HelloWorld_3" value="${snip.Manual_HelloWorld_3}"/>
-    			<filter token="Manual_HelloWorld_4" value="${snip.Manual_HelloWorld_4}"/>
-    			<filter token="Manual_HelloWorld_5" value="${snip.Manual_HelloWorld_5}"/>
-    			<filter token="Manual_HelloWorld_6" value="${snip.Manual_HelloWorld_6}"/>
-    			<filter token="Manual_HelloWorld_7" value="${snip.Manual_HelloWorld_7}"/>
-    			<filter token="Manual_HelloWorld_8" value="${snip.Manual_HelloWorld_8}"/>
-        		<filter token="Manual_HelloWorld_9" value="${snip.Manual_HelloWorld_9}"/>
-        		<filter token="Manual_HelloWorld_Simple" value="${snip.Manual_HelloWorld_Simple}"/>
-        		<filter token="Manual_HelloWorld_9_jsap" value="${snip.Manual_HelloWorld_9_jsap}"/>
+				<filter token="Manual_HelloWorld_1" value="${snip.Manual_HelloWorld_1}"/>
+				<filter token="Manual_HelloWorld_2" value="${snip.Manual_HelloWorld_2}"/>
+				<filter token="Manual_HelloWorld_3" value="${snip.Manual_HelloWorld_3}"/>
+				<filter token="Manual_HelloWorld_4" value="${snip.Manual_HelloWorld_4}"/>
+				<filter token="Manual_HelloWorld_5" value="${snip.Manual_HelloWorld_5}"/>
+				<filter token="Manual_HelloWorld_6" value="${snip.Manual_HelloWorld_6}"/>
+				<filter token="Manual_HelloWorld_7" value="${snip.Manual_HelloWorld_7}"/>
+				<filter token="Manual_HelloWorld_8" value="${snip.Manual_HelloWorld_8}"/>
+				<filter token="Manual_HelloWorld_9" value="${snip.Manual_HelloWorld_9}"/>
+				<filter token="Manual_HelloWorld_Simple" value="${snip.Manual_HelloWorld_Simple}"/>
+				<filter token="Manual_HelloWorld_9_jsap" value="${snip.Manual_HelloWorld_9_jsap}"/>
   			</filterset>
   		</copy>
 
  		<rundoc prompt="[mlamb@morbo]$ " format="docbook">
-       		<fileset file="${build}/manual/manual.xml"/>
-       		<env key="CLASSPATH" value="${build}:${lib}/xstream-1.1.2.jar"/>
+	   		<fileset file="${build}/manual/manual.xml"/>
+	   		<env key="CLASSPATH" value="${build}:${lib}/xstream-1.1.2.jar"/>
  			<env key="LANG" value="en_US.iso88591"/>
 		</rundoc>
 
@@ -238,7 +239,7 @@ Targets:
 			
   		<replace encoding="ISO-8859-1" dir="${build}/manual" includes="*.html"
 			token="&#x09;"
-			value="    " />
+			value="	" />
 			
   		<replace encoding="ISO-8859-1" dir="${build}/manual" includes="*.html"
 			token="&#xc2;"
@@ -316,5 +317,95 @@ Targets:
 	<!-- build distributable files from scratch -->
 	<target name="cleandist" depends="clean, dist">
 	</target>
-	
+
+	<!-- ************************************** WARNING: MAVEN ************************************** -->
+
+	<!-- define Maven coordinates -->
+	<property name="groupId" value="com.martiansoftware" />
+	<property name="artifactId" value="jsap" />
+	<property name="version" value="${version}" />
+
+	<!-- define artifacts' name, which follows the convention of Maven -->
+	<property name="maven-jar" value="${dist}/lib/${artifactId}-${version}.jar" />
+	<property name="maven-javadoc-jar" value="${dist}/lib/${artifactId}-${version}-javadoc.jar" />
+	<property name="maven-sources-jar" value="${dist}/lib/${artifactId}-${version}-sources.jar" />
+
+	<!-- defined maven snapshots and staging repository id and url -->
+	<property name="maven-snapshots-repository-id" value="sonatype-nexus-snapshots" />
+	<property name="maven-snapshots-repository-url" value="https://oss.sonatype.org/content/repositories/snapshots/" />
+	<property name="maven-staging-repository-id" value="sonatype-nexus-staging" />
+	<property name="maven-staging-repository-url" value="https://oss.sonatype.org/service/local/staging/deploy/maven2/" />
+
+	<!-- OSGi manifest generation -->
+
+	<target name="osgi" depends="compile-api">
+		<taskdef resource="aQute/bnd/ant/taskdef.properties" classpath="bnd/bnd-2.4.0.jar"/>
+		<bnd
+			classpath="${build}"
+			eclipse="false"
+			failok="false"
+			exceptions="true"
+			output="${maven-jar}"
+			files="jsap.bnd"/>
+	</target>
+	<!-- end OSGi manifest generation -->
+
+	<target name="dist-osgi" depends="osgi,javadoc" description="generate the distribution">
+		<!-- build the javadoc artifact (from symbolic link created in init) -->
+		<jar jarfile="${maven-javadoc-jar}">
+			<fileset dir="${dist}/javadoc" />
+		</jar>
+
+		<!-- build the sources artifact -->
+		<jar jarfile="${maven-sources-jar}">
+			<fileset dir="." includes="LICENSE-2.0.txt,jsap.bnd,build.xml,pom.xml,${src}/**/*.java"/>
+		</jar>
+	</target>
+
+	<target name="deploy" depends="dist-osgi" description="deploy snapshot version to Maven snapshot repository">
+		<artifact:mvn>
+			<arg value="org.apache.maven.plugins:maven-deploy-plugin:2.6:deploy-file" />
+			<arg value="-Durl=${maven-snapshots-repository-url}" />
+			<arg value="-DrepositoryId=${maven-snapshots-repository-id}" />
+			<arg value="-DpomFile=pom.xml" />
+			<arg value="-Dfile=${maven-jar}" />
+		</artifact:mvn>
+	</target>
+
+	<target name="stage" depends="dist-osgi" description="deploy release version to Maven staging repository">
+		<!-- sign and deploy the main artifact -->
+		<artifact:mvn>
+			<arg value="org.apache.maven.plugins:maven-gpg-plugin:1.3:sign-and-deploy-file" />
+			<arg value="-Durl=${maven-staging-repository-url}" />
+			<arg value="-DrepositoryId=${maven-staging-repository-id}" />
+			<arg value="-DpomFile=pom.xml" />
+			<arg value="-Dfile=${maven-jar}" />
+			<arg value="-Pgpg" />
+		</artifact:mvn>
+
+		<!-- sign and deploy the sources artifact -->
+		<artifact:mvn>
+			<arg value="org.apache.maven.plugins:maven-gpg-plugin:1.3:sign-and-deploy-file" />
+			<arg value="-Durl=${maven-staging-repository-url}" />
+			<arg value="-DrepositoryId=${maven-staging-repository-id}" />
+			<arg value="-DpomFile=pom.xml" />
+			<arg value="-Dfile=${maven-sources-jar}" />
+			<arg value="-Dclassifier=sources" />
+			<arg value="-Pgpg" />
+		</artifact:mvn>
+
+		<!-- sign and deploy the javadoc artifact -->
+		<artifact:mvn>
+			<arg value="org.apache.maven.plugins:maven-gpg-plugin:1.3:sign-and-deploy-file" />
+			<arg value="-Durl=${maven-staging-repository-url}" />
+			<arg value="-DrepositoryId=${maven-staging-repository-id}" />
+			<arg value="-DpomFile=pom.xml" />
+			<arg value="-Dfile=${maven-javadoc-jar}" />
+			<arg value="-Dclassifier=javadoc" />
+			<arg value="-Pgpg" />
+		</artifact:mvn>
+	</target>
+
+	<!-- ************************************** END OF MAVEN ************************************** -->
+
 </project>

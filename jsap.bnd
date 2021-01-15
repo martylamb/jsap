@@ -1,0 +1,5 @@
+Automatic-Module-Name: com.martiansoftware.jsap
+Bundle-Name: com.martiansoftware.jsap
+Bundle-SymbolicName: com.martiansoftware.jsap
+Export-Package: com.martiansoftware.*
+Bundle-Version: ${version}
