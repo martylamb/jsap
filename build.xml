@@ -38,6 +38,8 @@ Legal:
 	<property name="version" value="2.2"/>
 	<property name="year" value="2002-2020"/>
 
+	<property name="build.sysclasspath" value="ignore"/>
+
 	<!-- Documentation -->
 	<property name="j2se.apiurl" value="http://java.sun.com/j2se/1.8/docs/api/"/>
 	<property name="xstream.apiurl" value="http://xstream.codehaus.org/javadoc/"/>
@@ -136,7 +138,7 @@ Targets:
 	
 	<!-- compile the JSAP API -->
 	<target name="compile-api" depends="init" >
-		<javac target="1.8" source="1.8" destdir="${build}" srcdir="${javasrc}">
+		<javac release="8" destdir="${build}" srcdir="${javasrc}">
 <!--			<exclude name="${testFiles}" />
 			<exclude name="${exampleFiles}" /> -->
 			<classpath refid="lib.class.path" />
@@ -150,7 +152,7 @@ Targets:
 
 	<!-- compile the JSAP API and JUnit tests -->
 	<target name="compile-tests" depends="init" >
-		<javac target="1.8" source="1.8" destdir="${build}" srcdir="${javasrc}">
+		<javac release="8" destdir="${build}" srcdir="${javasrc}">
 <!--			<exclude name="${exampleFiles}" /> -->
 			<classpath refid="lib.class.path" />
 		</javac>
@@ -163,7 +165,7 @@ Targets:
 
 	<!-- compile the JSAP API, JUnit tests, and examples -->
 	<target name="compile-all" depends="init" >
-		<javac target="1.8" source="1.8" destdir="${build}" srcdir="${javasrc}">
+		<javac release="8" destdir="${build}" srcdir="${javasrc}">
 			<classpath refid="lib.class.path" />
 		</javac>
 	</target>
