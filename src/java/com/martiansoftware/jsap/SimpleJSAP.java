@@ -71,7 +71,7 @@ public class SimpleJSAP extends JSAP {
 		this.name = name;
 		this.explanation = explanation;
 		
-		final Switch help = new Switch( "help", JSAP.NO_SHORTFLAG, "help" );
+		final Switch help = new Switch( "help", 'h', "help" );
 		help.setHelp( "Prints this help message." );
 		this.registerParameter( help );
 
