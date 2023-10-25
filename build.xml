@@ -279,7 +279,7 @@ Targets:
 		<delete dir="${distimage}" />
 		<mkdir dir="${distimage}" />
 		<copy todir="${distimage}" file="${buildfile}" />
-		<copy todir="${distimage}" file="LICENSE.TXT" />
+		<copy todir="${distimage}" file="LICENSE-2.0.txt" />
 		<copy todir="${distimage}" file="src/doc/CHANGELOG.TXT" />
 
 		<!-- copy source files into temp directory -->
