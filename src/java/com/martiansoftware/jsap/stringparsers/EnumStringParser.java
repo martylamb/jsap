@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2002-2021, Martian Software, Inc.
+ * Copyright (C) 2002-2023, Martian Software, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -65,7 +65,7 @@ public class EnumStringParser<E extends Enum<E>> extends StringParser {
         try {
             return Enum.valueOf(clazz, optionValue);
         } catch (IllegalArgumentException exception) {
-            throw new ParseException("Option has wrong value '" + optionValue + "'; valid values are: " + String.join(", ", validEnumValues()), exception);
+            throw new ParseException("Invalid option value '" + optionValue + "'; valid values are: " + String.join(", ", validEnumValues()), exception);
         }
     }
 
