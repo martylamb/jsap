@@ -4,7 +4,7 @@
   <artifactId>jsap</artifactId>
   <packaging>jar</packaging>
   <name>JSAP</name>
-  <version>2.2</version>
+  <version>2.2.1</version>
   <description>The Java-based Simple Argument Parser.</description>
   <url>http://www.martiansoftware.com/jsap/</url>
   <licenses>

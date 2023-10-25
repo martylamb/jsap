@@ -9,7 +9,7 @@ Author:
  http://www.martiansoftware.com/contact.html
 
 Legal:
- Copyright (C) 2002-2021, Martian Software, Inc.
+ Copyright (C) 2002-2023, Martian Software, Inc.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -35,8 +35,8 @@ Legal:
 
 	<!-- Basics -->
 	<property name="name" value="jsap" />
-	<property name="version" value="2.2"/>
-	<property name="year" value="2002-2020"/>
+	<property name="version" value="2.2.1"/>
+	<property name="year" value="2002-2023"/>
 
 	<property name="build.sysclasspath" value="ignore"/>
 
